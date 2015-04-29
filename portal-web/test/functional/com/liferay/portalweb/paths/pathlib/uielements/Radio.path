@@ -1,0 +1,24 @@
+<html>
+<head>
+<title>Radio</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Radio</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>CONTENT_ALL_CONTENT</td>
+	<td>//input[@id='_156_allContent']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_CHOOSE_CONTENT</td>
+	<td>//input[@id='_156_chooseContent']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>
