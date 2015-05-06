@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>ADD</td>
-	<td>//a[contains(.,'Add')]</td>
+	<td>//a[contains(.,'Add')]|//button[contains(.,'Add')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -139,6 +139,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NEW_TEMPLATE</td>
+	<td>//a[@role='menuitem' and contains(.,'New')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>OK</td>
 	<td>//button[contains(.,'OK')]</td>
 	<td></td>
@@ -236,6 +241,11 @@
 <tr>
 	<td>SOURCE</td>
 	<td>//a[@role='button' and (@title='Source')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBMIT</td>
+	<td>//button[@type='submit']</td>
 	<td></td>
 </tr>
 <tr>

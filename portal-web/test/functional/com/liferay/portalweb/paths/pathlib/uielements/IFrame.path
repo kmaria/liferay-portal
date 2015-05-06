@@ -1,0 +1,34 @@
+<html>
+<head>
+<title>IFrame</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">IFrame</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIALOG</td>
+	<td>//iframe</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURATION_DIALOG</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>
