@@ -24,7 +24,7 @@ boolean localPublishing = ParamUtil.getBoolean(request, "localPublishing");
 boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 %>
 
-<liferay-portlet:renderURL varImpl="portletURL">
+<liferay-portlet:renderURL portletName="<%= PortletKeys.EXPORT_IMPORT %>" varImpl="portletURL">
 	<portlet:param name="struts_action" value="/export_import/publish_layouts" />
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.PUBLISH %>" />
 	<portlet:param name="tabs2" value="new-publication-process" />
@@ -51,14 +51,14 @@ int exportImportConfigurationType = localPublishing ? ExportImportConfigurationC
 	>
 		<aui:nav-bar>
 			<aui:nav cssClass="navbar-nav" searchContainer="<%= searchContainer %>">
-				<portlet:renderURL var="addPublishConfigurationURL">
+				<liferay-portlet:renderURL portletName="<%= PortletKeys.EXPORT_IMPORT %>" var="addPublishConfigurationURL">
 					<portlet:param name="struts_action" value="/export_import/publish_layouts" />
 					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
 					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 					<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranchId) %>" />
 					<portlet:param name="layoutSetBranchName" value="<%= layoutSetBranchName %>" />
 					<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-				</portlet:renderURL>
+				</liferay-portlet:renderURL>
 
 				<aui:nav-item href="<%= addPublishConfigurationURL %>" iconCssClass="icon-plus" label="new" />
 			</aui:nav>
@@ -87,7 +87,7 @@ int exportImportConfigurationType = localPublishing ? ExportImportConfigurationC
 				/>
 			</liferay-ui:search-container-column-text>
 
-			<liferay-portlet:renderURL varImpl="rowURL">
+			<liferay-portlet:renderURL portletName="<%= PortletKeys.EXPORT_IMPORT %>" varImpl="rowURL">
 				<portlet:param name="struts_action" value="/export_import/publish_layouts" />
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />
 				<portlet:param name="redirect" value="<%= searchContainer.getIteratorURL().toString() %>" />

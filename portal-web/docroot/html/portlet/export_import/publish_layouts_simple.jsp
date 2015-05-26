@@ -36,12 +36,12 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 GroupDisplayContextHelper groupDisplayContextHelper = new GroupDisplayContextHelper(request);
 %>
 
-<portlet:actionURL var="confirmedActionURL">
+<liferay-portlet:actionURL portletName="<%= PortletKeys.EXPORT_IMPORT %>" var="confirmedActionURL">
 	<portlet:param name="struts_action" value='<%= cmd.equals(Constants.EXPORT) ? "/export_import/edit_export_configuration" : "/export_import/edit_publish_configuration" %>' />
 	<portlet:param name="redirect" value="<%= redirect %>" />
 	<portlet:param name="exportImportConfigurationId" value="<%= String.valueOf(exportImportConfiguration.getExportImportConfigurationId()) %>" />
 	<portlet:param name="quickPublish" value="<%= Boolean.TRUE.toString() %>" />
-</portlet:actionURL>
+</liferay-portlet:actionURL>
 
 <aui:form action='<%= confirmedActionURL.toString() + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="fm2">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= cmd %>" />
@@ -50,13 +50,13 @@ GroupDisplayContextHelper groupDisplayContextHelper = new GroupDisplayContextHel
 
 	<div class="export-dialog-tree">
 		<ul class="lfr-tree list-unstyled">
-			<portlet:renderURL var="advancedPublishURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-				<portlet:param name="struts_action" value="/staging_bar/publish_layouts" />
+			<liferay-portlet:renderURL portletName="<%= PortletKeys.EXPORT_IMPORT %>" var="advancedPublishURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+				<portlet:param name="struts_action" value="/export_import/publish_layouts" />
 				<portlet:param name="tabs2" value="new-publication-process" />
 				<portlet:param name="groupId" value="<%= String.valueOf(groupDisplayContextHelper.getGroupId()) %>" />
 				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 				<portlet:param name="quickPublish" value="<%= Boolean.FALSE.toString() %>" />
-			</portlet:renderURL>
+			</liferay-portlet:renderURL>
 
 			<liferay-ui:icon
 				cssClass="label label-submit publish-mode-switch"

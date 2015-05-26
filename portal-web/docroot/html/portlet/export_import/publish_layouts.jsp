@@ -131,6 +131,7 @@ portletURL.setParameter("struts_action", "/export_import/publish_layouts");
 portletURL.setParameter("closeRedirect", closeRedirect);
 portletURL.setParameter("groupId", String.valueOf(stagingGroupId));
 portletURL.setParameter("stagingGroupId", String.valueOf(stagingGroupId));
+portletURL.setParameter("p_p_id", PortletKeys.EXPORT_IMPORT);
 portletURL.setParameter("privateLayout", String.valueOf(privateLayout));
 
 PortletURL renderURL = renderResponse.createRenderURL();
@@ -149,6 +150,7 @@ renderURL.setParameter("closeRedirect", closeRedirect);
 renderURL.setParameter("groupId", String.valueOf(stagingGroupId));
 renderURL.setParameter("layoutSetBranchId", String.valueOf(layoutSetBranchId));
 renderURL.setParameter("layoutSetBranchName", layoutSetBranchName);
+renderURL.setParameter("p_p_id", PortletKeys.EXPORT_IMPORT);
 renderURL.setParameter("privateLayout", String.valueOf(privateLayout));
 
 response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
@@ -189,16 +191,16 @@ else if (!quickPublish) {
 
 <c:if test="<%= !quickPublish %>">
 	<div class="export-dialog-tree">
-		<portlet:renderURL var="simplePublishRedirectURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-			<portlet:param name="struts_action" value="/staging_bar/publish_layouts" />
+		<liferay-portlet:renderURL portletName="<%= PortletKeys.EXPORT_IMPORT %>" var="simplePublishRedirectURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+			<portlet:param name="struts_action" value="/export_import/publish_layouts" />
 			<portlet:param name="tabs2" value="current-and-previous" />
 			<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 			<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 			<portlet:param name="quickPublish" value="<%= Boolean.TRUE.toString() %>" />
-		</portlet:renderURL>
+		</liferay-portlet:renderURL>
 
-		<portlet:renderURL var="simplePublishURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-			<portlet:param name="struts_action" value="/staging_bar/publish_layouts_simple" />
+		<liferay-portlet:renderURL portletName="<%= PortletKeys.EXPORT_IMPORT %>" var="simplePublishURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+			<portlet:param name="struts_action" value="/export_import/publish_layouts_simple" />
 			<portlet:param name="redirect" value="<%= simplePublishRedirectURL %>" />
 			<portlet:param name="localPublishing" value="<%= String.valueOf(localPublishing) %>" />
 			<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
@@ -210,7 +212,7 @@ else if (!quickPublish) {
 			<portlet:param name="secureConnection" value='<%= liveGroupTypeSettings.getProperty("secureConnection") %>' />
 			<portlet:param name="sourceGroupId" value="<%= String.valueOf(stagingGroupId) %>" />
 			<portlet:param name="targetGroupId" value="<%= String.valueOf(liveGroupId) %>" />
-		</portlet:renderURL>
+		</liferay-portlet:renderURL>
 
 		<liferay-ui:icon
 			cssClass="label label-submit publish-mode-switch"
@@ -249,11 +251,11 @@ else if (!quickPublish) {
 			</div>
 
 			<div <%= publishConfigurationButtons.equals("custom") ? StringPool.BLANK : "class=\"hide\"" %> id="<portlet:namespace />customConfiguration">
-				<portlet:actionURL var="updatePublishConfigurationURL">
+				<liferay-portlet:actionURL portletName="<%= PortletKeys.EXPORT_IMPORT %>" var="updatePublishConfigurationURL">
 					<portlet:param name="struts_action" value="/export_import/edit_publish_configuration" />
 					<portlet:param name="groupId" value="<%= String.valueOf(stagingGroupId) %>" />
 					<portlet:param name="localPublishing" value="<%= String.valueOf(localPublishing) %>" />
-				</portlet:actionURL>
+				</liferay-portlet:actionURL>
 
 				<aui:form action='<%= (cmd.equals(Constants.PUBLISH_TO_LIVE) || cmd.equals(Constants.PUBLISH_TO_REMOTE)) ? portletURL.toString() : updatePublishConfigurationURL + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="exportPagesFm" onSubmit='<%= (cmd.equals(Constants.PUBLISH_TO_LIVE) || cmd.equals(Constants.PUBLISH_TO_REMOTE)) ? "event.preventDefault(); " + renderResponse.getNamespace() + "publishPages();" : StringPool.BLANK %>' >
 					<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= cmd %>" />
@@ -481,7 +483,7 @@ else if (!quickPublish) {
 </aui:script>
 
 <aui:script use="liferay-export-import">
-	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="publishProcessesURL">
+	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" portletName="<%= PortletKeys.EXPORT_IMPORT %>" var="publishProcessesURL">
 		<portlet:param name="struts_action" value="/export_import/publish_layouts" />
 		<portlet:param name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_CUR_PARAM) %>" />
 		<portlet:param name="<%= SearchContainer.DEFAULT_DELTA_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_DELTA_PARAM) %>" />

@@ -55,13 +55,13 @@ ExportImportConfiguration exportImportConfiguration = (ExportImportConfiguration
 	<portlet:param name="rootNodeName" value="<%= rootNodeName %>" />
 </portlet:renderURL>
 
-<portlet:renderURL var="exportByExportImportConfigurationURL">
+<liferay-portlet:renderURL portletName="<%= PortletKeys.EXPORT_IMPORT %>" var="exportByExportImportConfigurationURL">
 	<portlet:param name="struts_action" value="/export_import/confirmation" />
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
 	<portlet:param name="redirect" value="<%= exportRedirectURL %>" />
 	<portlet:param name="backURL" value="<%= deleteRedirectURL %>" />
 	<portlet:param name="exportImportConfigurationId" value="<%= String.valueOf(exportImportConfiguration.getExportImportConfigurationId()) %>" />
-</portlet:renderURL>
+</liferay-portlet:renderURL>
 
 <liferay-ui:icon
 	iconCssClass="icon-arrow-up"

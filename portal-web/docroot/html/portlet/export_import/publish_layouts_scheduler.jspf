@@ -33,7 +33,7 @@
 </ul>
 
 <aui:script>
-	<portlet:renderURL var="scheduledEventsURL">
+	<liferay-portlet:renderURL portletName="<%= PortletKeys.EXPORT_IMPORT %>" var="scheduledEventsURL">
 		<portlet:param name="struts_action" value="/export_import/publish_layouts" />
 		<portlet:param name="tabs2" value="scheduled" />
 		<portlet:param name="closeRedirect" value="<%= closeRedirect %>" />
@@ -41,7 +41,7 @@
 		<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranchId) %>" />
 		<portlet:param name="layoutSetBranchName" value="<%= layoutSetBranchName %>" />
 		<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-	</portlet:renderURL>
+	</liferay-portlet:renderURL>
 
 	function <portlet:namespace />schedulePublishEvent() {
 		var form = AUI.$(document.<portlet:namespace />exportPagesFm);

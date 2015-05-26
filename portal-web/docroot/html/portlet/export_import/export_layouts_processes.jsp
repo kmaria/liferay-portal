@@ -154,11 +154,11 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 
 					<liferay-ui:icon iconCssClass="icon-repeat" message="relaunch" url="<%= relaunchURL %>" />
 
-					<portlet:actionURL var="deleteBackgroundTaskURL">
+					<liferay-portlet:actionURL portletName="<%= PortletKeys.EXPORT_IMPORT %>" var="deleteBackgroundTaskURL">
 						<portlet:param name="struts_action" value="/export_import/delete_background_task" />
 						<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
 						<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
-					</portlet:actionURL>
+					</liferay-portlet:actionURL>
 
 					<%
 					Date completionDate = backgroundTask.getCompletionDate();

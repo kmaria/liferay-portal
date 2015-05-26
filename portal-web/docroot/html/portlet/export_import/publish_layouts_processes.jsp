@@ -35,6 +35,7 @@ renderURL.setParameter("groupId", String.valueOf(groupId));
 renderURL.setParameter("layoutSetBranchId", String.valueOf(layoutSetBranchId));
 renderURL.setParameter("layoutSetBranchName", layoutSetBranchName);
 renderURL.setParameter("localPublishing", String.valueOf(localPublishing));
+renderURL.setParameter("p_p_id", PortletKeys.EXPORT_IMPORT);
 renderURL.setParameter("quickPublish", String.valueOf(quickPublish));
 
 String orderByCol = ParamUtil.getString(request, "orderByCol");
@@ -142,23 +143,23 @@ String taskExecutorClassName = localPublishing ? LayoutStagingBackgroundTaskExec
 				<c:if test="<%= !backgroundTask.isInProgress() %>">
 					<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
 						<c:if test="<%= backgroundTask.getGroupId() != liveGroupId %>">
-							<portlet:actionURL var="relaunchURL">
+							<liferay-portlet:actionURL portletName="<%= PortletKeys.EXPORT_IMPORT %>" var="relaunchURL">
 								<portlet:param name="struts_action" value="/export_import/edit_publish_configuration" />
 								<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RELAUNCH %>" />
 								<portlet:param name="redirect" value="<%= renderURL.toString() %>" />
 								<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
 								<portlet:param name="quickPublish" value="<%= String.valueOf(quickPublish) %>" />
-							</portlet:actionURL>
+							</liferay-portlet:actionURL>
 
 							<liferay-ui:icon iconCssClass="icon-repeat" message="relaunch" url="<%= relaunchURL %>" />
 						</c:if>
 
-						<portlet:actionURL var="deleteBackgroundTaskURL">
+						<liferay-portlet:actionURL portletName="<%= PortletKeys.EXPORT_IMPORT %>" var="deleteBackgroundTaskURL">
 							<portlet:param name="struts_action" value="/export_import/delete_background_task" />
 							<portlet:param name="redirect" value="<%= renderURL.toString() %>" />
 							<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
 							<portlet:param name="quickPublish" value="<%= String.valueOf(quickPublish) %>" />
-						</portlet:actionURL>
+						</liferay-portlet:actionURL>
 
 						<%
 						Date completionDate = backgroundTask.getCompletionDate();

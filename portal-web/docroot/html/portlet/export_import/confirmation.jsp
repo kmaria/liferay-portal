@@ -73,12 +73,12 @@ long[] layoutIds = GetterUtil.getLongValues(settingsMap.get("layoutIds"));
 		<liferay-ui:message key="<%= Time.getRelativeTimeDescription(exportImportConfiguration.getCreateDate(), locale, timeZone) %>" />
 	</aui:fieldset>
 
-	<portlet:actionURL var="confirmedActionURL">
+	<liferay-portlet:actionURL portletName="<%= PortletKeys.EXPORT_IMPORT %>" var="confirmedActionURL">
 		<portlet:param name="struts_action" value='<%= (cmd.equals(Constants.EXPORT) ? "/export_import/edit_export_configuration" : "/export_import/edit_publish_configuration") %>' />
 		<portlet:param name="<%= Constants.CMD %>" value="<%= cmd %>" />
 		<portlet:param name="redirect" value="<%= redirectURL %>" />
 		<portlet:param name="exportImportConfigurationId" value="<%= String.valueOf(exportImportConfiguration.getExportImportConfigurationId()) %>" />
-	</portlet:actionURL>
+	</liferay-portlet:actionURL>
 
 	<aui:form action='<%= confirmedActionURL.toString() + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="fm2">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= cmd %>" />

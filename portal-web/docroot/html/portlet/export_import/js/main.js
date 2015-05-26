@@ -19,6 +19,8 @@ AUI.add(
 
 		var STR_EMPTY = '';
 
+		var STR_EXPORT_IMPORT_PORTLET_ID = '200';
+
 		var defaultConfig = {
 			setter: '_setNode'
 		};
@@ -756,6 +758,7 @@ AUI.add(
 							var portletURL = Liferay.PortletURL.createURL(redirectNode.val());
 
 							portletURL.setParameter('cmd', cmdNode.val());
+							portletURL.setPortletId(STR_EXPORT_IMPORT_PORTLET_ID);
 
 							if (instance._exportLAR) {
 								portletURL.setParameter('struts_action', '/group_pages/edit_export_configuration');
