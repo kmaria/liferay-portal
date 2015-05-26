@@ -100,7 +100,7 @@ AUI.add(
 						var children = next.fields || next.nestedFields || next.fieldValues || next.nestedFieldValues;
 
 						if (children) {
-							AArray.each(children, addToQueue);
+							children.forEach(addToQueue);
 						}
 					}
 				}
@@ -158,21 +158,8 @@ AUI.add(
 				var instance = this;
 
 				A.io.request(
-					themeDisplay.getPathMain() + '/dynamic_data_mapping/render_structure_field',
+					instance._getTemplateResourceURL(),
 					{
-						data: {
-							controlPanelCategory: 'portlet',
-							definition: AJSON.stringify(instance.get('definition')),
-							doAsGroupId: instance.get('doAsGroupId'),
-							fieldName: instance.get('name'),
-							mode: instance.get('mode'),
-							namespace: instance.get('namespace'),
-							p_l_id: instance.get('p_l_id'),
-							p_p_id: '166',
-							p_p_isolated: true,
-							portletNamespace: instance.get('portletNamespace'),
-							readOnly: instance.get('readOnly')
-						},
 						on: {
 							success: function(event, id, xhr) {
 								if (callback) {
@@ -182,6 +169,27 @@ AUI.add(
 						}
 					}
 				);
+			},
+
+			_getTemplateResourceURL: function() {
+				var instance = this;
+
+				var portletURL = Liferay.PortletURL.createResourceURL();
+
+				portletURL.setDoAsGroupId(instance.get('doAsGroupId'));
+				portletURL.setParameter('controlPanelCategory', 'portlet');
+				portletURL.setParameter('definition', AJSON.stringify(instance.get('definition')));
+				portletURL.setParameter('fieldName', instance.get('name'));
+				portletURL.setParameter('javax.portlet.action', 'renderStructureField');
+				portletURL.setParameter('mode', instance.get('mode'));
+				portletURL.setParameter('namespace', instance.get('namespace'));
+				portletURL.setParameter('portletNamespace', instance.get('portletNamespace'));
+				portletURL.setParameter('readOnly', instance.get('readOnly'));
+				portletURL.setPlid(instance.get('p_l_id'));
+				portletURL.setPortletId('com_liferay_dynamic_data_mapping_web_portlet_DynamicDataMappingPortlet');
+				portletURL.setWindowState('pop_up');
+
+				return portletURL.toString();
 			},
 
 			_valueFields: function() {
@@ -298,7 +306,7 @@ AUI.add(
 						return AArray.find(
 							instance.get('fields'),
 							function(item) {
-								return (item.get('name') === name);
+								return item.get('name') === name;
 							}
 						);
 					},
@@ -306,8 +314,8 @@ AUI.add(
 					getInputName: function() {
 						var instance = this;
 
-						var portletNamespace = instance.get('portletNamespace');
 						var fieldsNamespace = instance.get('fieldsNamespace');
+						var portletNamespace = instance.get('portletNamespace');
 
 						var prefix = [portletNamespace];
 
@@ -339,8 +347,7 @@ AUI.add(
 					getRepeatedSiblings: function() {
 						var instance = this;
 
-						return AArray.filter(
-							instance.getSiblings(),
+						return instance.getSiblings().filter(
 							function(item) {
 								return item.get('name') === instance.get('name');
 							}
@@ -536,8 +543,7 @@ AUI.add(
 						var translationManager = parent.get('translationManager');
 
 						if (translationManager) {
-							AArray.each(
-								translationManager.get('availableLocales'),
+							translationManager.get('availableLocales').forEach(
 								function(item, index) {
 									var value = localizationMap[item];
 
@@ -560,8 +566,7 @@ AUI.add(
 							}
 						);
 
-						AArray.each(
-							newField.get('fields'),
+						newField.get('fields').forEach(
 							function(item, index) {
 								var name = item.get('name');
 
@@ -635,8 +640,7 @@ AUI.add(
 					_removeFieldValidation: function(field) {
 						var instance = this;
 
-						AArray.each(
-							field.get('fields'),
+						field.get('fields').forEach(
 							function(item, index) {
 								instance._removeFieldValidation(item);
 							}
@@ -653,8 +657,8 @@ AUI.add(
 					_valueLocalizationMap: function() {
 						var instance = this;
 
-						var values = instance.get('values');
 						var instanceId = instance.get('instanceId');
+						var values = instance.get('values');
 
 						var fieldValue = instance.getFieldInfo(values, 'instanceId', instanceId);
 
@@ -1105,8 +1109,8 @@ AUI.add(
 
 						var imagePreviewURL = instance._getImagePreviewURL();
 
-						var previewLinkNode = A.one('#' + instance.getInputName() + 'PreviewContainer a');
 						var previewImageNode = A.one('#' + instance.getInputName() + 'PreviewContainer img');
+						var previewLinkNode = A.one('#' + instance.getInputName() + 'PreviewContainer a');
 
 						previewLinkNode.attr('href', imagePreviewURL);
 						previewImageNode.attr('src', imagePreviewURL);

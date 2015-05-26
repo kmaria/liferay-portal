@@ -44,14 +44,14 @@ String stagingFriendlyURL = (String)request.getAttribute("view.jsp-stagingFriend
 							boolean selected = (group.isStagingGroup() || group.isStagedRemotely()) && (curLayoutSetBranch.getLayoutSetBranchId() == layoutRevision.getLayoutSetBranchId());
 						%>
 
-							<portlet:actionURL var="layoutSetBranchURL">
-								<portlet:param name="struts_action" value="/dockbar/edit_layouts" />
+							<liferay-portlet:actionURL portletName="<%= PortletKeys.STAGING_BAR %>" var="layoutSetBranchURL">
+								<portlet:param name="struts_action" value="/staging_bar/edit_layouts" />
 								<portlet:param name="<%= Constants.CMD %>" value="select_layout_set_branch" />
 								<portlet:param name="redirect" value="<%= stagingFriendlyURL %>" />
 								<portlet:param name="groupId" value="<%= String.valueOf(curLayoutSetBranch.getGroupId()) %>" />
 								<portlet:param name="privateLayout" value="<%= String.valueOf(layout.isPrivateLayout()) %>" />
 								<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(curLayoutSetBranch.getLayoutSetBranchId()) %>" />
-							</portlet:actionURL>
+							</liferay-portlet:actionURL>
 
 							<liferay-ui:icon
 								cssClass='<%= selected ? "disabled" : StringPool.BLANK %>'

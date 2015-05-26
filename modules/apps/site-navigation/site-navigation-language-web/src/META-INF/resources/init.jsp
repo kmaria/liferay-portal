@@ -23,13 +23,17 @@
 
 <%@ page import="com.liferay.portal.kernel.servlet.taglib.ui.LanguageEntry" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
+page import="com.liferay.site.navigation.language.web.configuration.LanguagePortletInstanceConfiguration" %><%@
 page import="com.liferay.site.navigation.language.web.display.context.LanguageDisplayContext" %>
 
-<liferay-theme:defineObjects />
 <portlet:defineObjects />
+
+<liferay-theme:defineObjects />
 
 <%
 LanguageDisplayContext languageDisplayContext = new LanguageDisplayContext(request);
+
+LanguagePortletInstanceConfiguration languagePortletInstanceConfiguration = languageDisplayContext.getLanguagePortletInstanceConfiguration();
 %>
 
 <%@ include file="/init-ext.jsp" %>
