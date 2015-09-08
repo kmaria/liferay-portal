@@ -715,6 +715,13 @@ public class LiferaySeleniumHelper {
 			_TEST_BASE_DIR_NAME + "/" +
 				liferaySelenium.getSikuliImagesDirName() + image);
 
+		System.out.println(
+			_TEST_BASE_DIR_NAME + "/" +
+				liferaySelenium.getSikuliImagesDirName() + image);
+		System.out.println(
+			_TEST_BASE_DIR_NAME + "/" +
+				liferaySelenium.getSikuliImagesDirName() + image);
+
 		return new ImageTarget(file);
 	}
 
@@ -1075,7 +1082,11 @@ public class LiferaySeleniumHelper {
 
 		ImageTarget imageTarget = getImageTarget(liferaySelenium, image);
 
+		System.out.println(imageTarget);
+
 		screenRegion = screenRegion.wait(imageTarget, 5000);
+
+		System.out.println(screenRegion);
 
 		if (screenRegion == null) {
 			throw new Exception("Element is not present");
