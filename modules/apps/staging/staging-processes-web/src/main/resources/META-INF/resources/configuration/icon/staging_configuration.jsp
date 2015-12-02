@@ -1,4 +1,5 @@
-<%--
+<%@ page import="javax.portlet.PortletMode" %>
+<%@ page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -16,52 +17,12 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-util:buffer var="stagingConfigurationPortlet">
-	<liferay-portlet:runtime portletName="<%= StagingConfigurationPortletKeys.STAGING_CONFIGURATION %>" />
-</liferay-util:buffer>
-
-<%
-String taglibOnClick = renderResponse.getNamespace() + "openStagingConfigurationView()";
-%>
+<liferay-portlet:renderURL portletMode="<%= PortletMode.VIEW.toString() %>" portletName="<%= StagingConfigurationPortletKeys.STAGING_CONFIGURATION %>" var="stagingConfigurationPortletURL">
+</liferay-portlet:renderURL>
 
 <liferay-ui:icon
 	message="staging-configuration"
-	onClick="<%= taglibOnClick %>"
-	url="javascript:;"
+	method="get"
+	url="<%= stagingConfigurationPortletURL %>"
+	useDialog="<%= true %>"
 />
-
-<aui:script>
-	function <portlet:namespace />openStagingConfigurationView() {
-		Liferay.Util.Window.getWindow(
-			{
-				dialog: {
-					bodyContent: '<%= stagingConfigurationPortlet %>',
-					centered: true,
-					modal: true
-					toolbars: {
-						footer: [
-							{
-								label: Liferay.Language.get('ok'),
-								on: {
-									click: function(event) {
-										event.domEvent.preventDefault();
-									}
-								},
-								primary: true
-							},
-							{
-								label: Liferay.Language.get('cancel'),
-								on: {
-									click: function(event) {
-										event.domEvent.preventDefault();
-									}
-								}
-							}
-						]
-					}
-				},
-				title: Liferay.Language.get('staging-configuration')
-			}
-		);
-	}
-</aui:script>
