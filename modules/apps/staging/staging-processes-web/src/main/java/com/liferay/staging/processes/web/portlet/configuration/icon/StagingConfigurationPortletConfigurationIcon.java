@@ -25,7 +25,9 @@ import javax.servlet.http.HttpServletRequest;
 public class StagingConfigurationPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
-	public StagingConfigurationPortletConfigurationIcon(HttpServletRequest request) {
+	public StagingConfigurationPortletConfigurationIcon(
+		HttpServletRequest request) {
+
 		super(request);
 	}
 

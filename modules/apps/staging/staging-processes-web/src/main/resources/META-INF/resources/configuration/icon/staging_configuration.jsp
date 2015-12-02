@@ -1,5 +1,8 @@
+<%@ page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %>
+
 <%@ page import="javax.portlet.PortletMode" %>
-<%@ page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%--
+
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -17,10 +20,13 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-portlet:renderURL portletMode="<%= PortletMode.VIEW.toString() %>" portletName="<%= StagingConfigurationPortletKeys.STAGING_CONFIGURATION %>" var="stagingConfigurationPortletURL">
-	<portlet:param name="mvcRenderCommandName" value="stagingConfiguration" />
+<liferay-portlet:renderURL portletMode="<%= PortletMode.VIEW.toString() %>" portletName="<%= StagingConfigurationPortletKeys.STAGING_CONFIGURATION %>" var="stagingConfigurationPortletURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+	<portlet:param name="mvcRenderCommandName" value="staging" />
 </liferay-portlet:renderURL>
 
+<%
+System.out.println("stagingConfigurationPortletURL: " + stagingConfigurationPortletURL);
+%>
 <liferay-ui:icon
 	message="staging-configuration"
 	method="get"
