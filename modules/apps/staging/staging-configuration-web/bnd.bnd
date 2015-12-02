@@ -5,3 +5,4 @@ Include-Resource:\
 	classes,\
 	content=../staging-lang/src/main/resources/content,\
 	META-INF/resources=src/main/resources/META-INF/resources
+Export-Package: com.liferay.staging.configuration.web.portlet.constants

@@ -87,6 +87,7 @@ page import="com.liferay.staging.processes.web.constants.StagingProcessesPortlet
 page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.taglib.search.SearchEntry" %><%@
 page import="com.liferay.taglib.ui.util.SessionTreeJSClicks" %>
+<%@ page import="com.liferay.staging.configuration.web.portlet.constants.StagingConfigurationPortletKeys" %>
 
 <%@ page import="java.io.Serializable" %>
 
