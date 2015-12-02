@@ -18,6 +18,7 @@
 <%@ include file="/init.jsp" %>
 
 <liferay-portlet:renderURL portletMode="<%= PortletMode.VIEW.toString() %>" portletName="<%= StagingConfigurationPortletKeys.STAGING_CONFIGURATION %>" var="stagingConfigurationPortletURL">
+	<portlet:param name="mvcRenderCommandName" value="stagingConfiguration" />
 </liferay-portlet:renderURL>
 
 <liferay-ui:icon
