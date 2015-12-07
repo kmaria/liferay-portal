@@ -19,8 +19,8 @@ import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfiguration
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconFactory;
 import com.liferay.staging.processes.web.constants.StagingProcessesPortletKeys;
 
+import javax.portlet.PortletRequest;
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -37,8 +37,8 @@ public class StagingConfigurationPortletConfigurationIconFactory
 	extends BaseJSPPortletConfigurationIconFactory {
 
 	@Override
-	public PortletConfigurationIcon create(HttpServletRequest request) {
-		return new StagingConfigurationPortletConfigurationIcon(request);
+	public PortletConfigurationIcon create(PortletRequest portletRequest) {
+		return new StagingConfigurationPortletConfigurationIcon(portletRequest);
 	}
 
 	@Override

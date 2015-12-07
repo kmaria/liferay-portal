@@ -17,6 +17,7 @@ package com.liferay.staging.processes.web.portlet.configuration.icon;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.model.User;
 
+import javax.portlet.PortletRequest;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -26,9 +27,9 @@ public class StagingConfigurationPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	public StagingConfigurationPortletConfigurationIcon(
-		HttpServletRequest request) {
+		PortletRequest portletRequest) {
 
-		super(request);
+		super(portletRequest);
 	}
 
 	@Override
