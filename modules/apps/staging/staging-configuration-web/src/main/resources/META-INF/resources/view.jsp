@@ -108,6 +108,9 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskMan
 									<portlet:param name="localPublishing" value="<%= String.valueOf(stagedLocally) %>" />
 								</liferay-portlet:renderURL>
 
+								<%
+								System.out.println("publishProcessesURL: " + publishProcessesURL.toString());
+								%>
 								uri: '<%= HtmlUtil.escapeJS(publishProcessesURL.toString()) %>'
 							}
 						);

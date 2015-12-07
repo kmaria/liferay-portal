@@ -83,6 +83,7 @@ page import="com.liferay.portlet.exportimport.lar.ExportImportHelperUtil" %><%@
 page import="com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys" %><%@
 page import="com.liferay.portlet.exportimport.staging.LayoutStagingUtil" %><%@
 page import="com.liferay.portlet.exportimport.staging.StagingUtil" %><%@
+page import="com.liferay.staging.configuration.web.portlet.constants.StagingConfigurationPortletKeys" %><%@
 page import="com.liferay.staging.processes.web.constants.StagingProcessesPortletKeys" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.taglib.search.SearchEntry" %><%@
