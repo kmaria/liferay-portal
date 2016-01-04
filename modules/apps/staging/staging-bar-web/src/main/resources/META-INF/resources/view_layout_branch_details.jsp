@@ -28,12 +28,12 @@ List<LayoutRevision> layoutRevisions = LayoutRevisionLocalServiceUtil.getChildLa
 %>
 
 <li class="control-menu-nav-item">
-	<a class="staging-variation-label" href="javascript:;" onclick='<%= renderResponse.getNamespace() + "openPageVariationsDialog();" %>'>
+	<a class="staging-variation-label" href="javascript:;" id="manageLayoutRevisions" onclick='<%= renderResponse.getNamespace() + "openPageVariationsDialog();" %>'>
 		<liferay-ui:message key="page-variations" />
 	</a>
 
 	<div class="dropdown">
-		<a class="dropdown-toggle layout-set-branch-selector staging-variation-selector" data-toggle="dropdown" href="#1">
+		<a class="dropdown-toggle layout-branch-selector staging-variation-selector" data-toggle="dropdown" href="#1">
 			<liferay-ui:message key="<%= HtmlUtil.escape(layoutBranch.getName()) %>" />
 
 			<aui:icon image="caret-double-l" markupView="lexicon" />
