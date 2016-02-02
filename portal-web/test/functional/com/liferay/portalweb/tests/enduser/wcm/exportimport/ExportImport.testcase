@@ -152,10 +152,7 @@
 
 		<var group="1" input="${valueName}" name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" />
 
-		<echo message="import file name ${larFileName}" />
-
-		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
-		<execute function="DownloadTempFile" />
+		<echo message="file name ${larFileName}" />
 
 		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
 		<execute function="DownloadTempFile" />
@@ -226,7 +223,7 @@
 
 		<var group="1" input="${valueName}" name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" />
 
-		<echo message="import file name ${larFileName}" />
+		<echo message="file name ${larFileName}" />
 
 		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
 		<execute function="DownloadTempFile" />
@@ -396,7 +393,7 @@
 
 		<var group="1" input="${valueName}" name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" />
 
-		<echo message="import file name ${larFileName}" />
+		<echo message="file name ${larFileName}" />
 
 		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
 		<execute function="DownloadTempFile" />
@@ -445,7 +442,7 @@
 
 		<var group="1" input="${valueName}" name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" />
 
-		<echo message="import file name ${larFileName}" />
+		<echo message="file name ${larFileName}" />
 
 		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
 		<execute function="DownloadTempFile" />
@@ -521,7 +518,7 @@
 
 		<var group="1" input="${valueName}" name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" />
 
-		<echo message="import file name ${larFileName}" />
+		<echo message="file name ${larFileName}" />
 
 		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
 		<execute function="DownloadTempFile" />
@@ -704,7 +701,6 @@
 
 		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
 		<execute function="DownloadTempFile" />
-		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
@@ -783,7 +779,7 @@
 
 		<var group="1" input="${valueName}" name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" />
 
-		<echo message="import file name ${larFileName}" />
+		<echo message="file name ${larFileName}" />
 
 		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
 		<execute function="DownloadTempFile" />
@@ -838,7 +834,7 @@
 
 		<var group="1" input="${valueName}" name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" />
 
-		<echo message="import file name ${larFileName}" />
+		<echo message="file name ${larFileName}" />
 
 		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
 		<execute function="DownloadTempFile" />
@@ -932,7 +928,6 @@
 
 		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
 		<execute function="DownloadTempFile" />
-		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
