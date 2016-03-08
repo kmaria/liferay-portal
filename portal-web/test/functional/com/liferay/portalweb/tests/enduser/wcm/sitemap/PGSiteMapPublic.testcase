@@ -33,8 +33,9 @@
 				</execute>
 
 				<execute macro="Page#addChild">
+					<var name="childSitepageName" value="true" />
 					<var name="page" value="Public Pages" />
-					<var name="siteChildPageName" value="QA Child Public Page ${M} "/>
+					<var name="siteChildPageName" value="QA Child Public Page ${N}${M} "/>
 					<var name="siteName" value="Site Name" />
 					<var name="sitePageName" value="QA team Public Page ${N}" />
 				</execute>
@@ -73,7 +74,7 @@
 			<for list="1,2" param="M">
 				<execute macro= "SiteMapPortlet#viewDefaultPG">
 					<var name="sitePageName" value='QA team Public Page ${N}'/>
-					<var name="siteChildPageName" value="QA Child Public Page ${M}"/>
+					<var name="siteChildPageName" value="QA Child Public Page ${N}${M}"/>
 					<var name="listPageName" value="${N}"/>
 					<var name="listChildPageName" value="${M}" />				
 				</execute>
