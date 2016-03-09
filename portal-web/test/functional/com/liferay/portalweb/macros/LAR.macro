@@ -64,11 +64,11 @@
 		</if>
 
 		<if>
-			<isset var="key_uncheckContentNameList" />
+			<isset var="uncheckContentNameList" />
 			<then>
 				<execute function="Check" locator1="SitePagesExport#CONTENT_CHOOSE_CONTENT" />
 
-				<for list="${key_uncheckContentNameList}" param="contentName">
+				<for list="${uncheckContentNameList}" param="contentName">
 					<var name="key_contentName" value="${contentName}" />
 
 					<execute function="Uncheck" locator1="PagesConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
@@ -77,7 +77,7 @@
 		</if>
 
 		<if>
-			<isset var="key_uncheckSubContent" />
+			<isset var="uncheckSubContent" />
 			<then>
 				<execute function="Click" locator1="SitePagesExport#CONTENT_CHOOSE_CONTENT" />
 
@@ -365,8 +365,8 @@
 		<execute function="Click" locator1="Button#PLUS" />
 
 		<execute macro="LAR#_configureExportSiteOptions">
-			<var name="key_uncheckContentNameList" value="${uncheckContentNameList}" />
-			<var name="key_uncheckSubContent" value="${uncheckSubContent}" />
+			<var name="uncheckContentNameList" value="${uncheckContentNameList}" />
+			<var name="uncheckSubContent" value="${uncheckSubContent}" />
 		</execute>
 	</command>
 
