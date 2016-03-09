@@ -751,7 +751,7 @@
 		</execute>
 
 		<execute macro="PortletEntry#publish" />
- 
+
 		<execute macro="LAR#configureExportSiteCP">
 			<var name="uncheckContentNameList" value="Documents and Media" />
 			<var name="uncheckSubContent" value="Referenced Content" />
