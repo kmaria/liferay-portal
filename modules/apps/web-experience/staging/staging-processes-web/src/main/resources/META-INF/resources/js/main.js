@@ -69,7 +69,7 @@ AUI.add(
 
 						instance._eventHandles = eventHandles;
 
-						instance._renderTimer = A.later(RENDER_INTERVAL_IN_PROGRESS, instance, instance._renderProcesses);
+						instance._laterTimeout = A.later(RENDER_INTERVAL_IN_PROGRESS, instance, instance._renderProcesses);
 					},
 
 					destructor: function() {
@@ -83,13 +83,11 @@ AUI.add(
 							instance._globalConfigurationDialog.destroy();
 						}
 
-						if (instance._renderTimer) {
-							instance._renderTimer.cancel();
-						}
-
 						if (instance._scheduledPublishingEventsDialog) {
 							instance._scheduledPublishingEventsDialog.destroy();
 						}
+
+						A.clearTimeout(instance._laterTimeout);
 					},
 
 					_bindUI: function() {
@@ -667,7 +665,7 @@ AUI.add(
 							renderInterval = RENDER_INTERVAL_IN_PROGRESS;
 						}
 
-						instance._renderTimer = A.later(renderInterval, instance, instance._renderProcesses);
+						instance._laterTimeout = A.later(renderInterval, instance, instance._renderProcesses);
 					},
 
 					_setContentLabels: function(portletId) {
