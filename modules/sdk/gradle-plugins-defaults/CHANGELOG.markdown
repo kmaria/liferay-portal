@@ -202,9 +202,14 @@ configuration.
 
 ### Changed
 - [LPS-61099]: Update the [Liferay Gradle Plugins] dependency to version 2.0.30.
-- [LRDOCS-2841]: Look for the `.releng` dir starting from the project directory,
-not from the root project one. This way, submodules like `content-targeting` can
-have their own separate `.releng` directory.
+- [LRDOCS-2841]: Look for the `.releng` directory starting from the project
+directory instead of the root project directory. Doing this lets submodules like
+`content-targeting` have their own separate `.releng` directory.
+
+## 1.2.18 - 2016-09-12
+
+### Changed
+- [LPS-67766]: Update the [Liferay Gradle Plugins] dependency to version 2.0.31.
 
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [LPS-61099]: https://issues.liferay.com/browse/LPS-61099
@@ -213,6 +218,7 @@ have their own separate `.releng` directory.
 [LPS-67352]: https://issues.liferay.com/browse/LPS-67352
 [LPS-67658]: https://issues.liferay.com/browse/LPS-67658
 [LPS-67694]: https://issues.liferay.com/browse/LPS-67694
+[LPS-67766]: https://issues.liferay.com/browse/LPS-67766
 [LPS-67804]: https://issues.liferay.com/browse/LPS-67804
 [LPS-67863]: https://issues.liferay.com/browse/LPS-67863
 [LPS-67996]: https://issues.liferay.com/browse/LPS-67996
