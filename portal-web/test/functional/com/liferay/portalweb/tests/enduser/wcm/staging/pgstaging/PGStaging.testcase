@@ -1210,8 +1210,6 @@
 		<execute macro="Staging#deactivateStagingCP">
 			<var name="siteName" value="Site Name" />
 		</execute>
-
-		<execute function="Pause" locator1="5000" />
 	</command>
 
 	<command name="PublishPrivatePage" priority="5">
@@ -1383,8 +1381,6 @@
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Web Content Display" />
 		</execute>
-
-		<execute function="Pause" locator1="3000" />
 
 		<execute macro="WebContent#addPGViaWCD">
 			<var name="webContentContent" value="Web Content Content" />
