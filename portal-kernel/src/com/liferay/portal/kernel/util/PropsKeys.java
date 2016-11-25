@@ -693,6 +693,8 @@ public interface PropsKeys {
 
 	public static final String DL_FILE_INDEXING_IGNORE_EXTENSIONS = "dl.file.indexing.ignore.extensions";
 
+	public static final String DL_FILE_INDEXING_INTERVAL = "dl.file.indexing.interval";
+
 	public static final String DL_FILE_INDEXING_MAX_SIZE = "dl.file.indexing.max.size";
 
 	public static final String DL_FILE_MAX_SIZE = "dl.file.max.size";
@@ -2076,6 +2078,8 @@ public interface PropsKeys {
 	public static final String SPRING_HIBERNATE_SESSION_FACTORY = "spring.hibernate.session.factory";
 
 	public static final String SPRING_HIBERNATE_SESSION_FACTORY_PRELOAD_CLASSLOADER_CLASSES = "spring.hibernate.session.factory.preload.classloader.classes";
+
+	public static final String SPRING_HIBERNATE_SESSION_FACTORY_VERIFY = "spring.hibernate.session.factory.verify";
 
 	public static final String SPRING_INFRASTRUCTURE_CONFIGS = "spring.infrastructure.configs";
 

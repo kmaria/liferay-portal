@@ -40,7 +40,7 @@ AUI.add(
 					rangeLastPublishNode: defaultConfig,
 					ratingsNode: defaultConfig,
 					setupNode: defaultConfig,
-					timeZone: STR_EMPTY,
+					timeZoneOffset: 0,
 					userPreferencesNode: defaultConfig
 				},
 
@@ -97,13 +97,21 @@ AUI.add(
 
 						var today = new Date();
 
+						var todayMS = +today;
+
+						var clientTZOffset = today.getTimezoneOffset();
+
+						var serverTZOffset = this.get('timeZoneOffset');
+
+						var adjustedDate = new Date(todayMS + serverTZOffset + (clientTZOffset * 60 * 1000));
+
 						var dateRangeChecker = {
-							todayUsed: today,
+							todayUsed: adjustedDate,
 							validRange: true
 						};
 
 						if (instance._isChecked('rangeDateRangeNode')) {
-							dateRangeChecker.validRange = instance._rangeEndsLater() && instance._rangeEndsInPast(today) && instance._rangeStartsInPast(today);
+							dateRangeChecker.validRange = instance._rangeEndsLater() && instance._rangeEndsInPast(adjustedDate) && instance._rangeStartsInPast(adjustedDate);
 						}
 
 						return dateRangeChecker;

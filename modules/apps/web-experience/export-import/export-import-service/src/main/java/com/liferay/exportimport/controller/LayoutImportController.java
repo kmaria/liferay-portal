@@ -75,7 +75,6 @@ import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.service.persistence.LayoutUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -323,6 +322,12 @@ public class LayoutImportController implements ImportController {
 						layout, false, serviceContext);
 				}
 				catch (NoSuchLayoutException nsle) {
+
+					// LPS-52675
+
+					if (_log.isDebugEnabled()) {
+						_log.debug(nsle, nsle);
+					}
 				}
 			}
 		}
@@ -484,6 +489,12 @@ public class LayoutImportController implements ImportController {
 								layoutPrototypeUuid, companyId);
 				}
 				catch (NoSuchLayoutPrototypeException nslpe) {
+
+					// LPS-52675
+
+					if (_log.isDebugEnabled()) {
+						_log.debug(nslpe, nslpe);
+					}
 				}
 			}
 
@@ -524,6 +535,12 @@ public class LayoutImportController implements ImportController {
 								importedLayoutSetPrototypeUuid, companyId);
 				}
 				catch (NoSuchLayoutSetPrototypeException nslspe) {
+
+					// LPS-52675
+
+					if (_log.isDebugEnabled()) {
+						_log.debug(nslspe, nslspe);
+					}
 				}
 			}
 
@@ -648,7 +665,7 @@ public class LayoutImportController implements ImportController {
 		// Layouts
 
 		Set<Layout> modifiedLayouts = new HashSet<>();
-		List<Layout> previousLayouts = LayoutUtil.findByG_P(
+		List<Layout> previousLayouts = _layoutLocalService.getLayouts(
 			portletDataContext.getGroupId(),
 			portletDataContext.isPrivateLayout());
 
@@ -676,7 +693,7 @@ public class LayoutImportController implements ImportController {
 					continue;
 				}
 
-				Layout sourcePrototypeLayout = LayoutUtil.fetchByUUID_G_P(
+				Layout sourcePrototypeLayout = _layoutLocalService.fetchLayout(
 					sourcePrototypeLayoutUuid, layoutSetPrototype.getGroupId(),
 					true);
 
@@ -920,7 +937,7 @@ public class LayoutImportController implements ImportController {
 				typeSettingsProperties.setProperty(
 					Sites.LAST_MERGE_TIME, String.valueOf(lastMergeTime));
 
-				LayoutUtil.update(layout);
+				_layoutLocalService.updateLayout(layout);
 			}
 
 			// The layout set may be stale because LayoutUtil#update(layout)
@@ -1188,6 +1205,12 @@ public class LayoutImportController implements ImportController {
 			}
 		}
 		catch (PortalException pe) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -1522,6 +1545,13 @@ public class LayoutImportController implements ImportController {
 						layoutSetPrototypeUuid, companyId);
 			}
 			catch (NoSuchLayoutSetPrototypeException nslspe) {
+
+				// LPS-52675
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(nslspe, nslspe);
+				}
+
 				String layoutSetPrototypeName = headerElement.attributeValue(
 					"layout-set-prototype-name");
 
@@ -1551,6 +1581,13 @@ public class LayoutImportController implements ImportController {
 							layoutPrototypeUuid, companyId);
 				}
 				catch (NoSuchLayoutPrototypeException nslpe) {
+
+					// LPS-52675
+
+					if (_log.isDebugEnabled()) {
+						_log.debug(nslpe, nslpe);
+					}
+
 					String layoutPrototypeName = GetterUtil.getString(
 						layoutElement.attributeValue("layout-prototype-name"));
 

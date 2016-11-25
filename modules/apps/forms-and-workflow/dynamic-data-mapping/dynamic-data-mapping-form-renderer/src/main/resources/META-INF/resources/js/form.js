@@ -114,7 +114,9 @@ AUI.add(
 					toJSON: function() {
 						var instance = this;
 
-						var defaultLanguageId = themeDisplay.getLanguageId();
+						var definition = instance.get('definition');
+
+						var defaultLanguageId = definition.defaultLanguageId;
 
 						return {
 							availableLanguageIds: [defaultLanguageId],

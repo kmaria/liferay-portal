@@ -40,7 +40,7 @@ import java.awt.AlphaComposite;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.color.ColorSpace;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.DataBuffer;
@@ -702,21 +702,83 @@ public class ImageToolImpl implements ImageTool {
 
 		BufferedImage originalBufferedImage = getBufferedImage(renderedImage);
 
+		BufferedImage scaledBufferedImage = new BufferedImage(
+			scaledWidth, scaledHeight, originalBufferedImage.getType());
+
+		int originalHeight = originalBufferedImage.getHeight();
+		int originalWidth = originalBufferedImage.getWidth();
+
+		if (((scaledHeight * 2) >= originalHeight) &&
+			((scaledWidth * 2) >= originalWidth)) {
+
+			Graphics2D scaledGraphics2D = scaledBufferedImage.createGraphics();
+
+			scaledGraphics2D.drawImage(
+				originalBufferedImage, 0, 0, scaledWidth, scaledHeight, null);
+
+			scaledGraphics2D.dispose();
+
+			return scaledBufferedImage;
+		}
+
+		BufferedImage tempBufferedImage = new BufferedImage(
+			originalWidth, originalHeight, scaledBufferedImage.getType());
+
+		Graphics2D tempGraphics2D = tempBufferedImage.createGraphics();
+
+		RenderingHints renderingHints = new RenderingHints(
+			RenderingHints.KEY_INTERPOLATION,
+			RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+
+		tempGraphics2D.setRenderingHints(renderingHints);
+
 		ColorModel originalColorModel = originalBufferedImage.getColorModel();
 
-		ColorSpace colorSpace = originalColorModel.getColorSpace();
+		if (originalColorModel.hasAlpha()) {
+			tempGraphics2D.setComposite(AlphaComposite.Src);
+		}
 
-		BufferedImage scaledBufferedImage = new BufferedImage(
-			scaledWidth, scaledHeight, colorSpace.getType());
+		int startHeight = scaledHeight;
+		int startWidth = scaledWidth;
+
+		while ((startHeight < originalHeight) && (startWidth < originalWidth)) {
+			startHeight *= 2;
+			startWidth *= 2;
+		}
+
+		originalHeight = startHeight / 2;
+		originalWidth = startWidth / 2;
+
+		tempGraphics2D.drawImage(
+			originalBufferedImage, 0, 0, originalWidth, originalHeight, null);
+
+		while ((originalHeight >= (scaledHeight * 2)) &&
+			   (originalWidth >= (scaledWidth * 2))) {
+
+			originalHeight /= 2;
+
+			if (originalHeight < scaledHeight) {
+				originalHeight = scaledHeight;
+			}
+
+			originalWidth /= 2;
+
+			if (originalWidth < scaledWidth) {
+				originalWidth = scaledWidth;
+			}
+
+			tempGraphics2D.drawImage(
+				tempBufferedImage, 0, 0, originalWidth, originalHeight, 0, 0,
+				originalWidth * 2, originalHeight * 2, null);
+		}
+
+		tempGraphics2D.dispose();
 
 		Graphics2D scaledGraphics2D = scaledBufferedImage.createGraphics();
 
-		if (originalColorModel.hasAlpha()) {
-			scaledGraphics2D.setComposite(AlphaComposite.Src);
-		}
-
 		scaledGraphics2D.drawImage(
-			originalBufferedImage, 0, 0, scaledWidth, scaledHeight, null);
+			tempBufferedImage, 0, 0, scaledWidth, scaledHeight, 0, 0,
+			originalWidth, originalHeight, null);
 
 		scaledGraphics2D.dispose();
 

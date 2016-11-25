@@ -33,6 +33,10 @@ AUI.add(
 					dataProviders: {
 					},
 
+					defaultLanguageId: {
+						value: themeDisplay.getDefaultLanguageId()
+					},
+
 					definition: {
 						validator: Lang.isObject
 					},
@@ -158,6 +162,7 @@ AUI.add(
 									builder: instance,
 									dataProviders: instance.get('dataProviders'),
 									evaluatorURL: instance.get('evaluatorURL'),
+									locale: instance.get('defaultLanguageId'),
 									portletNamespace: instance.get('portletNamespace'),
 									readOnly: true
 								}

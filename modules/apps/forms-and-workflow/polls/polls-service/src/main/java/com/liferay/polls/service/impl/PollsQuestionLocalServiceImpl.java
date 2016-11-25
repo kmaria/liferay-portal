@@ -56,7 +56,7 @@ public class PollsQuestionLocalServiceImpl
 
 		// Question
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 		long groupId = serviceContext.getScopeGroupId();
 
 		Date expirationDate = null;
@@ -273,7 +273,7 @@ public class PollsQuestionLocalServiceImpl
 
 		// Question
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 
 		Date expirationDate = null;
 
@@ -317,12 +317,12 @@ public class PollsQuestionLocalServiceImpl
 			if (choice == null) {
 				pollsChoiceLocalService.addChoice(
 					userId, questionId, choiceName, choiceDescription,
-					new ServiceContext());
+					serviceContext);
 			}
 			else {
 				pollsChoiceLocalService.updateChoice(
 					choice.getChoiceId(), questionId, choiceName,
-					choiceDescription, new ServiceContext());
+					choiceDescription, serviceContext);
 			}
 		}
 

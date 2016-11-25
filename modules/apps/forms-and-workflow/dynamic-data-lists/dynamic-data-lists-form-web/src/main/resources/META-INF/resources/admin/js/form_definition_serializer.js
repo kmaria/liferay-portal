@@ -3,9 +3,21 @@ AUI.add(
 	function(A) {
 		var FieldTypes = Liferay.DDM.Renderer.FieldTypes;
 
+		var coerceLanguage = Liferay.DDL.FormBuilderUtil.coerceLanguage;
+
 		var DefinitionSerializer = A.Component.create(
 			{
 				ATTRS: {
+					availableLanguageIds: {
+						value: [
+							themeDisplay.getDefaultLanguageId()
+						]
+					},
+
+					defaultLanguageId: {
+						value: themeDisplay.getDefaultLanguageId()
+					},
+
 					fieldHandler: {
 						valueFn: '_valueFieldHandler'
 					},
@@ -28,8 +40,8 @@ AUI.add(
 
 						var definition = A.JSON.stringify(
 							{
-								availableLanguageIds: ['en_US'],
-								defaultLanguageId: 'en_US',
+								availableLanguageIds: instance.get('availableLanguageIds'),
+								defaultLanguageId: instance.get('defaultLanguageId'),
 								fields: instance.get('fields')
 							}
 						);
@@ -46,9 +58,15 @@ AUI.add(
 
 						var fieldType = FieldTypes.get(field.get('type'));
 
+						var builderLanguage = themeDisplay.getDefaultLanguageId();
+
+						var settingsLanguage = themeDisplay.getLanguageId();
+
 						fieldType.get('settings').fields.forEach(
 							function(item, index) {
-								config[item.name] = field.get(item.name);
+								var value = field.get(item.name);
+
+								config[item.name] = coerceLanguage(value, settingsLanguage, builderLanguage);
 							}
 						);
 
@@ -77,6 +95,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['json', 'liferay-ddl-form-builder-layout-visitor', 'liferay-ddm-form-field-types']
+		requires: ['json', 'liferay-ddl-form-builder-layout-visitor', 'liferay-ddl-form-builder-util', 'liferay-ddm-form-field-types']
 	}
 );

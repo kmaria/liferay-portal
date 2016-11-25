@@ -30,12 +30,13 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
@@ -122,6 +123,13 @@ public class DDLFormDisplayContext {
 			_recordSet = _ddlRecordSetService.fetchRecordSet(getRecordSetId());
 		}
 		catch (PortalException pe) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+
 			return null;
 		}
 
@@ -202,8 +210,6 @@ public class DDLFormDisplayContext {
 	protected DDMFormRenderingContext createDDMFormRenderingContext(
 		DDMForm ddmForm) {
 
-		String languageId = ParamUtil.getString(_renderRequest, "languageId");
-
 		DDMFormRenderingContext ddmFormRenderingContext =
 			new DDMFormRenderingContext();
 
@@ -213,8 +219,7 @@ public class DDLFormDisplayContext {
 			PortalUtil.getHttpServletRequest(_renderRequest));
 		ddmFormRenderingContext.setHttpServletResponse(
 			PortalUtil.getHttpServletResponse(_renderResponse));
-		ddmFormRenderingContext.setLocale(
-			LocaleUtil.fromLanguageId(languageId));
+		ddmFormRenderingContext.setLocale(ddmForm.getDefaultLocale());
 		ddmFormRenderingContext.setPortletNamespace(
 			_renderResponse.getNamespace());
 
@@ -392,6 +397,9 @@ public class DDLFormDisplayContext {
 	}
 
 	private static final String _DDM_FORM_FIELD_NAME_CAPTCHA = "_CAPTCHA_";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DDLFormDisplayContext.class);
 
 	private final DDLRecordSetService _ddlRecordSetService;
 	private final DDMFormRenderer _ddmFormRenderer;

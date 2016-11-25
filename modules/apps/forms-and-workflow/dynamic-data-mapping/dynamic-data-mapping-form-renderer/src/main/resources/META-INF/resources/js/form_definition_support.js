@@ -57,12 +57,15 @@ AUI.add(
 				return A.map(
 					definition.fields,
 					function(item) {
+						var definition = instance.get('definition');
+
 						var fieldClass = Util.getFieldClass(item.type);
 
 						return new fieldClass(
 							A.merge(
 								item,
 								{
+									locale: definition.defaultLanguageId,
 									parent: instance,
 									portletNamespace: portletNamespace
 								}
@@ -98,6 +101,7 @@ AUI.add(
 						var config = A.merge(
 							Util.getFieldByKey(definition, name),
 							{
+								locale: definition.defaultLanguageId,
 								parent: instance,
 								portletNamespace: portletNamespace,
 								readOnly: instance.get('readOnly'),

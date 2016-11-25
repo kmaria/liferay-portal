@@ -19,10 +19,6 @@ AUI.add(
 				valueFn: '_valueLayout'
 			},
 
-			locale: {
-				value: themeDisplay.getLanguageId()
-			},
-
 			readOnly: {
 				value: false
 			},
@@ -159,7 +155,9 @@ AUI.add(
 			_normalizeLayoutPage: function(page) {
 				var instance = this;
 
-				var locale = instance.get('locale');
+				var definition = instance.get('definition');
+
+				var locale = definition.defaultLanguageId;
 
 				instance._pageHasRequiredFields = false;
 
