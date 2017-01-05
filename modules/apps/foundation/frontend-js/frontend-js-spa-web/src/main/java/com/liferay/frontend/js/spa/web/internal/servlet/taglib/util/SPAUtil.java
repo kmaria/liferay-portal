@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
@@ -37,7 +38,9 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.lang.reflect.Field;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -55,7 +58,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class SPAUtil {
 
 	public long getCacheExpirationTime(long companyId) {
-		long cacheExpirationTime = -1;
+		long cacheExpirationTime = 0;
 
 		SPAConfiguration spaConfiguration =
 			_spaConfigurationActivator.getSPAConfiguration();
@@ -63,7 +66,7 @@ public class SPAUtil {
 		cacheExpirationTime = GetterUtil.getLong(
 			spaConfiguration.cacheExpirationTime(), cacheExpirationTime);
 
-		if (cacheExpirationTime > -1) {
+		if (cacheExpirationTime > 0) {
 			cacheExpirationTime *= Time.MINUTE;
 		}
 
@@ -71,23 +74,16 @@ public class SPAUtil {
 	}
 
 	public String getExcludedPaths() {
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		return _spaExcludedPaths;
+	}
 
-		String[] excludedPaths = StringUtil.split(
-			SPAConfigurationUtil.get("spa.excluded.paths"));
-
-		for (String excludedPath : excludedPaths) {
-			jsonArray.put(excludedPath);
-		}
-
-		return jsonArray.toString();
+	public ResourceBundle getLanguageResourceBundle(Locale locale) {
+		return ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
 	}
 
 	public String getLoginRedirect(HttpServletRequest request) {
-		String portletNamespace = PortalUtil.getPortletNamespace(
-			PropsUtil.get(PropsKeys.AUTH_LOGIN_PORTLET_NAME));
-
-		return ParamUtil.getString(request, portletNamespace + "redirect");
+		return ParamUtil.getString(request, _redirectParamName);
 	}
 
 	public String getPortletsBlacklist(ThemeDisplay themeDisplay) {
@@ -96,15 +92,40 @@ public class SPAUtil {
 			themeDisplay.getCompanyId());
 
 		for (Portlet portlet : companyPortlets) {
-			if (portlet.isActive() && portlet.isReady() &&
-				!portlet.isUndeployedPortlet() &&
-				!portlet.isSinglePageApplication()) {
+			if (!portlet.isSinglePageApplication() &&
+				!portlet.isUndeployedPortlet() && portlet.isActive() &&
+				portlet.isReady()) {
 
 				jsonObject.put(portlet.getPortletId(), true);
 			}
 		}
 
 		return jsonObject.toString();
+	}
+
+	public int getRequestTimeout() {
+		int requestTimeout = 0;
+
+		SPAConfiguration spaConfiguration =
+			_spaConfigurationActivator.getSPAConfiguration();
+
+		requestTimeout = GetterUtil.getInteger(
+			spaConfiguration.requestTimeout(), requestTimeout);
+
+		return requestTimeout;
+	}
+
+	public int getUserNotificationTimeout() {
+		int userNotificationTimeout = 0;
+
+		SPAConfiguration spaConfiguration =
+			_spaConfigurationActivator.getSPAConfiguration();
+
+		userNotificationTimeout = GetterUtil.getInteger(
+			spaConfiguration.userNotificationTimeout(),
+			userNotificationTimeout);
+
+		return userNotificationTimeout;
 	}
 
 	public String getValidStatusCodes() {
@@ -123,12 +144,15 @@ public class SPAUtil {
 
 		String portletId = request.getParameter("p_p_id");
 
+		if (Validator.isNull(portletId)) {
+			return false;
+		}
+
 		String singlePageApplicationLastPortletId =
 			(String)session.getAttribute(
 				WebKeys.SINGLE_PAGE_APPLICATION_LAST_PORTLET_ID);
 
-		if (Validator.isNotNull(portletId) &&
-			Validator.isNotNull(singlePageApplicationLastPortletId) &&
+		if (Validator.isNotNull(singlePageApplicationLastPortletId) &&
 			!Objects.equals(portletId, singlePageApplicationLastPortletId)) {
 
 			return true;
@@ -162,6 +186,8 @@ public class SPAUtil {
 	}
 
 	private static final String _VALID_STATUS_CODES;
+	private static final String _redirectParamName;
+	private static final String _spaExcludedPaths;
 
 	static {
 		Class<?> clazz = ServletResponseConstants.class;
@@ -177,6 +203,22 @@ public class SPAUtil {
 		}
 
 		_VALID_STATUS_CODES = jsonArray.toJSONString();
+
+		String portletNamespace = PortalUtil.getPortletNamespace(
+			PropsUtil.get(PropsKeys.AUTH_LOGIN_PORTLET_NAME));
+
+		_redirectParamName = portletNamespace.concat("redirect");
+
+		jsonArray = JSONFactoryUtil.createJSONArray();
+
+		String[] excludedPaths = StringUtil.split(
+			SPAConfigurationUtil.get("spa.excluded.paths"));
+
+		for (String excludedPath : excludedPaths) {
+			jsonArray.put(excludedPath);
+		}
+
+		_spaExcludedPaths = jsonArray.toString();
 	}
 
 	private PortletLocalService _portletLocalService;

@@ -205,15 +205,33 @@ if (portletTitleBasedNavigation) {
 						<div>
 
 							<%
-							wikiEngineRenderer.renderEditPageHTML(selectedFormat, pageContext, node, wikiPage);
+							try {
+								if ((templatePage != null) && (wikiPage != null) && wikiPage.isNew()) {
+									wikiEngineRenderer.renderEditPageHTML(selectedFormat, pageContext, node, templatePage);
+								}
+								else {
+									wikiEngineRenderer.renderEditPageHTML(selectedFormat, pageContext, node, wikiPage);
+								}
+							}
+							catch (WikiFormatException wfe) {
+							%>
+
+								<div class="alert alert-danger">
+									<liferay-ui:message key="the-format-of-this-page-is-not-supported-the-page-content-will-be-shown-unformatted" />
+								</div>
+
+								<aui:input name="content" type="textarea" value="<%= wikiPage.getContent() %>" />
+
+							<%
+							}
 							%>
 
 						</div>
 					</aui:fieldset>
 
-					<c:if test="<%= (wikiPage != null) && (wikiPage.getPageId() > 0) %>">
+					<c:if test="<%= ((wikiPage != null) && (wikiPage.getPageId() > 0)) || ((templatePage != null) && WikiNodePermissionChecker.contains(permissionChecker, node.getNodeId(), ActionKeys.ADD_ATTACHMENT)) %>">
 						<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="attachments">
-							<c:if test="<%= WikiNodePermissionChecker.contains(permissionChecker, node.getNodeId(), ActionKeys.ADD_ATTACHMENT) %>">
+							<c:if test="<%= !wikiPage.isNew() && WikiNodePermissionChecker.contains(permissionChecker, node.getNodeId(), ActionKeys.ADD_ATTACHMENT) %>">
 								<liferay-util:include page="/wiki/edit_page_attachment.jsp" servletContext="<%= application %>" />
 							</c:if>
 
@@ -281,6 +299,14 @@ if (portletTitleBasedNavigation) {
 
 									<%
 									}
+
+									if (!formats.contains(selectedFormat)) {
+									%>
+
+										<aui:option label="<%= selectedFormat %>" selected="<%= true %>" value="<%= selectedFormat %>" />
+
+									<%
+									}
 									%>
 
 								</aui:select>
@@ -296,16 +322,16 @@ if (portletTitleBasedNavigation) {
 					</aui:fieldset>
 
 					<c:if test="<%= wikiPage != null %>">
-						<liferay-ui:custom-attributes-available className="<%= WikiPage.class.getName() %>">
+						<liferay-expando:custom-attributes-available className="<%= WikiPage.class.getName() %>">
 							<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="custom-fields">
-								<liferay-ui:custom-attribute-list
+								<liferay-expando:custom-attribute-list
 									className="<%= WikiPage.class.getName() %>"
 									classPK="<%= (templatePage != null) ? templatePage.getPrimaryKey() : wikiPage.getPrimaryKey() %>"
 									editable="<%= true %>"
 									label="<%= true %>"
 								/>
 							</aui:fieldset>
-						</liferay-ui:custom-attributes-available>
+						</liferay-expando:custom-attributes-available>
 					</c:if>
 
 					<c:if test="<%= (wikiPage == null) || wikiPage.isNew() %>">

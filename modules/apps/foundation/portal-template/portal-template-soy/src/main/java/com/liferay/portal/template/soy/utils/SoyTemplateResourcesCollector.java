@@ -62,7 +62,9 @@ public class SoyTemplateResourcesCollector {
 		List<URL> urls = getSoyResourceURLs(_bundle, _templatePath);
 
 		for (URL url : urls) {
-			templateResources.add(new URLTemplateResource(url.getPath(), url));
+			String templateId = getTemplateId(_bundle.getBundleId(), url);
+
+			templateResources.add(new URLTemplateResource(templateId, url));
 		}
 	}
 
@@ -73,14 +75,14 @@ public class SoyTemplateResourcesCollector {
 		BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
 
 		for (BundleWire bundleWire : bundleWiring.getRequiredWires("soy")) {
-			String capabilityPrefix = getCapabilityPrefix(
-				bundleWire.getCapability());
+			Bundle providerBundle = getProviderBundle(bundleWire);
 
 			List<URL> urls = getSoyResourceURLs(
-				getProviderBundle(bundleWire), StringPool.SLASH);
+				providerBundle, StringPool.SLASH);
 
 			for (URL url : urls) {
-				String templateId = getTemplateId(capabilityPrefix, url);
+				String templateId = getTemplateId(
+					providerBundle.getBundleId(), url);
 
 				TemplateResource templateResource =
 					TemplateResourceLoaderUtil.getTemplateResource(
@@ -91,6 +93,10 @@ public class SoyTemplateResourcesCollector {
 		}
 	}
 
+	/**
+	 * @deprecated As of 2.2.0, with no direct replacement
+	 */
+	@Deprecated
 	protected String getCapabilityPrefix(BundleCapability bundleCapability) {
 		Map<String, Object> attributes = bundleCapability.getAttributes();
 
@@ -115,6 +121,15 @@ public class SoyTemplateResourcesCollector {
 		return Collections.list(urls);
 	}
 
+	protected String getTemplateId(long bundleId, URL url) {
+		return String.valueOf(bundleId).concat(
+			TemplateConstants.BUNDLE_SEPARATOR).concat(url.getPath());
+	}
+
+	/**
+	 * @deprecated As of 2.2.0, with no direct replacement
+	 */
+	@Deprecated
 	protected String getTemplateId(String capabilityPrefix, URL url) {
 		return capabilityPrefix.concat(
 			TemplateConstants.BUNDLE_SEPARATOR).concat(url.getPath());

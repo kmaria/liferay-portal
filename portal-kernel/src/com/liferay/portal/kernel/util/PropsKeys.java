@@ -729,6 +729,14 @@ public interface PropsKeys {
 
 	public static final String DL_STORE_ANTIVIRUS_IMPL = "dl.store.antivirus.impl";
 
+	public static final String DL_STORE_FILE_IMPL_SAFE_FILE_NAME_2_AMPERSAND = "dl.store.file.impl.safe.file.name.2.ampersand";
+
+	public static final String DL_STORE_FILE_IMPL_SAFE_FILE_NAME_2_CLOSE_PARENTHESIS = "dl.store.file.impl.safe.file.name.2.close.parenthesis";
+
+	public static final String DL_STORE_FILE_IMPL_SAFE_FILE_NAME_2_OPEN_PARENTHESIS = "dl.store.file.impl.safe.file.name.2.open.parenthesis";
+
+	public static final String DL_STORE_FILE_IMPL_SAFE_FILE_NAME_2_SEMICOLON = "dl.store.file.impl.safe.file.name.2.semicolon";
+
 	public static final String DL_STORE_IMPL = "dl.store.impl";
 
 	public static final String DL_SUBFOLDERS_VISIBLE = "dl.subfolders.visible";
@@ -1307,8 +1315,16 @@ public interface PropsKeys {
 
 	public static final String MESSAGE_BOARDS_USER_RANKS = "message.boards.user.ranks";
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static final String MICROSOFT_TRANSLATOR_CLIENT_ID = "microsoft.translator.client.id";
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static final String MICROSOFT_TRANSLATOR_CLIENT_SECRET = "microsoft.translator.client.secret";
 
 	public static final String MIME_TYPES_CONTENT_DISPOSITION_INLINE = "mime.types.content.disposition.inline";

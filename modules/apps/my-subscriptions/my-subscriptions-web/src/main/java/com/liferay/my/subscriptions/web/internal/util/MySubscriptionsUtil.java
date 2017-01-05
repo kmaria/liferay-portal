@@ -21,6 +21,7 @@ import com.liferay.blogs.kernel.model.BlogsEntry;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.message.boards.kernel.model.MBCategory;
@@ -157,6 +158,13 @@ public class MySubscriptionsUtil {
 
 			return dlFileEntryType.getName(locale);
 		}
+		else if (className.equals(DLFolderConstants.getClassName()) ||
+				 className.equals(Folder.class.getName())) {
+
+			if (group != null) {
+				return LanguageUtil.get(locale, "home");
+			}
+		}
 		else if (className.equals(JournalFolder.class.getName())) {
 			if (group != null) {
 				return LanguageUtil.get(locale, "home");
@@ -199,11 +207,6 @@ public class MySubscriptionsUtil {
 			WikiNode wikiNode = WikiNodeLocalServiceUtil.getWikiNode(classPK);
 
 			return wikiNode.getName();
-		}
-		else if (className.equals(Folder.class.getName())) {
-			if (group != null) {
-				return LanguageUtil.get(locale, "home");
-			}
 		}
 
 		if (group != null) {

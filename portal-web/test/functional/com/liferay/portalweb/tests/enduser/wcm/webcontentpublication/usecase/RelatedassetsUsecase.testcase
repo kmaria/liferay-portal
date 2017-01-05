@@ -1,5 +1,6 @@
 <definition component-name="portal-wcm">
 	<property name="portal.release" value="true" />
+	<property name="portal.upstream" value="true" />
 	<property name="testray.main.component.name" value="Related Assets" />
 
 	<set-up>
@@ -19,7 +20,7 @@
 		</if>
 	</tear-down>
 
-	<command name="AssertRelatedAssetsDisplayWithCategory" priority="4">
+	<command ignore="true" name="AssertRelatedAssetsDisplayWithCategory" priority="4">
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>

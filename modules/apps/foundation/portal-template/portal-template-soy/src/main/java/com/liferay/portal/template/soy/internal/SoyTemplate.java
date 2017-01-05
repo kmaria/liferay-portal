@@ -20,18 +20,22 @@ import com.google.template.soy.SoyFileSet.Builder;
 import com.google.template.soy.data.SanitizedContent;
 import com.google.template.soy.data.SoyMapData;
 import com.google.template.soy.data.UnsafeSanitizedContentOrdainer;
+import com.google.template.soy.msgs.SoyMsgBundle;
 import com.google.template.soy.tofu.SoyTofu;
 import com.google.template.soy.tofu.SoyTofu.Renderer;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
+import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
+import com.liferay.portal.kernel.util.ClassResourceBundleLoader;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.template.AbstractMultiResourceTemplate;
-import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.soy.utils.SoyHTMLContextValue;
 
 import java.io.Reader;
@@ -41,9 +45,16 @@ import java.security.AccessController;
 import java.security.PrivilegedActionException;
 import java.security.PrivilegedExceptionAction;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
+import java.util.Set;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.wiring.BundleWiring;
 
 /**
  * @author Bruno Basto
@@ -53,12 +64,13 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 	public SoyTemplate(
 		List<TemplateResource> templateResources,
 		TemplateResource errorTemplateResource, Map<String, Object> context,
-		TemplateContextHelper templateContextHelper, boolean privileged) {
+		SoyTemplateContextHelper templateContextHelper, boolean privileged) {
 
 		super(
 			templateResources, errorTemplateResource, context,
 			templateContextHelper, TemplateConstants.LANG_TYPE_SOY, 0);
 
+		_templateContextHelper = templateContextHelper;
 		_privileged = privileged;
 	}
 
@@ -89,8 +101,11 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 	protected SoyMapData getSoyMapData() {
 		SoyMapData soyMapData = new SoyMapData();
 
+		Set<String> restrictedVariables =
+			_templateContextHelper.getRestrictedVariables();
+
 		for (String key : context.keySet()) {
-			if (key.equals(TemplateConstants.NAMESPACE)) {
+			if (restrictedVariables.contains(key)) {
 				continue;
 			}
 
@@ -103,7 +118,7 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 					htmlValue.toString(), SanitizedContent.ContentKind.HTML);
 			}
 
-			soyMapData.put(key, value);
+			soyMapData.put(key, _templateContextHelper.deserializeValue(value));
 		}
 
 		return soyMapData;
@@ -168,6 +183,20 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 
 			renderer.setData(getSoyMapData());
 
+			Locale locale = (Locale)get("locale");
+
+			if (locale != null) {
+				SoyMsgBundle soyMsgBundle = soyFileSet.extractMsgs();
+
+				ResourceBundle languageResourceBundle =
+					_getLanguageResourceBundle(locale);
+
+				SoyMsgBundleBridge soyMsgBundleBridge = new SoyMsgBundleBridge(
+					soyMsgBundle, locale, languageResourceBundle);
+
+				renderer.setMsgBundle(soyMsgBundleBridge);
+			}
+
 			boolean renderStrict = GetterUtil.getBoolean(
 				get(TemplateConstants.RENDER_STRICT), true);
 
@@ -185,7 +214,35 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 		}
 	}
 
+	private ResourceBundle _getLanguageResourceBundle(Locale locale) {
+		List<ResourceBundleLoader> resourceBundleLoaders = new ArrayList<>();
+
+		for (TemplateResource templateResource : templateResources) {
+			Bundle templateResourceBundle =
+				_templateContextHelper.getTemplateBundle(
+					templateResource.getTemplateId());
+
+			BundleWiring bundleWiring = templateResourceBundle.adapt(
+				BundleWiring.class);
+
+			resourceBundleLoaders.add(
+				new ClassResourceBundleLoader(
+					"content.Language", bundleWiring.getClassLoader()));
+		}
+
+		resourceBundleLoaders.add(LanguageUtil.getPortalResourceBundleLoader());
+
+		AggregateResourceBundleLoader aggregateResourceBundleLoader =
+			new AggregateResourceBundleLoader(
+				resourceBundleLoaders.toArray(
+					new ResourceBundleLoader[resourceBundleLoaders.size()]));
+
+		return aggregateResourceBundleLoader.loadResourceBundle(
+			LanguageUtil.getLanguageId(locale));
+	}
+
 	private final boolean _privileged;
+	private final SoyTemplateContextHelper _templateContextHelper;
 
 	private class TemplatePrivilegedExceptionAction
 		implements PrivilegedExceptionAction<SoyFileSet> {

@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -49,6 +50,8 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.announcements.service.base.AnnouncementsEntryLocalServiceBaseImpl;
 import com.liferay.util.ContentUtil;
 
+import java.io.Serializable;
+
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -57,6 +60,7 @@ import java.util.Locale;
 /**
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
+ * @author Roberto Díaz
  */
 public class AnnouncementsEntryLocalServiceImpl
 	extends AnnouncementsEntryLocalServiceBaseImpl {
@@ -64,31 +68,13 @@ public class AnnouncementsEntryLocalServiceImpl
 	@Override
 	public AnnouncementsEntry addEntry(
 			long userId, long classNameId, long classPK, String title,
-			String content, String url, String type, int displayDateMonth,
-			int displayDateDay, int displayDateYear, int displayDateHour,
-			int displayDateMinute, boolean displayImmediately,
-			int expirationDateMonth, int expirationDateDay,
-			int expirationDateYear, int expirationDateHour,
-			int expirationDateMinute, int priority, boolean alert)
+			String content, String url, String type, Date displayDate,
+			Date expirationDate, int priority, boolean alert)
 		throws PortalException {
 
 		// Entry
 
 		User user = userPersistence.findByPrimaryKey(userId);
-
-		Date displayDate = new Date();
-
-		if (!displayImmediately) {
-			displayDate = PortalUtil.getDate(
-				displayDateMonth, displayDateDay, displayDateYear,
-				displayDateHour, displayDateMinute, user.getTimeZone(),
-				EntryDisplayDateException.class);
-		}
-
-		Date expirationDate = PortalUtil.getDate(
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, user.getTimeZone(),
-			EntryExpirationDateException.class);
 
 		validate(title, content, url, displayDate, expirationDate);
 
@@ -121,6 +107,43 @@ public class AnnouncementsEntryLocalServiceImpl
 			false, false);
 
 		return entry;
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #addEntry(long, long, long,
+	 *             String, String, String, String, Date, Date, int, boolean)}
+	 */
+	@Deprecated
+	@Override
+	public AnnouncementsEntry addEntry(
+			long userId, long classNameId, long classPK, String title,
+			String content, String url, String type, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, boolean displayImmediately,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, int priority, boolean alert)
+		throws PortalException {
+
+		User user = userPersistence.findByPrimaryKey(userId);
+
+		Date displayDate = new Date();
+
+		if (!displayImmediately) {
+			displayDate = PortalUtil.getDate(
+				displayDateMonth, displayDateDay, displayDateYear,
+				displayDateHour, displayDateMinute, user.getTimeZone(),
+				EntryDisplayDateException.class);
+		}
+
+		Date expirationDate = PortalUtil.getDate(
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, user.getTimeZone(),
+			EntryExpirationDateException.class);
+
+		return addEntry(
+			userId, classNameId, classPK, title, content, url, type,
+			displayDate, expirationDate, priority, alert);
 	}
 
 	@Override
@@ -307,6 +330,11 @@ public class AnnouncementsEntryLocalServiceImpl
 		return announcementsEntryPersistence.countByUserId(userId);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, String,
+	 *             String, String, String, Date, Date, int)}
+	 */
+	@Deprecated
 	@Override
 	public AnnouncementsEntry updateEntry(
 			long userId, long entryId, String title, String content, String url,
@@ -334,6 +362,17 @@ public class AnnouncementsEntryLocalServiceImpl
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, user.getTimeZone(),
 			EntryExpirationDateException.class);
+
+		return updateEntry(
+			entryId, title, content, url, type, displayDate, expirationDate,
+			priority);
+	}
+
+	@Override
+	public AnnouncementsEntry updateEntry(
+			long entryId, String title, String content, String url, String type,
+			Date displayDate, Date expirationDate, int priority)
+		throws PortalException {
 
 		validate(title, content, url, displayDate, expirationDate);
 
@@ -546,13 +585,22 @@ public class AnnouncementsEntryLocalServiceImpl
 			"[$ENTRY_CONTENT$]", entry.getContent(), false);
 		subscriptionSender.setContextAttributes(
 			"[$ENTRY_ID$]", entry.getEntryId(), "[$ENTRY_TITLE$]",
-			entry.getTitle(), "[$ENTRY_TYPE$]",
-			LanguageUtil.get(locale, entry.getType()), "[$ENTRY_URL$]",
-			entry.getUrl(), "[$PORTLET_NAME$]",
-			LanguageUtil.get(
-				locale, entry.isAlert() ? "alert" : "announcement"));
+			entry.getTitle(), "[$ENTRY_URL$]", entry.getUrl());
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
+
+		EntryTypeSerializableFunction entryTypeSerializableFunction =
+			new EntryTypeSerializableFunction(entry);
+
+		subscriptionSender.setLocalizedContextAttribute(
+			"[$ENTRY_TYPE$]", entryTypeSerializableFunction);
+
+		PortletNameSerializableFunction portletNameSerializableFunction =
+			new PortletNameSerializableFunction(entry);
+
+		subscriptionSender.setLocalizedContextAttribute(
+			"[$PORTLET_NAME$]", portletNameSerializableFunction);
+
 		subscriptionSender.setMailId("announcements_entry", entry.getEntryId());
 
 		String portletId = PortletProviderUtil.getPortletId(
@@ -601,5 +649,38 @@ public class AnnouncementsEntryLocalServiceImpl
 		AnnouncementsEntryLocalServiceImpl.class);
 
 	private Date _previousCheckDate;
+
+	private static class EntryTypeSerializableFunction
+		implements Function<Locale, String>, Serializable {
+
+		public EntryTypeSerializableFunction(AnnouncementsEntry entry) {
+			_entry = entry;
+		}
+
+		@Override
+		public String apply(Locale locale) {
+			return LanguageUtil.get(locale, _entry.getType());
+		}
+
+		private final AnnouncementsEntry _entry;
+
+	}
+
+	private static class PortletNameSerializableFunction
+		implements Function<Locale, String>, Serializable {
+
+		public PortletNameSerializableFunction(AnnouncementsEntry entry) {
+			_entry = entry;
+		}
+
+		@Override
+		public String apply(Locale locale) {
+			return LanguageUtil.get(
+				locale, _entry.isAlert() ? "alert" : "announcement");
+		}
+
+		private final AnnouncementsEntry _entry;
+
+	}
 
 }

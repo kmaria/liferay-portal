@@ -1,5 +1,6 @@
 <definition component-name="portal-user-interface">
 	<property name="portal.release" value="true" />
+	<property name="portal.upstream" value="true" />
 	<property name="testray.main.component.name" value="User Interface" />
 
 	<var name="pageName" value="CKEditor Page" />
@@ -38,6 +39,7 @@
 		</execute>
 
 		<execute macro="Blogs#addEntryWithUploadedCoverImage">
+			<var name="coverImageName" value="Document_1" />
 			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entrySubtitle" value="Blogs Entry Subtitle" />
 			<var name="entryTitle" value="Blogs Entry Title" />
@@ -45,7 +47,9 @@
 			<var name="uploadFileName" value="Document_1.jpg" />
 		</execute>
 
-		<execute macro="BlogsEntry#saveAsDraftAndWait" />
+		<execute function="Pause" locator1="10000" />
+
+		<execute macro="BlogsEntry#saveAsDraft" />
 
 		<execute function="Click" locator1="BlogsEditEntry#DELETE_COVER_IMAGE_BUTTON" />
 
@@ -58,6 +62,8 @@
 		<execute macro="ItemSelector#selectBlogImage">
 			<var name="imageFileName" value="Document_1.jpg" />
 		</execute>
+
+		<execute function="Pause" locator1="10000" />
 
 		<execute macro="PortletEntry#publish" />
 

@@ -1,5 +1,6 @@
 <definition component-name="portal-test-plugins">
 	<property name="portal.release" value="true" />
+	<property name="portal.upstream" value="true" />
 	<property name="testray.main.component.name" value="Test Plugins" />
 	<property name="portlet.plugins.includes" value="sample-service-builder-portlet" />
 
@@ -24,6 +25,8 @@
 			<var name="portletName" value="Sample Service Builder" />
 		</execute>
 
-		<execute macro="TestSearchPaginationPortlet#search50Results" />
+		<execute macro="TestSearchPaginationPortlet#search15Results">
+			<var name="itemsPerPage" value="5" />
+		</execute>
 	</command>
 </definition>

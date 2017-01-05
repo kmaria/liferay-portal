@@ -1,5 +1,6 @@
 <definition component-name="portal-search-ee">
 	<property name="portal.release" value="true" />
+	<property name="portal.upstream" value="true" />
 	<property name="test.run.environment" value="EE" />
 	<property name="testray.main.component.name" value="Elastic Search Impl" />
 
@@ -114,11 +115,13 @@
 
 		<!-- Verify the total number of Elasticsearch replicas has decreased to one -->
 
-		<execute macro="Elasticsearch#viewReplicaRemovedInConsole" />
+		<!-- LRQA-28998 -->
 
-		<execute macro="Elasticsearch#viewClusterStatusViaClusterHealthAPI">
+		<!-- <execute macro="Elasticsearch#viewReplicaRemovedInConsole" /> -->
+
+		<!-- <execute macro="Elasticsearch#viewClusterStatusViaClusterHealthAPI">
 			<var name="numberOfNodes" value="1" />
-		</execute>
+		</execute> -->
 
 		<!-- Verify search functionality after a replica has been removed -->
 
