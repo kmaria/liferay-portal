@@ -1,0 +1,12 @@
+before_script:
+- export OPTS="-Xmx2048m -XX:MaxPermSize=512m"
+- export JAVA_OPTS="${JAVA_OPTS} ${OPTS}"
+- export ANT_OPTS="${ANT_OPTS} ${OPTS}"
+
+language: java
+ 
+install: true
+ 
+jdk: oraclejdk8
+ 
+script: "ant test-unit"
