@@ -433,7 +433,9 @@ public class BlogsEntryLocalServiceTest {
 				_user.getCompanyId(), _group.getGroupId(), new Date(),
 				_statusInTrashQueryDefinition);
 
-		Assert.assertEquals(initialCount + 1, groupsEntriesInTrash.size());
+		Assert.assertEquals(
+			groupsEntriesInTrash.toString(), initialCount + 1,
+			groupsEntriesInTrash.size());
 
 		for (BlogsEntry groupsEntry : groupsEntriesInTrash) {
 			Assert.assertEquals(
@@ -480,7 +482,7 @@ public class BlogsEntryLocalServiceTest {
 		List<BlogsEntry> entries =
 			BlogsEntryLocalServiceUtil.getNoAssetEntries();
 
-		Assert.assertEquals(1, entries.size());
+		Assert.assertEquals(entries.toString(), 1, entries.size());
 		Assert.assertEquals(entry, entries.get(0));
 	}
 
@@ -642,7 +644,8 @@ public class BlogsEntryLocalServiceTest {
 			BlogsEntryLocalServiceUtil.getCompanyEntries(
 				_user.getCompanyId(), new Date(), queryDefinition);
 
-		Assert.assertEquals(initialCount + 1, actualEntries.size());
+		Assert.assertEquals(
+			actualEntries.toString(), initialCount + 1, actualEntries.size());
 
 		assertBlogsEntriesStatus(actualEntries, statusInTrash);
 	}
@@ -707,7 +710,8 @@ public class BlogsEntryLocalServiceTest {
 				_group.getGroupId(), queryDefinition);
 		}
 
-		Assert.assertEquals(initialCount + 1, actualEntries.size());
+		Assert.assertEquals(
+			actualEntries.toString(), initialCount + 1, actualEntries.size());
 
 		assertBlogsEntriesStatus(actualEntries, statusInTrash);
 	}
@@ -776,7 +780,8 @@ public class BlogsEntryLocalServiceTest {
 				_group.getGroupId(), _user.getUserId(), new Date(),
 				queryDefinition);
 
-		Assert.assertEquals(initialCount + 1, actualEntries.size());
+		Assert.assertEquals(
+			actualEntries.toString(), initialCount + 1, actualEntries.size());
 
 		assertBlogsEntriesStatus(actualEntries, statusInTrash);
 	}
@@ -815,24 +820,26 @@ public class BlogsEntryLocalServiceTest {
 			queryDefinition = _statusAnyQueryDefinition;
 		}
 
-		Organization organization = OrganizationTestUtil.addOrganization();
+		_organization = OrganizationTestUtil.addOrganization();
 
-		User user = UserTestUtil.addOrganizationOwnerUser(organization);
+		_organizationUser = UserTestUtil.addOrganizationOwnerUser(
+			_organization);
 
 		List<BlogsEntry> initialEntries =
 			BlogsEntryLocalServiceUtil.getOrganizationEntries(
-				organization.getOrganizationId(), new Date(), queryDefinition);
+				_organization.getOrganizationId(), new Date(), queryDefinition);
 
 		int initialCount = initialEntries.size();
 
-		addEntry(user.getUserId(), false);
-		addEntry(user.getUserId(), true);
+		addEntry(_organizationUser.getUserId(), false);
+		addEntry(_organizationUser.getUserId(), true);
 
 		List<BlogsEntry> actualEntries =
 			BlogsEntryLocalServiceUtil.getOrganizationEntries(
-				organization.getOrganizationId(), new Date(), queryDefinition);
+				_organization.getOrganizationId(), new Date(), queryDefinition);
 
-		Assert.assertEquals(initialCount + 1, actualEntries.size());
+		Assert.assertEquals(
+			actualEntries.toString(), initialCount + 1, actualEntries.size());
 
 		assertBlogsEntriesStatus(actualEntries, statusInTrash);
 	}
@@ -847,20 +854,21 @@ public class BlogsEntryLocalServiceTest {
 			queryDefinition = _statusAnyQueryDefinition;
 		}
 
-		Organization organization = OrganizationTestUtil.addOrganization();
+		_organization = OrganizationTestUtil.addOrganization();
 
-		User user = UserTestUtil.addOrganizationOwnerUser(organization);
+		_organizationUser = UserTestUtil.addOrganizationOwnerUser(
+			_organization);
 
 		int initialCount =
 			BlogsEntryLocalServiceUtil.getOrganizationEntriesCount(
-				organization.getOrganizationId(), new Date(), queryDefinition);
+				_organization.getOrganizationId(), new Date(), queryDefinition);
 
-		addEntry(user.getUserId(), false);
-		addEntry(user.getUserId(), true);
+		addEntry(_organizationUser.getUserId(), false);
+		addEntry(_organizationUser.getUserId(), true);
 
 		int actualCount =
 			BlogsEntryLocalServiceUtil.getOrganizationEntriesCount(
-				organization.getOrganizationId(), new Date(), queryDefinition);
+				_organization.getOrganizationId(), new Date(), queryDefinition);
 
 		Assert.assertEquals(initialCount + 1, actualCount);
 	}
@@ -878,16 +886,22 @@ public class BlogsEntryLocalServiceTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
+	@DeleteAfterTestRun
+	private Organization _organization;
+
+	@DeleteAfterTestRun
+	private User _organizationUser;
+
 	private final QueryDefinition<BlogsEntry> _statusAnyQueryDefinition =
-		new QueryDefinition<BlogsEntry>(
+		new QueryDefinition<>(
 			WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			null);
 	private final QueryDefinition<BlogsEntry> _statusApprovedQueryDefinition =
-		new QueryDefinition<BlogsEntry>(
+		new QueryDefinition<>(
 			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	private final QueryDefinition<BlogsEntry> _statusInTrashQueryDefinition =
-		new QueryDefinition<BlogsEntry>(
+		new QueryDefinition<>(
 			WorkflowConstants.STATUS_IN_TRASH, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	private User _user;

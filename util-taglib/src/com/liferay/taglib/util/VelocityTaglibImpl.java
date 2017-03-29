@@ -34,7 +34,6 @@ import com.liferay.taglib.portletext.RuntimeTag;
 import com.liferay.taglib.security.DoAsURLTag;
 import com.liferay.taglib.security.PermissionsURLTag;
 import com.liferay.taglib.servlet.PipingPageContext;
-import com.liferay.taglib.theme.LayoutIconTag;
 import com.liferay.taglib.theme.MetaTagsTag;
 import com.liferay.taglib.theme.WrapPortletTag;
 import com.liferay.taglib.ui.AssetCategoriesSummaryTag;
@@ -544,7 +543,7 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 
 	@Override
 	public void layoutIcon(Layout layout) throws Exception {
-		LayoutIconTag.doTag(layout, _servletContext, _request, _response);
+		com.liferay.taglib.theme.LayoutIconTag.doTag(layout, _pageContext);
 	}
 
 	@Override

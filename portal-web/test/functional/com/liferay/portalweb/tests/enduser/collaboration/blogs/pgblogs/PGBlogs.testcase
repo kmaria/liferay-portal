@@ -93,9 +93,7 @@
 		</for>
 	</command>
 
-	<command name="AddBlogsEntry" priority="5">
-		<property name="portal.acceptance" value="true" />
-
+	<command name="AddBlogsEntry" priority="4">
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Blogs Page" />
 		</execute>
@@ -116,9 +114,7 @@
 		</execute>
 	</command>
 
-	<command name="AddBlogsEntryComment" priority="5">
-		<property name="portal.acceptance" value="true" />
-
+	<command name="AddBlogsEntryComment" priority="4">
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Blogs Page" />
 		</execute>
@@ -291,7 +287,7 @@
 		</execute>
 	</command>
 
-	<!-- <command name="AddBlogsEntryWithSamePageScope" priority="4">
+	<command name="AddBlogsEntryWithSamePageScope" priority="4">
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />
 			<var name="siteName" value="${siteName}" />
@@ -428,7 +424,7 @@
 		<execute macro="Portlet#viewTitle">
 			<var name="portletName" value="Blogs" />
 		</execute>
-	</command> -->
+	</command>
 
 	<command name="AddBlogsEntryWithSubtitle" priority="4">
 		<execute macro="Navigator#gotoPage">
@@ -1122,6 +1118,131 @@
 		</for>
 	</command>
 
+	<command name="SignInToAddAndReplyToBlogsEntryComment" priority="4">
+		<property name="portal.release" value="false" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Blogs Page" />
+		</execute>
+
+		<execute macro="Blogs#addEntry">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Blogs Page" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoEntryPG">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="BlogsEntryComment#signInToCommentPG">
+			<var name="entryComment" value="Blogs Entry Comment" />
+			<var name="entryType" value="comment" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Blogs Page" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoEntryPG">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="BlogsEntryComment#viewPG">
+			<var name="commentCount" value="1" />
+			<var name="entryComment" value="Blogs Entry Comment" />
+			<var name="userFullName" value="userfn userln (You)" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Blogs Page" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoEntryPG">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="BlogsEntryComment#viewPG">
+			<var name="commentCount" value="1" />
+			<var name="entryComment" value="Blogs Entry Comment" />
+			<var name="userFullName" value="userfn userln" />
+		</execute>
+
+		<execute macro="BlogsEntryComment#signInToCommentPG">
+			<var name="entryComment" value="Reply Comment" />
+			<var name="entryType" value="reply" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Blogs Page" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoEntryPG">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="BlogsEntryComment#viewPG">
+			<var name="commentCount" value="2" />
+			<var name="entryComment" value="Reply Comment" />
+			<var name="userFullName" value="Test Test (You)" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Blogs Page" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoEntryPG">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="BlogsEntryComment#viewPG">
+			<var name="commentCount" value="2" />
+			<var name="entryComment" value="Reply Comment" />
+			<var name="userFullName" value="Test Test" />
+		</execute>
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+	</command>
+
 	<command name="SubscribeToBlogsEntryComment" priority="3">
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Blogs Page" />
@@ -1149,7 +1270,7 @@
 		<execute macro="BlogsEntryComment#viewSubscribedPG" />
 	</command>
 
-	<command name="UserFlagsEntryAndAdminViewsNotificationInMockMock" priority="4">
+	<command ignore="true" name="UserFlagsEntryAndAdminViewsNotificationInMockMock" priority="4">
 		<property name="test.smtp.server.enabled" value="true" />
 
 		<execute macro="TestCase#getSiteName">
@@ -1282,6 +1403,8 @@
 	</command>
 
 	<command name="ViewBlogsEntryCommentAsGuest" priority="4">
+		<property name="portal.upstream" value="false" />
+
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Blogs Page" />
 		</execute>
@@ -1428,6 +1551,61 @@
 		</execute>
 	</command>
 
+	<command name="ViewBlogsEntryPermissionsPagination" priority="4">
+		<description message="This is a use case for LPS-70269." />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Blogs Page" />
+		</execute>
+
+		<execute macro="Blogs#addEntry">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Blogs Page" />
+		</execute>
+
+		<execute macro="PermissionsInline#gotoBlogsEntryPG" />
+
+		<execute macro="PermissionsInline#viewPermissionsRemoved">
+			<var name="permissionDefinitionKey" value="CONFIGURATION_PERMISSIONS_ADD_DISCUSSION_CHECKBOX" />
+			<var name="roleName" value="Power User" />
+		</execute>
+
+		<execute macro="PermissionsInline#viewPermissionsChecked">
+			<var name="permissionDefinitionKey" value="CONFIGURATION_PERMISSIONS_ADD_DISCUSSION_CHECKBOX" />
+			<var name="roleName" value="Site Member" />
+		</execute>
+
+		<execute macro="PermissionsInline#viewPermissionsRemoved">
+			<var name="permissionDefinitionKey" value="CONFIGURATION_PERMISSIONS_ADD_DISCUSSION_CHECKBOX" />
+			<var name="roleName" value="User" />
+		</execute>
+
+		<execute macro="Pagination#changePagination">
+			<var name="itemsPerPage" value="5" />
+		</execute>
+
+		<execute macro="PermissionsInline#viewPermissionsRemoved">
+			<var name="permissionDefinitionKey" value="CONFIGURATION_PERMISSIONS_ADD_DISCUSSION_CHECKBOX" />
+			<var name="roleName" value="Power User" />
+		</execute>
+
+		<execute macro="PermissionsInline#viewPermissionsChecked">
+			<var name="permissionDefinitionKey" value="CONFIGURATION_PERMISSIONS_ADD_DISCUSSION_CHECKBOX" />
+			<var name="roleName" value="Site Member" />
+		</execute>
+
+		<execute macro="Pagination#clickNextPage" />
+
+		<execute macro="PermissionsInline#viewPermissionsRemoved">
+			<var name="permissionDefinitionKey" value="CONFIGURATION_PERMISSIONS_ADD_DISCUSSION_CHECKBOX" />
+			<var name="roleName" value="User" />
+		</execute>
+	</command>
+
 	<command name="ViewBlogsEntryRSS" priority="4">
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />
@@ -1442,6 +1620,8 @@
 			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
+
+		<execute function="Pause" locator1="3000" />
 
 		<execute macro="BlogsEntry#viewRSS">
 			<var name="entryContent" value="Blogs Entry Content" />

@@ -15,6 +15,7 @@
 package com.liferay.document.library.item.selector.web.internal.file;
 
 import com.liferay.document.library.item.selector.web.internal.BaseDLItemSelectorView;
+import com.liferay.document.library.item.selector.web.internal.constants.DLItemSelectorViewConstants;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
@@ -25,16 +26,16 @@ import com.liferay.portal.kernel.util.ListUtil;
 import java.util.Collections;
 import java.util.List;
 
-import javax.servlet.ServletContext;
-
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Roberto Díaz
  */
 @Component(
-	property = {"item.selector.view.order:Integer=100"},
+	property = {
+		"item.selector.view.key=" + DLItemSelectorViewConstants.DL_FILE_ITEM_SELECTOR_VIEW_KEY,
+		"item.selector.view.order:Integer=100"
+	},
 	service = ItemSelectorView.class
 )
 public class DLFileItemSelectorView
@@ -48,15 +49,6 @@ public class DLFileItemSelectorView
 	@Override
 	public List<ItemSelectorReturnType> getSupportedItemSelectorReturnTypes() {
 		return _supportedItemSelectorReturnTypes;
-	}
-
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.document.library.item.selector.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
 	}
 
 	private static final List<ItemSelectorReturnType>

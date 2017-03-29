@@ -1,8 +1,9 @@
 <definition component-name="portal-document-management-ee">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
 	<property name="cmis.repository.type" value="documentum6" />
 	<property name="custom.properties" value="session.store.password=true${line.separator}company.security.auth.type=screenName" />
+	<property name="osgi.app.includes" value="documentum" />
+	<property name="portal.release" value="true" />
+	<property name="portal.upstream" value="true" />
 	<property name="test.run.environment" value="EE" />
 	<property name="testray.main.component.name" value="Documents Management" />
 
@@ -354,6 +355,59 @@
 
 		<execute macro="DMDocument#cancelCheckoutCP">
 			<var name="dmRepositoryName" value="true" />
+		</execute>
+	</command>
+
+	<command name="DeleteCheckedoutDocument" priority="5">
+		<description message="This is a use case for LPS-68454" />
+
+		<execute macro="DMRepository#gotoCP">
+			<var name="dmRepositoryName" value="Documentum Repository Name" />
+		</execute>
+
+		<execute macro="DMDocument#addCP">
+			<var name="dmDocumentFile" value="Document_3.txt" />
+			<var name="dmDocumentTitle" value="Document_3.txt" />
+		</execute>
+
+		<execute macro="DMDocument#checkoutCP">
+			<var name="dmDocumentTitle" value="Document_3.txt" />
+			<var name="dmRepositoryName" value="true" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMRepository#gotoCP">
+			<var name="dmRepositoryName" value="Documentum Repository Name" />
+		</execute>
+
+		<execute macro="DMDocument#viewIconLockedCP">
+			<var name="dmDocumentTitle" value="Document_3.txt" />
+		</execute>
+
+		<execute macro="DMDocument#deleteCP">
+			<var name="dmDocumentTitle" value="Document_3.txt" />
+			<var name="recycleBinDisabled" value="true" />
+		</execute>
+
+		<execute function="AssertConsoleTextNotPresent" value1="Cannot prune sysobject Document_3.txt version tree since one or more of its versions are locked." />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMRepository#gotoCP">
+			<var name="dmRepositoryName" value="Documentum Repository Name" />
+		</execute>
+
+		<execute macro="DMDocument#cannotViewCP">
+			<var name="dmDocumentTitle" value="Document_3.txt" />
 		</execute>
 	</command>
 

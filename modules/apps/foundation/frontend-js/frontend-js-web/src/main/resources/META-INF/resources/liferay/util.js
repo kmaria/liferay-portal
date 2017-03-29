@@ -689,6 +689,18 @@
 			return Util.listCheckboxesExcept(form, except, name, false);
 		},
 
+		normalizeFriendlyURL: function(text) {
+			var newText = text.replace(/[^a-zA-Z0-9_-]/g, '-');
+
+			if (newText[0] === '-') {
+				newText = newText.replace(/^-+/, '');
+			}
+
+			newText = newText.replace(/--+/g, '-');
+
+			return newText.toLowerCase();
+		},
+
 		ns: function(namespace, obj) {
 			var instance = this;
 
@@ -1158,6 +1170,8 @@
 				Util.submitForm(form);
 
 				form.attr('target', '');
+
+				Util._submitLocked = null;
 			}
 		},
 
@@ -1267,6 +1281,8 @@
 			}
 
 			iframeBody.addClass(dialog.iframeConfig.bodyCssClass);
+
+			event.win.focus();
 
 			var detachEventHandles = function() {
 				AArray.invoke(eventHandles, 'detach');
@@ -1850,7 +1866,7 @@
 		DROP_POSITION: 450,
 		MENU: 5000,
 		OVERLAY: 1000,
-		POPOVER: 1060,
+		POPOVER: 1600,
 		TOOLTIP: 10000,
 		WINDOW: 1200
 	};

@@ -24,6 +24,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.portal.kernel.exception.BulkException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -34,9 +35,15 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.Node;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.XPath;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -117,32 +124,25 @@ public class JournalArticleExportImportContentProcessor
 			return content;
 		}
 
-		StringBuilder sb = new StringBuilder(content);
+		Document document = SAXReaderUtil.read(content);
 
-		int beginPos = 0;
-		int endPos = 0;
+		XPath xPath = SAXReaderUtil.createXPath(
+			"//dynamic-element[@type='ddm-journal-article']");
 
-		while (true) {
-			beginPos = sb.indexOf(_DDM_JOURNAL_ARTICLE_TYPE, endPos);
+		List<Node> ddmJournalArticleNodes = xPath.selectNodes(document);
 
-			if (beginPos == -1) {
-				break;
-			}
+		for (Node ddmJournalArticleNode : ddmJournalArticleNodes) {
+			Element ddmJournalArticleElement = (Element)ddmJournalArticleNode;
 
-			endPos = beginPos;
+			List<Element> dynamicContentElements =
+				ddmJournalArticleElement.elements("dynamic-content");
 
-			while (true) {
-				beginPos = sb.indexOf(_CDATA_BEGIN, endPos);
+			for (Element dynamicContentElement : dynamicContentElements) {
+				String jsonData = dynamicContentElement.getStringValue();
 
-				if (beginPos == -1) {
-					break;
+				if (jsonData.equals(StringPool.BLANK)) {
+					continue;
 				}
-
-				beginPos += _CDATA_BEGIN.length();
-
-				endPos = sb.indexOf(_CDATA_END, beginPos);
-
-				String jsonData = sb.substring(beginPos, endPos);
 
 				JSONObject jsonObject = _jsonFactory.createJSONObject(jsonData);
 
@@ -179,9 +179,9 @@ public class JournalArticleExportImportContentProcessor
 							journalArticleReference);
 				}
 
-				sb.replace(beginPos, endPos, journalArticleReference);
+				dynamicContentElement.clearContent();
 
-				endPos = beginPos + journalArticleReference.length();
+				dynamicContentElement.addCDATA(journalArticleReference);
 
 				if (exportReferencedContent) {
 					StagedModelDataHandlerUtil.exportReferenceStagedModel(
@@ -199,7 +199,7 @@ public class JournalArticleExportImportContentProcessor
 			}
 		}
 
-		return sb.toString();
+		return document.asXML();
 	}
 
 	protected String replaceImportJournalArticleReferences(
@@ -258,74 +258,79 @@ public class JournalArticleExportImportContentProcessor
 			long groupId, String content)
 		throws PortalException {
 
-		StringBuilder sb = new StringBuilder(content);
-
-		int beginPos = 0;
-		int endPos = 0;
-
 		List<Throwable> throwables = new ArrayList<>();
 
-		while (true) {
-			beginPos = sb.indexOf(_DDM_JOURNAL_ARTICLE_TYPE, endPos);
+		try {
+			Document document = SAXReaderUtil.read(content);
 
-			if (beginPos == -1) {
-				break;
-			}
+			XPath xPath = SAXReaderUtil.createXPath(
+				"//dynamic-element[@type='ddm-journal-article']");
 
-			endPos = beginPos;
+			List<Node> ddmJournalArticleNodes = xPath.selectNodes(document);
 
-			while (true) {
-				beginPos = sb.indexOf(_CDATA_BEGIN, endPos);
+			for (Node ddmJournalArticleNode : ddmJournalArticleNodes) {
+				Element ddmJournalArticleElement =
+					(Element)ddmJournalArticleNode;
 
-				if (beginPos == -1) {
-					break;
-				}
+				List<Element> dynamicContentElements =
+					ddmJournalArticleElement.elements("dynamic-content");
 
-				beginPos += _CDATA_BEGIN.length();
+				for (Element dynamicContentElement : dynamicContentElements) {
+					String json = dynamicContentElement.getStringValue();
 
-				endPos = sb.indexOf(_CDATA_END, beginPos);
+					if (Validator.isNull(json)) {
+						if (_log.isDebugEnabled()) {
+							_log.debug(
+								"No journal article reference is specified");
+						}
 
-				String json = sb.substring(beginPos, endPos);
-
-				if (Validator.isNull(json)) {
-					if (_log.isDebugEnabled()) {
-						_log.debug("No journal article reference is specified");
+						continue;
 					}
 
-					continue;
+					JSONObject jsonObject = null;
+
+					try {
+						jsonObject = _jsonFactory.createJSONObject(json);
+					}
+					catch (JSONException jsone) {
+						_log.debug(jsone, jsone);
+
+						continue;
+					}
+
+					if (!jsonObject.has("classPK")) {
+						continue;
+					}
+
+					long classPK = GetterUtil.getLong(
+						jsonObject.get("classPK"));
+
+					JournalArticle journalArticle =
+						_journalArticleLocalService.fetchLatestArticle(classPK);
+
+					if (journalArticle == null) {
+						Throwable throwable = new NoSuchArticleException(
+							"No JournalArticle exists with the key " +
+								"{resourcePrimKey=" + classPK + "}");
+
+						throwables.add(throwable);
+					}
 				}
-
-				JSONObject jsonObject = _jsonFactory.createJSONObject(json);
-
-				long classPK = GetterUtil.getLong(jsonObject.get("classPK"));
-
-				JournalArticle journalArticle =
-					_journalArticleLocalService.fetchLatestArticle(classPK);
-
-				if (journalArticle == null) {
-					Throwable throwable = new NoSuchArticleException(
-						"No JournalArticle exists with the key " +
-							"{resourcePrimKey=" + classPK + "}");
-
-					throwables.add(throwable);
-				}
+			}
+		}
+		catch (DocumentException de) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Invalid content:\n" + content);
 			}
 		}
 
 		if (!throwables.isEmpty()) {
 			throw new PortalException(
 				new BulkException(
-					"Unable to validate jounral article references",
+					"Unable to validate journal article references",
 					throwables));
 		}
 	}
-
-	private static final String _CDATA_BEGIN = "<![CDATA[";
-
-	private static final String _CDATA_END = "]]>";
-
-	private static final String _DDM_JOURNAL_ARTICLE_TYPE =
-		"type=\"ddm-journal-article\"";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalArticleExportImportContentProcessor.class);

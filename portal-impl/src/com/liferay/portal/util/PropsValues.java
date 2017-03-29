@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Time;
 
 /**
@@ -143,6 +144,8 @@ public class PropsValues {
 	public static final int AUTH_TOKEN_LENGTH = GetterUtil.getInteger(PropsUtil.get(PropsKeys.AUTH_TOKEN_LENGTH));
 
 	public static final String AUTH_TOKEN_SHARED_SECRET = PropsUtil.get(PropsKeys.AUTH_TOKEN_SHARED_SECRET);
+
+	public static final boolean AUTH_USER_UUID_STORE_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.AUTH_USER_UUID_STORE_ENABLED));
 
 	public static final boolean AUTO_DEPLOY_COPY_COMMONS_LOGGING = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.AUTO_DEPLOY_COPY_COMMONS_LOGGING));
 
@@ -489,6 +492,8 @@ public class PropsValues {
 	public static final boolean DL_FILE_ENTRY_PREVIEW_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.DL_FILE_ENTRY_PREVIEW_ENABLED));
 
 	public static final boolean DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED));
+
+	public static final String[] DL_FILE_ENTRY_PREVIEW_GENERATION_DECRYPT_PASSWORDS_PDFBOX = PropsUtil.getArray(PropsKeys.DL_FILE_ENTRY_PREVIEW_GENERATION_DECRYPT_PASSWORDS_PDFBOX);
 
 	public static final long DL_FILE_ENTRY_PREVIEW_GENERATION_TIMEOUT_GHOSTSCRIPT = GetterUtil.getLong(PropsUtil.get(PropsKeys.DL_FILE_ENTRY_PREVIEW_GENERATION_TIMEOUT_GHOSTSCRIPT));
 
@@ -962,6 +967,8 @@ public class PropsValues {
 
 	public static final String MODULE_FRAMEWORK_STATE_DIR = PropsUtil.get(PropsKeys.MODULE_FRAMEWORK_STATE_DIR);
 
+	public static final String[] MODULE_FRAMEWORK_STATIC_JARS = PropsUtil.getArray(PropsKeys.MODULE_FRAMEWORK_STATIC_JARS);
+
 	public static final long MODULE_FRAMEWORK_STOP_WAIT_TIMEOUT = GetterUtil.getLong(PropsUtil.get(PropsKeys.MODULE_FRAMEWORK_STOP_WAIT_TIMEOUT));
 
 	public static final String[] MODULE_FRAMEWORK_SYSTEM_PACKAGES_EXTRA = PropsUtil.getArray(PropsKeys.MODULE_FRAMEWORK_SYSTEM_PACKAGES_EXTRA);
@@ -1392,6 +1399,8 @@ public class PropsValues {
 
 	public static final boolean SESSION_TIMEOUT_AUTO_EXTEND = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.SESSION_TIMEOUT_AUTO_EXTEND));
 
+	public static final int SESSION_TIMEOUT_AUTO_EXTEND_OFFSET = GetterUtil.getInteger(PropsUtil.get(PropsKeys.SESSION_TIMEOUT_AUTO_EXTEND_OFFSET));
+
 	public static final boolean SESSION_TIMEOUT_REDIRECT_ON_EXPIRE = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.SESSION_TIMEOUT_REDIRECT_ON_EXPIRE));
 
 	public static final int SESSION_TIMEOUT_WARNING = GetterUtil.getInteger(PropsUtil.get(PropsKeys.SESSION_TIMEOUT_WARNING));
@@ -1574,6 +1583,8 @@ public class PropsValues {
 
 	public static final boolean USERS_IMAGE_CHECK_TOKEN = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.USERS_IMAGE_CHECK_TOKEN));
 
+	public static final boolean USERS_IMAGE_DEFAULT_USE_INITIALS = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.USERS_IMAGE_DEFAULT_USE_INITIALS));
+
 	public static int USERS_IMAGE_MAX_HEIGHT = GetterUtil.getInteger(PropsUtil.get(PropsKeys.USERS_IMAGE_MAX_HEIGHT));
 
 	public static int USERS_IMAGE_MAX_WIDTH = GetterUtil.getInteger(PropsUtil.get(PropsKeys.USERS_IMAGE_MAX_WIDTH));
@@ -1691,6 +1702,16 @@ public class PropsValues {
 
 		if (!LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED) {
 			LAYOUT_USER_PUBLIC_LAYOUTS_AUTO_CREATE = false;
+		}
+
+		for (int i = 0; i < LOGIN_FORM_NAVIGATION_POST.length; i++) {
+			LOGIN_FORM_NAVIGATION_POST[i] = TextFormatter.format(
+				LOGIN_FORM_NAVIGATION_POST[i], TextFormatter.N);
+		}
+
+		for (int i = 0; i < LOGIN_FORM_NAVIGATION_PRE.length; i++) {
+			LOGIN_FORM_NAVIGATION_PRE[i] = TextFormatter.format(
+				LOGIN_FORM_NAVIGATION_PRE[i], TextFormatter.N);
 		}
 	}
 

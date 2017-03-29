@@ -43,8 +43,8 @@ page import="com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil" %
 page import="com.liferay.asset.kernel.service.AssetVocabularyServiceUtil" %><%@
 page import="com.liferay.document.library.kernel.model.DLFileEntry" %><%@
 page import="com.liferay.document.library.kernel.util.DLUtil" %><%@
-page import="com.liferay.expando.kernel.model.ExpandoBridge" %><%@
 page import="com.liferay.exportimport.kernel.staging.LayoutStagingUtil" %><%@
+page import="com.liferay.exportimport.kernel.staging.StagingUtil" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.bean.BeanPropertiesUtil" %><%@
 page import="com.liferay.portal.kernel.cal.Recurrence" %><%@
@@ -163,7 +163,6 @@ page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.util.comparator.PortletCategoryComparator" %><%@
 page import="com.liferay.portal.kernel.util.comparator.PortletTitleComparator" %><%@
-page import="com.liferay.portal.kernel.webserver.WebServerServletTokenUtil" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
 page import="com.liferay.portal.model.impl.*" %><%@
 page import="com.liferay.portal.plugin.PluginUtil" %><%@
@@ -252,3 +251,5 @@ page import="javax.portlet.WindowState" %>
 <liferay-theme:defineObjects />
 
 <%@ include file="/html/common/init-ext.jsp" %>
+
+<%@ include file="/html/common/init-compat.jsp" %>

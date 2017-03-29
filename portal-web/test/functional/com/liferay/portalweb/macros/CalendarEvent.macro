@@ -206,7 +206,7 @@
 					<var name="eventType" value="${eventType}" />
 					<var name="startDate" value="${startDate}" />
 					<var name="startDateTime" value="${startDateTime}" />
-					<var name="user" value="${user}" />
+					<var name="userFullName" value="${userFullName}" />
 				</execute>
 			</then>
 		</if>
@@ -366,15 +366,17 @@
 			<then>
 				<for list="${eventCommentList}" param="eventComment">
 					<var name="key_entryComment" value="${eventComment}" />
+					<var name="key_userFullName" value="${userFullName}" />
 
-					<execute function="AssertTextEquals" locator1="Comments#USER_NAME" value1="${user} (You)" />
+					<execute function="AssertTextEquals" locator1="Comments#USER_NAME" value1="${userFullName}" />
 					<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY_SPECIFIC" value1="${eventComment}" />
 				</for>
 			</then>
 			<else>
 				<var name="key_entryComment" value="${eventComment}" />
+				<var name="key_userFullName" value="${userFullName}" />
 
-				<execute function="AssertTextEquals" locator1="Comments#USER_NAME" value1="${user} (You)" />
+				<execute function="AssertTextEquals" locator1="Comments#USER_NAME" value1="${userFullName}" />
 				<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY_SPECIFIC" value1="${eventComment}" />
 			</else>
 		</if>
@@ -620,7 +622,9 @@
 
 		<execute macro="CalendarEvent#selectEventIframe" />
 
-		<execute function="Type" locator1="TextInput#TITLE" value1="${eventTitle}" />
+		<execute macro="PortletEntry#inputTitle">
+			<var name="title" value="${eventTitle}" />
+		</execute>
 
 		<execute macro="CalendarEvent#_viewNewEventIframe" />
 
@@ -959,6 +963,19 @@
 
 		<execute function="Confirm#waitForConfirmation" value1="Deleting this event will cancel the meeting with your guests. Would you like to delete?" />
 
+		<var method="selenium#getCurrentDayName()" name="currentDay" />
+		<var method="selenium#getCurrentHour()" name="currentHour" />
+
+		<if>
+			<and>
+				<equals arg1="${currentDay}" arg2="Saturday" />
+				<equals arg1="${currentHour}" arg2="22" />
+			</and>
+			<then>
+				<execute function="Refresh" />
+			</then>
+		</if>
+
 		<execute macro="CalendarScheduler#viewSpecificEventNotPresent">
 			<var name="eventTitle" value="${eventTitle}" />
 		</execute>
@@ -1027,7 +1044,9 @@
 
 				<execute function="AssertTextEquals" locator1="TextInput#TITLE" value1="${eventTitle}" />
 
-				<execute function="Type" locator1="TextInput#TITLE" value1="${eventTitleEdit}" />
+				<execute macro="PortletEntry#inputTitle">
+					<var name="title" value="${eventTitleEdit}" />
+				</execute>
 
 				<execute function="AssertElementPresent" locator1="CalendarEditEvent#START_DATE" />
 				<execute function="AssertElementPresent" locator1="CalendarEditEvent#END_DATE" />
@@ -1047,7 +1066,9 @@
 				<then>
 					<execute function="AssertTextEquals" locator1="TextInput#TITLE" value1="${eventTitle}" />
 
-					<execute function="Type" locator1="TextInput#TITLE" value1="${eventTitleEdit}" />
+					<execute macro="PortletEntry#inputTitle">
+						<var name="title" value="${eventTitleEdit}" />
+					</execute>
 
 					<execute function="AssertElementPresent" locator1="CalendarEditEvent#START_DATE" />
 					<execute function="AssertElementPresent" locator1="CalendarEditEvent#START_DATE_TIME" />
@@ -1083,7 +1104,9 @@
 				<then>
 					<execute function="AssertTextEquals" locator1="TextInput#TITLE" value1="${eventTitle}" />
 
-					<execute function="Type" locator1="TextInput#TITLE" value1="${eventTitleEdit}" />
+					<execute macro="PortletEntry#inputTitle">
+						<var name="title" value="${eventTitleEdit}" />
+					</execute>
 
 					<execute function="AssertElementPresent" locator1="CalendarEditEvent#START_DATE" />
 					<execute function="AssertElementPresent" locator1="CalendarEditEvent#START_DATE_TIME" />
@@ -1189,7 +1212,9 @@
 	</command>
 
 	<command name="editTitle">
-		<execute function="Type" locator1="TextInput#TITLE" value1="${eventTitle}" />
+		<execute macro="PortletEntry#inputTitle">
+			<var name="title" value="${eventTitle}" />
+		</execute>
 	</command>
 
 	<command name="editViaAgendaView">
@@ -1231,7 +1256,9 @@
 
 		<execute function="AssertTextEquals" locator1="TextInput#TITLE" value1="${eventTitle}" />
 
-		<execute function="Type" locator1="TextInput#TITLE" value1="${eventTitleEdit}" />
+		<execute macro="PortletEntry#inputTitle">
+			<var name="title" value="${eventTitleEdit}" />
+		</execute>
 
 		<execute function="AssertElementPresent" locator1="CalendarEditEvent#START_DATE" />
 		<execute function="AssertElementPresent" locator1="CalendarEditEvent#START_DATE_TIME" />
@@ -1746,15 +1773,17 @@
 			<then>
 				<for list="${eventCommentList}" param="eventComment">
 					<var name="key_entryComment" value="${eventComment}" />
+					<var name="key_userFullName" value="${userFullName}" />
 
-					<execute function="AssertTextEquals" locator1="Comments#USER_NAME" value1="${user} (You)" />
+					<execute function="AssertTextEquals" locator1="Comments#USER_NAME" value1="${userFullName}" />
 					<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY_SPECIFIC" value1="${eventComment}" />
 				</for>
 			</then>
 			<else>
 				<var name="key_entryComment" value="${eventComment}" />
+				<var name="key_userFullName" value="${userFullName}" />
 
-				<execute function="AssertTextEquals" locator1="Comments#USER_NAME" value1="${user} (You)" />
+				<execute function="AssertTextEquals" locator1="Comments#USER_NAME" value1="${userFullName}" />
 				<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY_SPECIFIC" value1="${eventComment}" />
 			</else>
 		</if>
@@ -1955,6 +1984,11 @@
 		</execute>
 
 		<execute function="AssertClick" locator1="Calendar#CURRENT_SITE_CALENDARS_CALENDAR" value1="${siteCalendarName}" />
+	</command>
+
+	<command name="viewNoRepeating">
+		<execute function="AssertNotVisible" locator1="CalendarEditEvent#REPEAT_SUMMARY" />
+		<execute function="AssertNotChecked" locator1="CalendarEditEvent#REPEAT_CHECKBOX" />
 	</command>
 
 	<command name="viewNoUserInviteWithUnapprovedWorkflow">

@@ -25,6 +25,12 @@ public class JournalServiceConfigurationValues {
 		JournalServiceConfigurationUtil.getArray(
 			JournalServiceConfigurationKeys.CHAR_BLACKLIST);
 
+	public static final boolean FETCH_LATEST_ARTICLE_WITH_PAGINATION =
+		GetterUtil.getBoolean(
+			JournalServiceConfigurationUtil.get(
+				JournalServiceConfigurationKeys.
+					FETCH_LATEST_ARTICLE_WITH_PAGINATION));
+
 	public static final int JOURNAL_ARTICLE_CHECK_INTERVAL =
 		GetterUtil.getInteger(
 			JournalServiceConfigurationUtil.get(
@@ -79,6 +85,10 @@ public class JournalServiceConfigurationValues {
 				JournalServiceConfigurationKeys.
 					JOURNAL_FOLDER_ICON_CHECK_COUNT));
 
+	/**
+	 * @deprecated As of 3.6.0, with no direct replacement
+	 */
+	@Deprecated
 	public static final String LAR_CREATION_STRATEGY =
 		JournalServiceConfigurationUtil.get(
 			JournalServiceConfigurationKeys.LAR_CREATION_STRATEGY);

@@ -1117,6 +1117,12 @@ public class PortalUtil {
 		return getPortal().getLayoutFriendlyURL(layout, themeDisplay, locale);
 	}
 
+	public static String getLayoutFriendlyURL(ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		return getPortal().getLayoutFriendlyURL(themeDisplay);
+	}
+
 	public static LayoutFriendlyURLComposite getLayoutFriendlyURLComposite(
 			long groupId, boolean privateLayout, String friendlyURL,
 			Map<String, String[]> params, Map<String, Object> requestContext)
@@ -1708,6 +1714,26 @@ public class PortalUtil {
 
 		return getPortal().getSiteAdministrationURL(
 			portletResponse, themeDisplay, portletName);
+	}
+
+	public static String getSiteAdminURL(
+			Company company, Group group, String ppid,
+			Map<String, String[]> params)
+		throws PortalException {
+
+		return getPortal().getSiteAdminURL(company, group, ppid, params);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getSiteAdminURL(Company, Group, String, Map)}
+	 */
+	@Deprecated
+	public static String getSiteAdminURL(
+			Group group, String ppid, Map<String, String[]> params)
+		throws PortalException {
+
+		return getPortal().getSiteAdminURL(group, ppid, params);
 	}
 
 	/**

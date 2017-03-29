@@ -20,7 +20,7 @@ Here are some of the types of changes documented in this file:
   replaces an old API, in spite of the old API being kept in Liferay Portal for
   backwards compatibility.
 
-*This document has been reviewed through commit `66199bf`.*
+*This document has been reviewed through commit `16080bf`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -4150,7 +4150,7 @@ addition, this change avoids future security issues from outdated flash movies.
 
 #### What changed?
 
-All Journal portlet properties have been moved to an OSGI configuration.
+All Journal portlet properties have been moved to an OSGi configuration.
 
 #### Who is affected?
 
@@ -4213,6 +4213,32 @@ Content application.
 
 ---------------------------------------
 
+### Deprecated the liferay-ui:captcha Tag and Replaced with liferay-captcha:captcha
+- **Date:** 2016-Nov-29
+- **JIRA Ticket:** LPS-69383
+
+#### What changed?
+
+The `liferay-ui:captcha` tag has been deprecated and replaced with the
+`liferay-captcha:captcha` tag.
+
+#### Who is affected?
+
+Plugins or templates that are using the `liferay-ui:captcha` tag need to update
+their usage of the tag.
+
+#### How should I update my code?
+
+You should import the `liferay-captcha` tag library (if necessary) and update
+the tag namespace from `liferay-ui:captcha` to `liferay-captcha:captcha`.
+
+#### Why was this change made?
+
+This change was made as a part of the ongoing strategy to modularize Liferay
+Portal by means of an OSGi container.
+
+---------------------------------------
+
 ### Moved Shopping File Uploads Portlet Properties to OSGi Configuration
 - **Date:** 2016-Dec-08
 - **JIRA Ticket:** LPS-69210
@@ -4220,8 +4246,8 @@ Content application.
 #### What changed?
 
 The Shopping file uploads portlet properties have been moved from Server
-Administration to an OSGI configuration named `ShoppingFileUploadsConfiguration`
-in the `shopping-api` module.
+Administration to an OSGi configuration named
+`ShoppingFileUploadsConfiguration.java` in the `shopping-api` module.
 
 #### Who is affected?
 
@@ -4236,7 +4262,7 @@ This affects anyone who is using the following portlet properties:
 
 Instead of overriding the `portal.properties` file, you can manage the
 properties from Portal's configuration administrator. This can be accessed by
-navigating to Liferay's Control Panel &rarr; *Configuration* &rarr; *System
+navigating to Liferay's *Control Panel* &rarr; *Configuration* &rarr; *System
 Settings* &rarr; *Shopping Cart Images* and editing the settings there.
 
 If you would like to include the new configuration in your application, follow
@@ -4280,5 +4306,29 @@ the tag namespace from `liferay-ui` to `liferay-expando`:
 
 This change was made as part of the ongoing strategy to modularize Liferay
 Portal by means of an OSGi container.
+
+---------------------------------------
+
+### Deprecated the aui:tool Tag with No Direct Replacement
+- **Date:** 2017-Feb-02
+- **JIRA Ticket:** LPS-70422
+
+#### What changed?
+
+The `aui:tool` tag has been deprecated with no direct replacement.
+
+#### Who is affected?
+
+Plugins or templates that are using the `aui:tool` tag must remove their usage
+of the tag.
+
+#### How should I update my code?
+
+There is no direct replacement. You should remove all usages of the `aui:tool`
+tag.
+
+#### Why was this change made?
+
+This change was made as a part of the ongoing strategy to deprecate unused tags.
 
 ---------------------------------------

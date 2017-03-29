@@ -159,6 +159,8 @@ public interface PropsKeys {
 
 	public static final String AUTH_TOKEN_SHARED_SECRET = "auth.token.shared.secret";
 
+	public static final String AUTH_USER_UUID_STORE_ENABLED = "auth.user.uuid.store.enabled";
+
 	public static final String AUTH_VERIFIER = "auth.verifier.";
 
 	public static final String AUTH_VERIFIER_PIPELINE = "auth.verifier.pipeline";
@@ -633,6 +635,8 @@ public interface PropsKeys {
 
 	public static final String DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED = "dl.file.entry.preview.fork.process.enabled";
 
+	public static final String DL_FILE_ENTRY_PREVIEW_GENERATION_DECRYPT_PASSWORDS_PDFBOX = "dl.file.entry.preview.generation.decrypt.passwords.pdfbox";
+
 	public static final String DL_FILE_ENTRY_PREVIEW_GENERATION_TIMEOUT_GHOSTSCRIPT = "dl.file.entry.preview.generation.timeout.ghostscript";
 
 	public static final String DL_FILE_ENTRY_PREVIEW_GENERATION_TIMEOUT_PDFBOX = "dl.file.entry.preview.generation.timeout.pdfbox";
@@ -1013,6 +1017,8 @@ public interface PropsKeys {
 
 	public static final String JSONWS_WEB_SERVICE_STRICT_HTTP_METHOD = "jsonws.web.service.strict.http.method";
 
+	public static final String JSP_PAGE_CONTEXT_FORCE_GET_ATTRIBUTE = "jsp.page.context.force.get.attribute";
+
 	public static final String JSP_WRITER_BUFFER_SIZE = "jsp.writer.buffer.size";
 
 	public static final String LAYOUT_AJAX_RENDER_ENABLE = "layout.ajax.render.enable";
@@ -1384,6 +1390,8 @@ public interface PropsKeys {
 	public static final String MODULE_FRAMEWORK_SERVICES_IGNORED_INTERFACES = "module.framework.services.ignored.interfaces";
 
 	public static final String MODULE_FRAMEWORK_STATE_DIR = "module.framework.state.dir";
+
+	public static final String MODULE_FRAMEWORK_STATIC_JARS = "module.framework.static.jars";
 
 	public static final String MODULE_FRAMEWORK_STOP_WAIT_TIMEOUT = "module.framework.stop.wait.timeout";
 
@@ -1915,6 +1923,8 @@ public interface PropsKeys {
 
 	public static final String SESSION_TIMEOUT_AUTO_EXTEND = "session.timeout.auto.extend";
 
+	public static final String SESSION_TIMEOUT_AUTO_EXTEND_OFFSET = "session.timeout.auto.extend.offset";
+
 	public static final String SESSION_TIMEOUT_REDIRECT_ON_EXPIRE = "session.timeout.redirect.on.expire";
 
 	public static final String SESSION_TIMEOUT_WARNING = "session.timeout.warning";
@@ -2281,6 +2291,8 @@ public interface PropsKeys {
 	public static final String USERS_FULL_NAME_VALIDATOR = "users.full.name.validator";
 
 	public static final String USERS_IMAGE_CHECK_TOKEN = "users.image.check.token";
+
+	public static final String USERS_IMAGE_DEFAULT_USE_INITIALS = "users.image.default.use.initials";
 
 	public static final String USERS_IMAGE_MAX_HEIGHT = "users.image.max.height";
 

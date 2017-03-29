@@ -32,6 +32,7 @@ import com.liferay.source.formatter.util.ThreadSafeClassLibrary;
 import com.thoughtworks.qdox.JavaDocBuilder;
 import com.thoughtworks.qdox.model.DefaultDocletTagFactory;
 import com.thoughtworks.qdox.model.JavaMethod;
+import com.thoughtworks.qdox.parser.ParseException;
 
 import java.io.File;
 
@@ -333,7 +334,12 @@ public class JavaClass {
 		JavaDocBuilder javaDocBuilder = new JavaDocBuilder(
 			new DefaultDocletTagFactory(), new ThreadSafeClassLibrary());
 
-		javaDocBuilder.addSource(_file);
+		try {
+			javaDocBuilder.addSource(_file);
+		}
+		catch (ParseException pe) {
+			return;
+		}
 
 		com.thoughtworks.qdox.model.JavaClass javaClass =
 			javaDocBuilder.getClassByName(getClassName());
@@ -905,16 +911,6 @@ public class JavaClass {
 
 			checkTestAnnotations(javaTerm);
 		}
-
-		String javaTermContent = javaTerm.getContent();
-
-		String newJavaTermContent = _javaSourceProcessor.formatAnnotations(
-			_fileName, javaTerm.getName(), javaTermContent, _indent, true);
-
-		if (!javaTermContent.equals(newJavaTermContent)) {
-			_classContent = _classContent.replace(
-				javaTermContent, newJavaTermContent);
-		}
 	}
 
 	protected String getAccessModifier() {
@@ -1176,13 +1172,15 @@ public class JavaClass {
 				}
 
 				javaTermName = (String)tuple.getObject(0);
+				javaTermType = (Integer)tuple.getObject(1);
 
-				if (!Validator.isVariableName(javaTermName)) {
+				if ((javaTermType != JavaTerm.TYPE_STATIC_BLOCK) &&
+					!Validator.isVariableName(javaTermName)) {
+
 					return Collections.emptySet();
 				}
 
 				javaTermStartPosition = javaTermEndPosition;
-				javaTermType = (Integer)tuple.getObject(1);
 
 				lastCommentOrAnnotationPos = -1;
 			}
@@ -1518,7 +1516,9 @@ public class JavaClass {
 			while (javaTermsIterator.hasNext()) {
 				JavaTerm javaTerm = javaTermsIterator.next();
 
-				if (!javaTerm.isStatic() || !javaTerm.isVariable()) {
+				if (!javaTerm.isStatic() ||
+					(!javaTerm.isClass() && !javaTerm.isVariable())) {
+
 					continue;
 				}
 
@@ -1548,8 +1548,7 @@ public class JavaClass {
 		String javaTermName = javaTerm.getName();
 
 		if (_javaSourceProcessor.isExcludedPath(
-				javaTermSortExcludesProperty, _absolutePath, -1,
-				javaTermName)) {
+				javaTermSortExcludesProperty, _absolutePath, javaTermName)) {
 
 			return;
 		}

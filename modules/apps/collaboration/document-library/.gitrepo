@@ -2,8 +2,10 @@
 ; Do not manually edit this file.
 ;
 [subrepo]
+	autopull = false
 	cmdver = liferay
-	commit = 9fc36db806878089462f5fdcb754da9885124e3c
+	commit = 3961b9ee3c35a7e54274ffa9fce104f16e23ab81
+	mergebuttonmergecommits = false
 	mode = push
-	parent = c629a48a2dfacf2a9589006c83aef450eda9ac7e
+	parent = a7aec3ce4c599b8f1166f52b9a77e3fbd2e49621
 	remote = git@github.com:liferay/com-liferay-document-library.git

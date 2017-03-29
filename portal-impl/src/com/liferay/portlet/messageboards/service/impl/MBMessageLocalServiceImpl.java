@@ -34,6 +34,7 @@ import com.liferay.message.boards.kernel.model.MBThreadConstants;
 import com.liferay.message.boards.kernel.util.comparator.MessageCreateDateComparator;
 import com.liferay.message.boards.kernel.util.comparator.MessageThreadComparator;
 import com.liferay.portal.kernel.comment.Comment;
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -379,17 +380,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		mbMessagePersistence.update(message);
 
-		// Attachments
-
-		if (ListUtil.isNotEmpty(inputStreamOVPs)) {
-			Folder folder = message.addAttachmentsFolder();
-
-			PortletFileRepositoryUtil.addPortletFileEntries(
-				message.getGroupId(), userId, MBMessage.class.getName(),
-				message.getMessageId(), MBConstants.SERVICE_NAME,
-				folder.getFolderId(), inputStreamOVPs);
-		}
-
 		// Resources
 
 		if ((parentMessageId !=
@@ -417,6 +407,17 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				addMessageResources(
 					message, serviceContext.getModelPermissions());
 			}
+		}
+
+		// Attachments
+
+		if (ListUtil.isNotEmpty(inputStreamOVPs)) {
+			Folder folder = message.addAttachmentsFolder();
+
+			PortletFileRepositoryUtil.addPortletFileEntries(
+				message.getGroupId(), userId, MBMessage.class.getName(),
+				message.getMessageId(), MBConstants.SERVICE_NAME,
+				folder.getFolderId(), inputStreamOVPs);
 		}
 
 		// Asset
@@ -1249,7 +1250,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 
 		return new MBMessageDisplayImpl(
-			message, parentMessage, category, thread, status, this, comparator);
+			userId, message, parentMessage, category, thread, status, this,
+			comparator);
 	}
 
 	/**
@@ -1348,6 +1350,29 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		else {
 			return mbMessagePersistence.findByT_S(threadId, status, start, end);
 		}
+	}
+
+	@Override
+	public List<MBMessage> getThreadMessages(
+		long userId, long threadId, int status, int start, int end,
+		Comparator<MBMessage> comparator) {
+
+		QueryDefinition<MBMessage> queryDefinition = new QueryDefinition<>(
+			status, userId, true, start, end, null);
+
+		if (comparator instanceof OrderByComparator) {
+			queryDefinition.setOrderByComparator(
+				(OrderByComparator<MBMessage>)comparator);
+		}
+
+		List<MBMessage> messages = mbMessageFinder.findByThreadId(
+			threadId, queryDefinition);
+
+		if (!(comparator instanceof OrderByComparator)) {
+			messages = ListUtil.sort(messages, comparator);
+		}
+
+		return messages;
 	}
 
 	@Override
@@ -1981,11 +2006,14 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		subject = HtmlUtil.extractText(body);
 
-		if (subject.length() <= 50) {
+		if (subject.length() <= MBMessageConstants.MESSAGE_SUBJECT_MAX_LENGTH) {
 			return subject;
 		}
 
-		return subject.substring(50) + StringPool.TRIPLE_PERIOD;
+		String subjectSubstring = subject.substring(
+			0, MBMessageConstants.MESSAGE_SUBJECT_MAX_LENGTH);
+
+		return subjectSubstring + StringPool.TRIPLE_PERIOD;
 	}
 
 	protected String getMessageURL(
@@ -2022,11 +2050,13 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				"message_boards/view_message/" + message.getMessageId();
 		}
 		else {
+			Group group = groupLocalService.fetchGroup(message.getGroupId());
+
 			portletId = PortletProviderUtil.getPortletId(
 				MBMessage.class.getName(), PortletProvider.Action.MANAGE);
 
 			PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-				request, portletId, PortletRequest.RENDER_PHASE);
+				request, group, portletId, 0, 0, PortletRequest.RENDER_PHASE);
 
 			portletURL.setParameter(
 				"mvcRenderCommandName", "/message_boards/view_message");

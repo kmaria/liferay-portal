@@ -14,7 +14,7 @@
 
 package com.liferay.journal.service.persistence.impl;
 
-import com.liferay.journal.configuration.JournalServiceConfigurationValues;
+import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.exception.NoSuchArticleException;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.impl.JournalArticleImpl;
@@ -28,7 +28,10 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarUtil;
@@ -116,9 +119,7 @@ public class JournalArticleFinderImpl
 			titles = CustomSQLUtil.keywords(keywords);
 			descriptions = CustomSQLUtil.keywords(keywords, false);
 
-			if (JournalServiceConfigurationValues.
-					JOURNAL_ARTICLE_DATABASE_KEYWORD_SEARCH_CONTENT) {
-
+			if (isdatabaseContentKeywordSearchEnabled(companyId)) {
 				contents = CustomSQLUtil.keywords(keywords, false);
 			}
 		}
@@ -241,9 +242,7 @@ public class JournalArticleFinderImpl
 			titles = CustomSQLUtil.keywords(keywords);
 			descriptions = CustomSQLUtil.keywords(keywords, false);
 
-			if (JournalServiceConfigurationValues.
-					JOURNAL_ARTICLE_DATABASE_KEYWORD_SEARCH_CONTENT) {
-
+			if (isdatabaseContentKeywordSearchEnabled(companyId)) {
 				contents = CustomSQLUtil.keywords(keywords, false);
 			}
 		}
@@ -367,9 +366,7 @@ public class JournalArticleFinderImpl
 			titles = CustomSQLUtil.keywords(keywords);
 			descriptions = CustomSQLUtil.keywords(keywords, false);
 
-			if (JournalServiceConfigurationValues.
-					JOURNAL_ARTICLE_DATABASE_KEYWORD_SEARCH_CONTENT) {
-
+			if (isdatabaseContentKeywordSearchEnabled(companyId)) {
 				contents = CustomSQLUtil.keywords(keywords, false);
 			}
 		}
@@ -539,9 +536,7 @@ public class JournalArticleFinderImpl
 			titles = CustomSQLUtil.keywords(keywords);
 			descriptions = CustomSQLUtil.keywords(keywords, false);
 
-			if (JournalServiceConfigurationValues.
-					JOURNAL_ARTICLE_DATABASE_KEYWORD_SEARCH_CONTENT) {
-
+			if (isdatabaseContentKeywordSearchEnabled(companyId)) {
 				contents = CustomSQLUtil.keywords(keywords, false);
 			}
 		}
@@ -1544,6 +1539,26 @@ public class JournalArticleFinderImpl
 		return articles.get(0);
 	}
 
+	protected boolean isdatabaseContentKeywordSearchEnabled(long companyId) {
+		JournalServiceConfiguration journalServiceConfiguration = null;
+
+		try {
+			journalServiceConfiguration =
+				ConfigurationProviderUtil.getCompanyConfiguration(
+					JournalServiceConfiguration.class, companyId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		if (journalServiceConfiguration == null) {
+			return false;
+		}
+
+		return
+			journalServiceConfiguration.databaseContentKeywordSearchEnabled();
+	}
+
 	protected boolean isNullArray(Object[] array) {
 		if (ArrayUtil.isEmpty(array)) {
 			return true;
@@ -1624,5 +1639,8 @@ public class JournalArticleFinderImpl
 
 	private static final String _DDM_TEMPLATE_KEY_SQL =
 		"(JournalArticle.DDMTemplateKey LIKE ? [$AND_OR_NULL_CHECK$]) ";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		JournalArticleFinderImpl.class);
 
 }

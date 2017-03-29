@@ -1726,6 +1726,7 @@ public class VerifyProperties extends VerifyProcess {
 		"com.liferay.portal.servlet.filters.charbufferpool." +
 			"CharBufferPoolFilter",
 		"com.liferay.portal.servlet.filters.monitoring.MonitoringFilter",
+		"com.liferay.portal.servlet.filters.secure.SecureFilter",
 		"com.liferay.portal.servlet.filters.validhtml.ValidHtmlFilter",
 		"commons.pool.enabled", "company.settings.form.configuration",
 		"company.settings.form.identification",
@@ -1745,6 +1746,7 @@ public class VerifyProperties extends VerifyProcess {
 		"dynamic.data.lists.template.language.parser[ftl]",
 		"dynamic.data.lists.template.language.parser[vm]",
 		"dynamic.data.lists.template.language.parser[xsl]",
+		"dynamic.data.mapping.structure.index.with.thread",
 		"dynamic.data.mapping.structure.private.field.names",
 		"dynamic.data.mapping.structure.private.field.datatype[_fieldsDisplay]",
 		"dynamic.data.mapping.structure.private.field.repeatable[" +

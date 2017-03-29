@@ -28,12 +28,15 @@ import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.PortalPreferences;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.PortalPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.test.IdempotentRetryAssert;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -46,6 +49,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.test.ServiceTestUtil;
@@ -54,9 +58,8 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.concurrent.Callable;
-import java.util.concurrent.TimeUnit;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -82,7 +85,39 @@ public class JournalIndexerTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
+		CompanyThreadLocal.setCompanyId(TestPropsValues.getCompanyId());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		serviceContext.setCompanyId(TestPropsValues.getCompanyId());
+
 		ServiceTestUtil.setUser(TestPropsValues.getUser());
+
+		PortalPreferences portalPreferenceces =
+			PortletPreferencesFactoryUtil.getPortalPreferences(
+				TestPropsValues.getUserId(), true);
+
+		_originalPortalPreferencesXML = PortletPreferencesFactoryUtil.toXML(
+			portalPreferenceces);
+
+		portalPreferenceces.setValue(
+			"", "indexAllArticleVersionsEnabled", "true");
+		portalPreferenceces.setValue(
+			"", "expireAllArticleVersionsEnabled", "true");
+
+		PortalPreferencesLocalServiceUtil.updatePreferences(
+			TestPropsValues.getCompanyId(),
+			PortletKeys.PREFS_OWNER_TYPE_COMPANY,
+			PortletPreferencesFactoryUtil.toXML(portalPreferenceces));
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		PortalPreferencesLocalServiceUtil.updatePreferences(
+			TestPropsValues.getCompanyId(),
+			PortletKeys.PREFS_OWNER_TYPE_COMPANY,
+			_originalPortalPreferencesXML);
 	}
 
 	@Test
@@ -540,46 +575,22 @@ public class JournalIndexerTest {
 	}
 
 	protected void assertSearchCount(
-			final int expectedCount, final long groupId, final boolean head,
-			final int status, final SearchContext searchContext)
+			int expectedCount, long groupId, boolean head, int status,
+			SearchContext searchContext)
 		throws Exception {
 
-		IdempotentRetryAssert.retryAssert(
-			3, TimeUnit.SECONDS,
-			new Callable<Void>() {
+		Hits hits = search(groupId, head, status, searchContext);
 
-				@Override
-				public Void call() throws Exception {
-					int actualCount = searchCount(
-						groupId, head, status, searchContext);
-
-					Assert.assertEquals(expectedCount, actualCount);
-
-					return null;
-				}
-
-			});
+		Assert.assertEquals(hits.toString(), expectedCount, hits.getLength());
 	}
 
 	protected void assertSearchCount(
-			final int expectedCount, final long groupId,
-			final SearchContext searchContext)
+			int expectedCount, long groupId, SearchContext searchContext)
 		throws Exception {
 
-		IdempotentRetryAssert.retryAssert(
-			10, TimeUnit.SECONDS,
-			new Callable<Void>() {
+		Hits hits = search(groupId, searchContext);
 
-				@Override
-				public Void call() throws Exception {
-					int actualCount = searchCount(groupId, searchContext);
-
-					Assert.assertEquals(expectedCount, actualCount);
-
-					return null;
-				}
-
-			});
+		Assert.assertEquals(hits.toString(), expectedCount, hits.getLength());
 	}
 
 	protected void indexVersions(boolean delete, boolean all) throws Exception {
@@ -706,7 +717,7 @@ public class JournalIndexerTest {
 		assertSearchCount(1, _group.getGroupId(), searchContext2);
 	}
 
-	protected int searchCount(
+	protected Hits search(
 			long groupId, boolean head, int status, SearchContext searchContext)
 		throws Exception {
 
@@ -717,15 +728,13 @@ public class JournalIndexerTest {
 		searchContext.setAttribute("status", status);
 		searchContext.setGroupIds(new long[] {groupId});
 
-		Hits results = indexer.search(searchContext);
-
-		return results.getLength();
+		return indexer.search(searchContext);
 	}
 
-	protected int searchCount(long groupId, SearchContext searchContext)
+	protected Hits search(long groupId, SearchContext searchContext)
 		throws Exception {
 
-		return searchCount(
+		return search(
 			groupId, true, WorkflowConstants.STATUS_APPROVED, searchContext);
 	}
 
@@ -822,5 +831,7 @@ public class JournalIndexerTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	private String _originalPortalPreferencesXML;
 
 }

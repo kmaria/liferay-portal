@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.Mergeable;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TimeZoneThreadLocal;
 import com.liferay.portal.kernel.util.Validator;
@@ -116,6 +117,15 @@ public class ThemeDisplay
 	}
 
 	public Account getAccount() {
+		if ((_account == null) && (_company != null)) {
+			try {
+				_account = _company.getAccount();
+			}
+			catch (PortalException pe) {
+				ReflectionUtil.throwException(pe);
+			}
+		}
+
 		return _account;
 	}
 
@@ -258,6 +268,19 @@ public class ThemeDisplay
 	}
 
 	public Contact getContact() {
+		if (_contact == null) {
+			if (_user == null) {
+				return null;
+			}
+
+			try {
+				_contact = _user.getContact();
+			}
+			catch (PortalException pe) {
+				ReflectionUtil.throwException(pe);
+			}
+		}
+
 		return _contact;
 	}
 
@@ -1223,8 +1246,6 @@ public class ThemeDisplay
 	public void setCompany(Company company) throws PortalException {
 		_company = company;
 		_companyGroupId = company.getGroupId();
-
-		setAccount(company.getAccount());
 	}
 
 	public void setCompanyLogo(String companyLogo) {
@@ -1777,10 +1798,8 @@ public class ThemeDisplay
 		_urlUpdateManager = urlUpdateManager;
 	}
 
-	public void setUser(User user) throws PortalException {
+	public void setUser(User user) {
 		_user = user;
-
-		setContact(user.getContact());
 	}
 
 	public void setWidget(boolean widget) {

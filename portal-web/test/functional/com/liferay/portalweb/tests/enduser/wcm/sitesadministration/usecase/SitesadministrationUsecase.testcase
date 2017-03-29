@@ -214,6 +214,62 @@
 		</execute>
 	</command>
 
+	<command name="AddSiteNameTranslations" priority="4">
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoAddMenuItem">
+			<var name="menuItem" value="Blank Site" />
+		</execute>
+
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="Site Name" />
+		</execute>
+
+		<execute macro="PortletEntry#inputLocalizedName">
+			<var name="language" value="es_ES" />
+			<var name="localizedName" value="Nombre del Sitio" />
+		</execute>
+
+		<execute macro="PortletEntry#inputLocalizedName">
+			<var name="language" value="zh_CN" />
+			<var name="localizedName" value="站点名称" />
+		</execute>
+
+		<execute macro="PortletEntry#save" />
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Page Name" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Language Selector" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Page Name" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#viewSiteNameTranslationsPG">
+			<var name="language" value="English" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#viewSiteNameTranslationsPG">
+			<var name="language" value="español" />
+			<var name="siteName" value="Nombre del Sitio" />
+		</execute>
+
+		<execute macro="Page#viewSiteNameTranslationsPG">
+			<var name="language" value="中文" />
+			<var name="siteName" value="站点名称" />
+		</execute>
+
+		<execute macro="LanguagePortlet#tearDownLanguagePG" />
+	</command>
+
 	<command name="MySitesDropDownDoesNotShowUserOrganizationOnTop" priority="3">
 		<for list="Site1 Name,Site2 Name,Site3 Name,Site4 Name,Site5 Name,Site6 Name,Site7 Name,Site8 Name,Site9 Name,Site10 Name" param="siteNameListsCount" >
 			<execute macro="ProductMenu#gotoControlPanelSites">
@@ -572,8 +628,8 @@
 		</execute>
 
 		<execute macro="ServerAdministration#configureMailServerSettings">
-			<var method="TestPropsUtil#get('email.address.1')" name="userName" />
-			<var method="TestPropsUtil#get('email.password.1')" name="userPassword" />
+			<var name="userName" property-value="email.address.1" />
+			<var name="userPassword" property-value="email.password.1" />
 		</execute>
 
 		<execute macro="Navigator#openSpecificURL">
@@ -587,15 +643,15 @@
 		<execute macro="User#logoutPG" />
 
 		<execute macro="User#addCreateAccountPG">
-			<var method="TestPropsUtil#get('email.address.2')" name="userEmailAddress" />
+			<var name="userEmailAddress" property-value="email.address.2" />
 			<var name="userFirstName" value="userfn" />
 			<var name="userLastName" value="userln" />
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="Gmail#login">
-			<var method="TestPropsUtil#get('email.address.2')" name="userEmailAddress" />
-			<var method="TestPropsUtil#get('email.password.2')" name="userPassword" />
+			<var name="userEmailAddress" property-value="email.address.2" />
+			<var name="userPassword" property-value="email.password.2" />
 		</execute>
 
 		<execute macro="Gmail#gotoHtmlMode" />
@@ -621,7 +677,7 @@
 		<execute macro="Gmail#gotoHtmlMode" />
 
 		<execute macro="Gmail#deleteSpecificMail">
-			<var name="gmailMessageTitleList" value="Email Address Verification, Your New Account, Your New Password" />
+			<var name="gmailMessageTitleList" value="Email Address Verification,Your New Account,Your New Password" />
 		</execute>
 
 		<execute macro="Navigator#openSpecificURL">
@@ -631,7 +687,7 @@
 		<execute macro="User#signInPG">
 			<var name="emailPassword" value="${emailPassword}" />
 			<var name="emailVerification" value="${emailVerification}" />
-			<var method="TestPropsUtil#get('email.address.2')" name="userEmailAddress" />
+			<var name="userEmailAddress" property-value="email.address.2" />
 		</execute>
 
 		<execute macro="User#firstLoginPG">
@@ -652,12 +708,12 @@
 		</execute>
 
 		<execute macro="User#editEmailViaMyAccount">
-			<var method="TestPropsUtil#get('email.address.3')" name="userEmailAddress" />
+			<var name="userEmailAddress" property-value="email.address.3" />
 		</execute>
 
 		<execute macro="Gmail#logoutAndLogin">
-			<var method="TestPropsUtil#get('email.address.3')" name="userEmailAddress" />
-			<var method="TestPropsUtil#get('email.password.3')" name="userPassword" />
+			<var name="userEmailAddress" property-value="email.address.3" />
+			<var name="userPassword" property-value="email.password.3" />
 		</execute>
 
 		<execute macro="Gmail#gotoHtmlMode" />
@@ -678,7 +734,7 @@
 		<execute macro="Gmail#gotoHtmlMode" />
 
 		<execute macro="Gmail#deleteSpecificMail">
-			<var name="gmailMessageTitleList" value="Email Address Verification, Your New Account, Your New Password" />
+			<var name="gmailMessageTitleList" value="Email Address Verification,Your New Account,Your New Password" />
 		</execute>
 	</command>
 

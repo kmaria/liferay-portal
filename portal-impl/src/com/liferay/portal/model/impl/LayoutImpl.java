@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletPreferences;
+import com.liferay.portal.kernel.model.PortletWrapper;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
@@ -272,7 +273,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 	 */
 	@Override
 	public List<Layout> getAncestors() throws PortalException {
-		List<Layout> layouts = new ArrayList<>();
+		List<Layout> layouts = Collections.emptyList();
 
 		Layout layout = this;
 
@@ -280,6 +281,10 @@ public class LayoutImpl extends LayoutBaseImpl {
 			layout = LayoutLocalServiceUtil.getLayout(
 				layout.getGroupId(), layout.isPrivateLayout(),
 				layout.getParentLayoutId());
+
+			if (layouts.isEmpty()) {
+				layouts = new ArrayList<>();
+			}
 
 			layouts.add(layout);
 		}
@@ -444,7 +449,26 @@ public class LayoutImpl extends LayoutBaseImpl {
 
 			}
 			else {
-				embeddedPortlet = (Portlet)embeddedPortlet.clone();
+				portlet = new PortletWrapper(portlet) {
+
+					@Override
+					public boolean getStatic() {
+						return _staticPortlet;
+					}
+
+					@Override
+					public boolean isStatic() {
+						return _staticPortlet;
+					}
+
+					@Override
+					public void setStatic(boolean staticPortlet) {
+						_staticPortlet = staticPortlet;
+					}
+
+					private boolean _staticPortlet;
+
+				};
 			}
 
 			// We set embedded portlets as static on order to avoid adding the
@@ -466,12 +490,16 @@ public class LayoutImpl extends LayoutBaseImpl {
 	 */
 	@Override
 	public String getFriendlyURL(Locale locale) {
-		Layout layout = this;
+		String friendlyURL = _friendlyURLs.get(locale);
 
-		String friendlyURL = layout.getFriendlyURL();
+		if (friendlyURL != null) {
+			return friendlyURL;
+		}
+
+		friendlyURL = getFriendlyURL();
 
 		try {
-			Group group = layout.getGroup();
+			Group group = getGroup();
 
 			UnicodeProperties typeSettingsProperties =
 				group.getTypeSettingsProperties();
@@ -487,18 +515,22 @@ public class LayoutImpl extends LayoutBaseImpl {
 				if (!ArrayUtil.contains(
 						locales, LanguageUtil.getLanguageId(locale))) {
 
+					_friendlyURLs.put(locale, friendlyURL);
+
 					return friendlyURL;
 				}
 			}
 
 			LayoutFriendlyURL layoutFriendlyURL =
 				LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURL(
-					layout.getPlid(), LocaleUtil.toLanguageId(locale));
+					getPlid(), LocaleUtil.toLanguageId(locale));
 
 			friendlyURL = layoutFriendlyURL.getFriendlyURL();
 		}
 		catch (Exception e) {
 		}
+
+		_friendlyURLs.put(locale, friendlyURL);
 
 		return friendlyURL;
 	}
@@ -1021,26 +1053,14 @@ public class LayoutImpl extends LayoutBaseImpl {
 
 	@Override
 	public boolean isPortletEmbedded(String portletId, long groupId) {
-		List<PortletPreferences> portletPreferences = _getPortletPreferences(
-			groupId);
+		List<Portlet> embeddedPortlets = getEmbeddedPortlets(groupId);
 
-		if (portletPreferences.isEmpty()) {
+		if (embeddedPortlets.isEmpty()) {
 			return false;
 		}
 
-		for (PortletPreferences portletPreference : portletPreferences) {
-			String currentPortletId = portletPreference.getPortletId();
-
-			if (!portletId.equals(currentPortletId)) {
-				continue;
-			}
-
-			Portlet portlet = PortletLocalServiceUtil.getPortletById(
-				getCompanyId(), currentPortletId);
-
-			if ((portlet != null) && portlet.isReady() &&
-				!portlet.isUndeployedPortlet() && portlet.isActive()) {
-
+		for (Portlet portlet : embeddedPortlets) {
+			if (Objects.equals(portlet.getPortletId(), portletId)) {
 				return true;
 			}
 		}
@@ -1302,10 +1322,8 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	private String _getLayoutTypeControllerType() {
-		LayoutType layoutType = getLayoutType();
-
 		LayoutTypeController layoutTypeController =
-			layoutType.getLayoutTypeController();
+			LayoutTypeControllerTracker.getLayoutTypeController(getType());
 
 		return layoutTypeController.getType();
 	}
@@ -1471,6 +1489,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 		_initFriendlyURLKeywords();
 	}
 
+	private final Map<Locale, String> _friendlyURLs = new HashMap<>();
 	private LayoutSet _layoutSet;
 	private transient LayoutType _layoutType;
 	private UnicodeProperties _typeSettingsProperties;

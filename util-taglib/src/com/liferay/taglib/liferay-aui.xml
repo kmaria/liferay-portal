@@ -7,6 +7,7 @@
 		<author>Nathan Cavanaugh</author>
 		<author>Julio Camarero</author>
 	</authors>
+	<description>Provides the AUI component tags, prefixed with <![CDATA[<code>aui:</code>]]>.</description>
 	<component bodyContent="true" name="A" writeJSP="false">
 		<description>Creates an anchor (or link) that offers custom configuration and localization.</description>
 		<attributes>
@@ -771,13 +772,6 @@
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
-				<description>Whether to translate the label's text into the user's language. The default value is <![CDATA[<code>true</code>]]>.</description>
-				<name>localizeLabel</name>
-				<inputType>boolean</inputType>
-				<outputType>boolean</outputType>
-				<defaultValue>true</defaultValue>
-			</attribute>
-			<attribute>
 				<name>languageId</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
@@ -795,8 +789,22 @@
 				<outputType>boolean</outputType>
 			</attribute>
 			<attribute>
+				<description>Whether to translate the label's text into the user's language. The default value is <![CDATA[<code>true</code>]]>.</description>
+				<name>localizeLabel</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+				<defaultValue>true</defaultValue>
+			</attribute>
+			<attribute>
 				<description>The maximum value for the input if its <![CDATA[<code>type</code>]]> is <![CDATA[<code>number</code>]]> or <![CDATA[<code>range</code>]]>. Note that the max value is inclusive if the input's <![CDATA[<code>type</code>]]> is <![CDATA[<code>range</code>]]>.</description>
 				<name>max</name>
+				<inputType>java.lang.Object</inputType>
+				<outputType>java.lang.Number</outputType>
+				<defaultValue>null</defaultValue>
+			</attribute>
+			<attribute>
+				<description>The minimum value for the input if its <![CDATA[<code>type</code>]]> is <![CDATA[<code>number</code>]]> or <![CDATA[<code>range</code>]]>. Note that the min value is inclusive if the input's <![CDATA[<code>type</code>]]> is <![CDATA[<code>range</code>]]>.</description>
+				<name>min</name>
 				<inputType>java.lang.Object</inputType>
 				<outputType>java.lang.Number</outputType>
 				<defaultValue>null</defaultValue>
@@ -808,19 +816,12 @@
 				<outputType><![CDATA[java.lang.Class<?>]]></outputType>
 			</attribute>
 			<attribute>
-				<description>The minimum value for the input if its <![CDATA[<code>type</code>]]> is <![CDATA[<code>number</code>]]> or <![CDATA[<code>range</code>]]>. Note that the min value is inclusive if the input's <![CDATA[<code>type</code>]]> is <![CDATA[<code>range</code>]]>.</description>
-				<name>min</name>
-				<inputType>java.lang.Object</inputType>
-				<outputType>java.lang.Number</outputType>
-				<defaultValue>null</defaultValue>
-			</attribute>
-			<attribute>
 				<name>multiple</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
 			</attribute>
 			<attribute>
-				<description>A name for the component.</description>
+				<description>A name for the component. If the name contains <![CDATA[<code>--</code>]]>, the generated name will be the substring following the <![CDATA[<code>--</code>]]>, excluding the last two characters and any prefixes. For example, the pattern <![CDATA[<code>prefix--customName--</code>]]> would result in the name <![CDATA[<code>customName</code>]]>. If the <![CDATA[<code>id</code>]]> is not provided and the <![CDATA[<code>type</code>]]> is given, the name is used as the <![CDATA[<code>id</code>]]>.</description>
 				<name>name</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
@@ -1028,13 +1029,13 @@
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
-				<description>An ID for the component instance.</description>
-				<name>id</name>
+				<name>file</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
-				<name>file</name>
+				<description>An ID for the component instance.</description>
+				<name>id</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
@@ -1302,14 +1303,14 @@
 				<settable>false</settable>
 			</attribute>
 			<attribute>
-				<name>sandbox</name>
-				<inputType>boolean</inputType>
-				<outputType>boolean</outputType>
-			</attribute>
-			<attribute>
 				<name>require</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<name>sandbox</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
 			</attribute>
 			<attribute>
 				<description>AlloyUI modules to be used in the script. Names of multiple modules must be separated by commas.</description>
@@ -1319,7 +1320,7 @@
 			</attribute>
 		</attributes>
 	</component>
-	<component bodyContent="true" name="Select">
+	<component bodyContent="true" name="Select" parentClass="com.liferay.taglib.BaseValidatorTagSupport">
 		<description>Creates a select field (or combo box) for holding <![CDATA[<code>&lt;aui:option&gt;</code>]]> components.</description>
 		<attributes>
 			<attribute>
@@ -1351,6 +1352,11 @@
 				<name>disabled</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
+			</attribute>
+			<attribute>
+				<name>field</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
 				<description>Whether the component should be the first element of the form. The default value is <![CDATA[<code>false</code>]]>.</description>
@@ -1416,6 +1422,12 @@
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
 				<defaultValue>true</defaultValue>
+			</attribute>
+			<attribute>
+				<description>Sets the class for the bean object.</description>
+				<name>model</name>
+				<inputType><![CDATA[java.lang.Class<?>]]></inputType>
+				<outputType><![CDATA[java.lang.Class<?>]]></outputType>
 			</attribute>
 			<attribute>
 				<description>Whether multiple options can be selected. If set to <![CDATA[<code>true</code>]]>, the select field expands to allow for multiple selections. The default value is <![CDATA[<code>false</code>]]>.</description>

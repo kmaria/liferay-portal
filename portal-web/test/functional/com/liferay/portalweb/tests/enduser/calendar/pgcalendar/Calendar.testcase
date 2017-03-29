@@ -143,6 +143,40 @@
 		</execute>
 	</command>
 
+	<command name="AddEventAfterClosingModal" priority="3">
+		<description message="This is a use case for LPS-64945." />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoAddEvent" />
+
+		<execute macro="CalendarEvent#editTitle">
+			<var name="eventTitle" value="Calendar Event Title" />
+		</execute>
+
+		<execute macro="CalendarNavigator#closeModal">
+			<var name="modalTitle" value="New Event" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoAddEvent" />
+
+		<execute macro="CalendarEvent#editTitle">
+			<var name="eventTitle" value="Calendar Event Title" />
+		</execute>
+
+		<execute macro="CalendarEvent#publish" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#view">
+			<var name="eventTitle" value="Calendar Event Title" />
+		</execute>
+	</command>
+
 	<command name="AddEventAllDay" priority="5">
 		<property name="portal.acceptance" value="true" />
 
@@ -198,7 +232,7 @@
 			<var name="eventType" value="All Day" />
 			<var name="pageName" value="Calendar Page" />
 			<var name="site" value="${siteName}" />
-			<var name="user" value="Test Test" />
+			<var name="userFullName" value="Test Test (You)" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -211,7 +245,7 @@
 			<var name="eventTitle" value="Calendar Event All Day Title" />
 			<var name="eventType" value="All Day" />
 			<var name="site" value="${siteName}" />
-			<var name="user" value="Test Test" />
+			<var name="userFullName" value="Test Test (You)" />
 		</execute>
 	</command>
 
@@ -479,9 +513,7 @@
 		</execute>
 	</command>
 
-	<command name="AddEventRegular" priority="5">
-		<property name="portal.acceptance" value="true" />
-
+	<command name="AddEventRegular" priority="4">
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Calendar Page" />
 		</execute>
@@ -503,9 +535,7 @@
 		</execute>
 	</command>
 
-	<!-- LPS-68313 -->
-
-	<!-- <command name="AddEventRegularAndResourceWithStagingAndSchedulePublishToLive" priority="4">
+	<command name="AddEventRegularAndResourceWithStagingAndSchedulePublishToLive" priority="4">
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -610,13 +640,12 @@
 			<var name="eventTitle" value="Site Name Staged Event" />
 		</execute>
 
-		<execute macro="CalendarEvent#view">
-			<var name="eventTitle" value="Test Test Live Event" />
+		<execute macro="CalendarResource#viewResourceNameNotPresent">
+			<var name="calendarResourceName" value="Calendar Resource Name" />
 		</execute>
 
-		<execute macro="Calendar#view">
-			<var name="calendarName" value="Calendar Resource Name" />
-			<var name="calendarType" value="Other Calendars" />
+		<execute macro="CalendarEvent#view">
+			<var name="eventTitle" value="Test Test Live Event" />
 		</execute>
 
 		<execute macro="Navigator#gotoStagedSitePage">
@@ -647,7 +676,7 @@
 			<var name="calendarName" value="Calendar Resource Name" />
 			<var name="calendarType" value="Other Calendars" />
 		</execute>
-	</command> -->
+	</command>
 
 	<command name="AddEventRegularCommentToCurrentSiteCalendars" priority="4">
 		<execute macro="TestCase#getSiteName">
@@ -680,7 +709,7 @@
 			<var name="eventType" value="Regular" />
 			<var name="pageName" value="Calendar Page" />
 			<var name="site" value="${siteName}" />
-			<var name="user" value="Test Test" />
+			<var name="userFullName" value="Test Test (You)" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -693,7 +722,7 @@
 			<var name="eventTitle" value="Calendar Event Regular Title" />
 			<var name="eventType" value="Regular" />
 			<var name="site" value="${siteName}" />
-			<var name="user" value="Test Test" />
+			<var name="userFullName" value="Test Test (You)" />
 		</execute>
 	</command>
 
@@ -973,7 +1002,7 @@
 			<var name="numberOfOccurrences" value="1" />
 			<var name="pageName" value="Calendar Page" />
 			<var name="site" value="${siteName}" />
-			<var name="user" value="Test Test" />
+			<var name="userFullName" value="Test Test (You)" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -986,7 +1015,7 @@
 			<var name="eventTitle" value="Calendar Event Repeating Title" />
 			<var name="eventType" value="Repeating" />
 			<var name="site" value="${siteName}" />
-			<var name="user" value="Test Test" />
+			<var name="userFullName" value="Test Test (You)" />
 		</execute>
 	</command>
 
@@ -1713,6 +1742,86 @@
 			<var name="color" value="668CD9" />
 			<var name="pageName" value="Calendar Page" />
 		</execute>
+	</command>
+
+	<command name="CancelRepeatingDialog" priority="4">
+		<description message="This is a use case for LPS-45616." />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoAddEvent" />
+
+		<execute macro="CalendarEvent#editTitle">
+			<var name="eventTitle" value="Calendar Non-Repeating Event 1" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewNoRepeating" />
+
+		<execute macro="CalendarEvent#gotoRepeatConfiguration" />
+
+		<execute function="KeyPress" locator1="CalendarEditEvent#REPEAT_ENDS_NEVER_RADIO" value1="\ESCAPE" />
+
+		<execute macro="CalendarEvent#viewNoRepeating" />
+
+		<execute macro="CalendarEvent#viewTitle">
+			<var name="eventTitle" value="Calendar Non-Repeating Event 1" />
+		</execute>
+
+		<execute macro="CalendarEvent#publish" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoAddEvent" />
+
+		<execute macro="CalendarEvent#editTitle">
+			<var name="eventTitle" value="Calendar Non-Repeating Event 2" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewNoRepeating" />
+
+		<execute macro="CalendarEvent#gotoRepeatConfiguration" />
+
+		<execute macro="CalendarEvent#selectRepeatFrequency">
+			<var name="frequency" value="Daily" />
+		</execute>
+
+		<execute function="KeyPress" locator1="CalendarEditEvent#REPEAT_ENDS_NEVER_RADIO" value1="\ESCAPE" />
+
+		<execute macro="CalendarEvent#viewNoRepeating" />
+
+		<execute macro="CalendarEvent#viewTitle">
+			<var name="eventTitle" value="Calendar Non-Repeating Event 2" />
+		</execute>
+
+		<execute macro="CalendarEvent#publish" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoAddEvent" />
+
+		<execute macro="CalendarEvent#editTitle">
+			<var name="eventTitle" value="Calendar Non-Repeating Event 3" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewNoRepeating" />
+
+		<execute macro="CalendarEvent#gotoRepeatConfiguration" />
+
+		<execute macro="Button#clickCancel" />
+
+		<execute macro="CalendarEvent#viewTitle">
+			<var name="eventTitle" value="Calendar Non-Repeating Event 3" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewNoRepeating" />
+
+		<execute macro="CalendarEvent#publish" />
 	</command>
 
 	<command name="ChangeCalendarTypeForAllDayEvent" priority="3">
@@ -3638,7 +3747,7 @@
 			<var name="eventType" value="Regular" />
 			<var name="pageName" value="Calendar Page" />
 			<var name="site" value="${siteName}" />
-			<var name="user" value="Test Test" />
+			<var name="userFullName" value="Test Test (You)" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -3651,7 +3760,7 @@
 			<var name="eventTitle" value="Calendar Event Regular Title" />
 			<var name="eventType" value="Regular" />
 			<var name="site" value="${siteName}" />
-			<var name="user" value="Test Test" />
+			<var name="userFullName" value="Test Test (You)" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -3693,7 +3802,7 @@
 			<var name="eventComment" value="Calendar Event Regular Comment" />
 			<var name="eventTitle" value="Calendar Event Regular Title" />
 			<var name="eventType" value="Regular" />
-			<var name="user" value="Test Test" />
+			<var name="userFullName" value="Test Test (You)" />
 		</execute>
 	</command>
 
@@ -4001,6 +4110,7 @@
 
 	<command name="SearchForOtherCalendars" priority="5">
 		<property name="portal.acceptance" value="pending" />
+		<property name="test.name.skip.portal.instance" value="Calendar#SearchForOtherCalendars" />
 
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />
@@ -5104,7 +5214,38 @@
 		</execute>
 	</command>
 
-	<command name="ViewShowMoreLocalization" priority="3">
+	<command name="ViewResourceCalendarPageAfterCancellingEdit" priority="2">
+		<description message="This is a use case for LPS-69884." />
+
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="CalendarResource#add">
+			<var name="calendarResourceName" value="Calendar Resource Name" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoResourceCalendars">
+			<var name="calendarResourceName" value="Calendar Resource Name" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoEditResourceCalendar">
+			<var name="calendarResourceName" value="Calendar Resource Name" />
+		</execute>
+
+		<execute macro="Button#clickCancel" />
+
+		<execute macro="CalendarResource#viewResourceCalendars">
+			<var name="calendarResourceName" value="Calendar Resource Name" />
+		</execute>
+	</command>
+
+	<command ignore="true" name="ViewShowMoreLocalization" priority="3">
 		<description message="This is a use case for LPS-54786." />
 
 		<execute macro="Navigator#gotoPage">

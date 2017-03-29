@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.frontend.taglib.servlet.taglib.ManagementBarFilterItem;
+import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.constants.JournalWebKeys;
 import com.liferay.journal.model.JournalArticle;
@@ -30,6 +31,7 @@ import com.liferay.journal.service.JournalArticleServiceUtil;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.journal.service.JournalFolderServiceUtil;
 import com.liferay.journal.util.JournalConverter;
+import com.liferay.journal.util.comparator.FolderArticleArticleIdComparator;
 import com.liferay.journal.util.comparator.FolderArticleDisplayDateComparator;
 import com.liferay.journal.util.comparator.FolderArticleModifiedDateComparator;
 import com.liferay.journal.web.configuration.JournalWebConfiguration;
@@ -45,12 +47,14 @@ import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
@@ -122,6 +126,17 @@ public class JournalDisplayContext {
 		return _article;
 	}
 
+	public String[] getCharactersBlacklist() throws PortalException {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		JournalServiceConfiguration journalServiceConfiguration =
+			ConfigurationProviderUtil.getCompanyConfiguration(
+				JournalServiceConfiguration.class, themeDisplay.getCompanyId());
+
+		return journalServiceConfiguration.charactersblacklist();
+	}
+
 	public SearchContainer<MBMessage> getCommentsSearchContainer()
 		throws PortalException {
 
@@ -136,7 +151,7 @@ public class JournalDisplayContext {
 			Field.CLASS_NAME_ID,
 			PortalUtil.getClassNameId(JournalArticle.class));
 
-		searchContext.setAttribute("discussion", true);
+		searchContext.setAttribute("discussion", Boolean.TRUE);
 
 		List<MBMessage> mbMessages = new ArrayList<>();
 
@@ -444,6 +459,20 @@ public class JournalDisplayContext {
 		return _orderByType;
 	}
 
+	public String[] getOrderColumns() {
+		JournalWebConfiguration journalWebConfiguration =
+			(JournalWebConfiguration)_request.getAttribute(
+				JournalWebConfiguration.class.getName());
+
+		String[] orderColumns = new String[] {"display-date", "modified-date"};
+
+		if (!journalWebConfiguration.journalArticleForceAutogenerateId()) {
+			orderColumns = ArrayUtil.append(orderColumns, "id");
+		}
+
+		return orderColumns;
+	}
+
 	public PortletURL getPortletURL() throws PortalException {
 		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
 
@@ -644,6 +673,11 @@ public class JournalDisplayContext {
 				if (Objects.equals(getOrderByCol(), "display-date")) {
 					sort = new Sort("displayDate", Sort.LONG_TYPE, orderByAsc);
 				}
+				else if (Objects.equals(getOrderByCol(), "id")) {
+					sort = new Sort(
+						DocumentImpl.getSortableFieldName(Field.ARTICLE_ID),
+						Sort.STRING_TYPE, !orderByAsc);
+				}
 				else if (Objects.equals(getOrderByCol(), "modified-date")) {
 					sort = new Sort(
 						Field.MODIFIED_DATE, Sort.LONG_TYPE, orderByAsc);
@@ -743,6 +777,10 @@ public class JournalDisplayContext {
 			if (Objects.equals(getOrderByCol(), "display-date")) {
 				folderOrderByComparator =
 					new FolderArticleDisplayDateComparator(orderByAsc);
+			}
+			else if (Objects.equals(getOrderByCol(), "id")) {
+				folderOrderByComparator = new FolderArticleArticleIdComparator(
+					orderByAsc);
 			}
 			else if (Objects.equals(getOrderByCol(), "modified-date")) {
 				folderOrderByComparator =

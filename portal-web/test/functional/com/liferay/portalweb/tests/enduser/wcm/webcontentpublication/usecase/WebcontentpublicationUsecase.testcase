@@ -149,6 +149,7 @@
 
 		<execute macro="User#firstLoginPG">
 			<var name="password" value="test" />
+			<var name="samlEnabled" value="true" />
 			<var name="userEmailAddress" value="test@liferay.com" />
 			<var name="virtualHostsURL" value="http://www.baker.com:8080" />
 		</execute>
@@ -441,7 +442,8 @@
 
 		<execute macro="AssetPublisherPortlet#configureShowMetadataFieldsPG">
 			<var name="addMetadata" value="true" />
-			<var name="metadataField" value="Categories" />
+			<var name="metadataFieldList" value="Categories" />
+			<var name="portletName" value="Asset Publisher" />
 			<var name="webContentContent" value="Web Content1 Content" />
 			<var name="webContentTitle" value="Web Content1 Title" />
 		</execute>
@@ -724,7 +726,7 @@
 			<var name="assetTitle" value="WC WebContent5 Title" />
 		</execute>
 
-		<execute macro="Category#viewRemoveFilterViaCategoriesNavigationPG">
+		<execute macro="Category#viewRemoveFilterViaAP">
 			<var name="categoryName" value="Vocabulary1 Category" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
@@ -745,7 +747,7 @@
 		</execute>
 	</command>
 
-	<command ignore="true" name="AssetPublisherFilterAndOrderByFieldType" priority="4">
+	<command name="AssetPublisherFilterAndOrderByFieldType" priority="4">
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -1232,6 +1234,11 @@
 	</command>
 
 	<command name="AssetPublisherTogglingBetweenSites" priority="4">
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -1249,9 +1256,9 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<for list="Liferay,Site Name,Global" param="siteName">
+		<for list="${siteName},Site Name,Global" param="siteName1">
 			<execute macro="ProductMenu#gotoSite">
-				<var name="site" value="${siteName}" />
+				<var name="site" value="${siteName1}" />
 			</execute>
 
 			<execute macro="ProductMenu#gotoSitesContent">
@@ -1261,8 +1268,8 @@
 			<execute macro="WebContentNavigator#gotoAddCP" />
 
 			<execute macro="WebContent#addCP">
-				<var name="webContentContent" value="${siteName} WC Content" />
-				<var name="webContentTitle" value="${siteName} WC Title" />
+				<var name="webContentContent" value="${siteName1} WC Content" />
+				<var name="webContentTitle" value="${siteName1} WC Title" />
 			</execute>
 
 			<execute macro="PortletEntry#publish" />
@@ -1311,7 +1318,7 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#configureAddSiteScopes">
-			<var name="otherSite" value="Liferay" />
+			<var name="otherSite" value="${siteName}" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
@@ -1329,8 +1336,8 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewAssetPG">
-			<var name="assetContent" value="Liferay WC Content" />
-			<var name="assetTitle" value="Liferay WC Title" />
+			<var name="assetContent" value="${siteName} WC Content" />
+			<var name="assetTitle" value="${siteName} WC Title" />
 		</execute>
 	</command>
 
@@ -1526,7 +1533,8 @@
 	<command name="ViewAuthorChangeViaAP" priority="3">
 		<execute macro="AssetPublisherPortlet#configureShowMetadataFieldsPG">
 			<var name="addMetadata" value="true" />
-			<var name="metadataField" value="Author" />
+			<var name="metadataFieldList" value="Author" />
+			<var name="portletName" value="Asset Publisher" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -2081,6 +2089,7 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#configureFlaggableDisplaySettingsPG">
+			<var name="portletName" value="Asset Publisher" />
 			<var name="setAsDefaultPage" value="true" />
 		</execute>
 

@@ -32,7 +32,7 @@ if (entry == null) {
 }
 %>
 
-<aui:form method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveEntry();" %>'>
+<aui:form enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveEntry();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="entryId" type="hidden" value="<%= entryId %>" />
@@ -82,7 +82,7 @@ if (entry == null) {
 
 		<aui:input name="url" />
 
-		<aui:field-wrapper label="content">
+		<aui:field-wrapper label="content" required="<%= true %>">
 			<liferay-ui:input-editor contents="<%= content %>" editorName='<%= PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.portlet.announcements.edit_entry.jsp") %>' />
 
 			<aui:input name="content" type="hidden" />

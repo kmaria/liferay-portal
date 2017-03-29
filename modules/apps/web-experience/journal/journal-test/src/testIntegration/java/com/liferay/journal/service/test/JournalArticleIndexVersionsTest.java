@@ -15,22 +15,23 @@
 package com.liferay.journal.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.journal.configuration.JournalServiceConfigurationKeys;
-import com.liferay.journal.configuration.JournalServiceConfigurationUtil;
-import com.liferay.journal.configuration.JournalServiceConfigurationValues;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.journal.util.impl.JournalUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.PortalPreferences;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.PortalPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.test.IdempotentRetryAssert;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -39,14 +40,12 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.TimeUnit;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -72,21 +71,45 @@ public class JournalArticleIndexVersionsTest {
 
 	@Before
 	public void setUp() throws Exception {
-		JournalServiceConfigurationValues.JOURNAL_ARTICLE_INDEX_ALL_VERSIONS =
-			false;
+		CompanyThreadLocal.setCompanyId(TestPropsValues.getCompanyId());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		serviceContext.setCompanyId(TestPropsValues.getCompanyId());
 
 		_group = GroupTestUtil.addGroup();
 
-		ServiceTestUtil.setUser(TestPropsValues.getUser());
+		User user = TestPropsValues.getUser();
+
+		user.setCompanyId(TestPropsValues.getCompanyId());
+
+		ServiceTestUtil.setUser(user);
+
+		PortalPreferences portalPreferenceces =
+			PortletPreferencesFactoryUtil.getPortalPreferences(
+				TestPropsValues.getUserId(), true);
+
+		_originalPortalPreferencesXML = PortletPreferencesFactoryUtil.toXML(
+			portalPreferenceces);
+
+		portalPreferenceces.setValue(
+			"", "expireAllArticleVersionsEnabled", "true");
+		portalPreferenceces.setValue(
+			"", "indexAllArticleVersionsEnabled", "false");
+
+		PortalPreferencesLocalServiceUtil.updatePreferences(
+			TestPropsValues.getCompanyId(),
+			PortletKeys.PREFS_OWNER_TYPE_COMPANY,
+			PortletPreferencesFactoryUtil.toXML(portalPreferenceces));
 	}
 
 	@After
-	public void tearDown() {
-		JournalServiceConfigurationValues.JOURNAL_ARTICLE_INDEX_ALL_VERSIONS =
-			GetterUtil.getBoolean(
-				JournalServiceConfigurationUtil.get(
-					JournalServiceConfigurationKeys.
-						JOURNAL_ARTICLE_INDEX_ALL_VERSIONS));
+	public void tearDown() throws Exception {
+		PortalPreferencesLocalServiceUtil.updatePreferences(
+			TestPropsValues.getCompanyId(),
+			PortletKeys.PREFS_OWNER_TYPE_COMPANY,
+			_originalPortalPreferencesXML);
 	}
 
 	@Test
@@ -211,50 +234,33 @@ public class JournalArticleIndexVersionsTest {
 	}
 
 	protected void assertSearchArticle(
-			final long expectedCount, final JournalArticle article)
+			long expectedCount, JournalArticle article)
 		throws Exception {
 
-		IdempotentRetryAssert.retryAssert(
-			3, TimeUnit.SECONDS,
-			new Callable<Void>() {
+		Indexer<JournalArticle> indexer = IndexerRegistryUtil.getIndexer(
+			JournalArticle.class);
 
-				@Override
-				public Void call() throws Exception {
-					List<JournalArticle> articles = search(true);
+		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
+			_group.getGroupId());
 
-					Assert.assertEquals(expectedCount, articles.size());
+		searchContext.setGroupIds(new long[] {_group.getGroupId()});
 
-					JournalArticle searchArticle = articles.get(0);
+		Hits results = indexer.search(searchContext);
 
-					Assert.assertEquals(article.getId(), searchArticle.getId());
+		List<JournalArticle> articles = JournalUtil.getArticles(results);
 
-					return null;
-				}
+		Assert.assertEquals(
+			articles.toString(), expectedCount, articles.size());
 
-			});
+		JournalArticle searchArticle = articles.get(0);
+
+		Assert.assertEquals(
+			searchArticle.toString(), article.getId(), searchArticle.getId());
 	}
 
-	protected void assertSearchCount(
-			final long expectedCount, final boolean head)
+	protected void assertSearchCount(long expectedCount, boolean head)
 		throws Exception {
 
-		IdempotentRetryAssert.retryAssert(
-			3, TimeUnit.SECONDS,
-			new Callable<Void>() {
-
-				@Override
-				public Void call() throws Exception {
-					long actualCount = searchCount(head);
-
-					Assert.assertEquals(expectedCount, actualCount);
-
-					return null;
-				}
-
-			});
-	}
-
-	protected List<JournalArticle> search(boolean head) throws Exception {
 		Indexer<JournalArticle> indexer = IndexerRegistryUtil.getIndexer(
 			JournalArticle.class);
 
@@ -271,30 +277,13 @@ public class JournalArticleIndexVersionsTest {
 
 		Hits results = indexer.search(searchContext);
 
-		return JournalUtil.getArticles(results);
-	}
-
-	protected long searchCount(boolean head) throws Exception {
-		Indexer<JournalArticle> indexer = IndexerRegistryUtil.getIndexer(
-			JournalArticle.class);
-
-		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
-			_group.getGroupId());
-
-		if (!head) {
-			searchContext.setAttribute(
-				Field.STATUS, WorkflowConstants.STATUS_ANY);
-			searchContext.setAttribute("head", Boolean.FALSE);
-		}
-
-		searchContext.setGroupIds(new long[] {_group.getGroupId()});
-
-		Hits results = indexer.search(searchContext);
-
-		return results.getLength();
+		Assert.assertEquals(
+			results.toString(), expectedCount, results.getLength());
 	}
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	private String _originalPortalPreferencesXML;
 
 }

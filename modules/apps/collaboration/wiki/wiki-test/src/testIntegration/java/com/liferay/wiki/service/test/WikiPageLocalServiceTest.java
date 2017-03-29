@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -110,6 +111,19 @@ public class WikiPageLocalServiceTest {
 	}
 
 	@Test
+	public void testAddPageWithNbspTitle() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		WikiPage page = WikiTestUtil.addPage(
+			TestPropsValues.getUserId(), _node.getNodeId(),
+			"ChildPage" + CharPool.NO_BREAK_SPACE + "1",
+			RandomTestUtil.randomString(), true, serviceContext);
+
+		Assert.assertEquals("ChildPage 1", page.getTitle());
+	}
+
+	@Test
 	public void testChangeParent() throws Exception {
 		testChangeParent(false);
 	}
@@ -138,6 +152,7 @@ public class WikiPageLocalServiceTest {
 			copyPage.getAttachmentsFileEntries();
 
 		Assert.assertEquals(
+			attachmentsFileEntries.toString(),
 			copyAttachmentsFileEntries.size(), attachmentsFileEntries.size());
 
 		FileEntry fileEntry = attachmentsFileEntries.get(0);
@@ -333,7 +348,8 @@ public class WikiPageLocalServiceTest {
 
 		List<WikiPage> pages = WikiPageLocalServiceUtil.getNoAssetPages();
 
-		Assert.assertEquals(initialPages.size() + 1, pages.size());
+		Assert.assertEquals(
+			pages.toString(), initialPages.size() + 1, pages.size());
 		Assert.assertEquals(page, pages.get(pages.size() - 1));
 	}
 
@@ -369,6 +385,21 @@ public class WikiPageLocalServiceTest {
 	@Test
 	public void testRenamePageWithExpando() throws Exception {
 		testRenamePage(true);
+	}
+
+	@Test
+	public void testRenamePageWithNbspTitle() throws Exception {
+		WikiPage page = WikiTestUtil.addPage(
+			_group.getGroupId(), _node.getNodeId(), true);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		WikiPageLocalServiceUtil.renamePage(
+			TestPropsValues.getUserId(), _node.getNodeId(), page.getTitle(),
+			"New" + CharPool.NO_BREAK_SPACE + "Title", true, serviceContext);
+
+		WikiPageLocalServiceUtil.getPage(_node.getNodeId(), "New Title");
 	}
 
 	@Test

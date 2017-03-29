@@ -110,7 +110,10 @@ iteratorURL.setParameter("mvcPath", "/edit_permissions.jsp");
 iteratorURL.setParameter("returnToFullPageURL", returnToFullPageURL);
 iteratorURL.setParameter("portletConfiguration", Boolean.TRUE.toString());
 iteratorURL.setParameter("portletResource", portletResource);
+iteratorURL.setParameter("modelResource", modelResource);
+iteratorURL.setParameter("resourceGroupId", String.valueOf(resourceGroupId));
 iteratorURL.setParameter("resourcePrimKey", resourcePrimKey);
+iteratorURL.setParameter("roleTypes", roleTypesParam);
 iteratorURL.setWindowState(LiferayWindowState.POP_UP);
 
 SearchContainer roleSearchContainer = new RoleSearch(renderRequest, iteratorURL);
@@ -244,6 +247,7 @@ RoleSearchTerms searchTerms = (RoleSearchTerms)roleSearchContainer.getSearchTerm
 			}
 
 			boolean filterGuestRole = false;
+			boolean permissionCheckGuestEnabled = PropsValues.PERMISSIONS_CHECK_GUEST_ENABLED;
 
 			if (Objects.equals(modelResource, Layout.class.getName())) {
 				Layout resourceLayout = LayoutLocalServiceUtil.getLayout(GetterUtil.getLong(resourcePrimKey));
@@ -251,7 +255,7 @@ RoleSearchTerms searchTerms = (RoleSearchTerms)roleSearchContainer.getSearchTerm
 				if (resourceLayout.isPrivateLayout()) {
 					Group resourceLayoutGroup = resourceLayout.getGroup();
 
-					if (!resourceLayoutGroup.isLayoutSetPrototype()) {
+					if (!resourceLayoutGroup.isLayoutSetPrototype() && !permissionCheckGuestEnabled) {
 						filterGuestRole = true;
 					}
 				}
@@ -267,7 +271,7 @@ RoleSearchTerms searchTerms = (RoleSearchTerms)roleSearchContainer.getSearchTerm
 					if (resourceLayout.isPrivateLayout()) {
 						Group resourceLayoutGroup = resourceLayout.getGroup();
 
-						if (!resourceLayoutGroup.isLayoutPrototype() && !resourceLayoutGroup.isLayoutSetPrototype()) {
+						if (!resourceLayoutGroup.isLayoutPrototype() && !resourceLayoutGroup.isLayoutSetPrototype() && !permissionCheckGuestEnabled) {
 							filterGuestRole = true;
 						}
 					}
@@ -329,8 +333,13 @@ RoleSearchTerms searchTerms = (RoleSearchTerms)roleSearchContainer.getSearchTerm
 					<liferay-ui:search-container-column-text
 						href="<%= definePermissionsHREF %>"
 						name="role"
-						value="<%= role.getTitle(locale) %>"
-					/>
+					>
+						<%= role.getTitle(locale) %>
+
+						<c:if test="<%= layout.isPrivateLayout() && name.equals(RoleConstants.GUEST) %>">
+							<liferay-ui:icon-help message="under-the-current-configuration-all-users-automatically-inherit-permissions-from-the-guest-role" />
+						</c:if>
+					</liferay-ui:search-container-column-text>
 
 					<%
 

@@ -417,7 +417,7 @@ public class MainServlet extends ActionServlet {
 			_log.error(e, e);
 		}
 
-		servletContext.setAttribute(WebKeys.STARTUP_FINISHED, true);
+		servletContext.setAttribute(WebKeys.STARTUP_FINISHED, Boolean.TRUE);
 
 		StartupHelperUtil.setStartupFinished(true);
 
@@ -627,10 +627,6 @@ public class MainServlet extends ActionServlet {
 		ServletContext servletContext = getServletContext();
 
 		request.setAttribute(WebKeys.CTX, servletContext);
-
-		String contextPath = request.getContextPath();
-
-		servletContext.setAttribute(WebKeys.CTX_PATH, contextPath);
 	}
 
 	protected void checkTilesDefinitionsFactory() {
@@ -1069,6 +1065,11 @@ public class MainServlet extends ActionServlet {
 				user = UserLocalServiceUtil.updateLastLogin(
 					userId, request.getRemoteAddr());
 			}
+		}
+
+		if (request.getAttribute(WebKeys.USER) != null) {
+			request.setAttribute(WebKeys.USER, user);
+			request.setAttribute(WebKeys.USER_ID, Long.valueOf(userId));
 		}
 
 		HttpSession session = request.getSession();

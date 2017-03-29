@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsException;
-import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
+import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.settings.SettingsLocator;
 import com.liferay.portal.kernel.settings.TypedSettings;
 import com.liferay.portal.kernel.util.Validator;
@@ -35,6 +35,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
@@ -66,8 +67,7 @@ public class ConfigurationProviderImpl implements ConfigurationProvider {
 
 			Object configurationOverrideInstance = null;
 
-			Settings settings = SettingsFactoryUtil.getSettings(
-				settingsLocator);
+			Settings settings = _settingsFactory.getSettings(settingsLocator);
 
 			TypedSettings typedSettings = new TypedSettings(settings);
 
@@ -108,26 +108,36 @@ public class ConfigurationProviderImpl implements ConfigurationProvider {
 				groupId, settingsId, configurationPid));
 	}
 
+	/**
+	 * @deprecated As of 2.0.0, replaced by {@link
+	 *             #getPortletInstanceConfiguration(Class, Layout, String)}
+	 */
+	@Deprecated
 	@Override
 	public <T> T getPortletInstanceConfiguration(
 			Class<T> clazz, Layout layout, PortletInstance portletInstance)
 		throws ConfigurationException {
 
+		return getPortletInstanceConfiguration(
+			clazz, layout, portletInstance.getPortletInstanceKey());
+	}
+
+	@Override
+	public <T> T getPortletInstanceConfiguration(
+			Class<T> clazz, Layout layout, String portletId)
+		throws ConfigurationException {
+
 		String configurationPid = _getConfigurationPid(clazz);
 
-		String portletInstanceKey = portletInstance.getPortletInstanceKey();
+		if (Validator.isNull(configurationPid)) {
+			return getConfiguration(
+				clazz, new PortletInstanceSettingsLocator(layout, portletId));
+		}
 
-		if (Validator.isNotNull(configurationPid)) {
-			return getConfiguration(
-				clazz,
-				new PortletInstanceSettingsLocator(
-					layout, portletInstanceKey, configurationPid));
-		}
-		else {
-			return getConfiguration(
-				clazz,
-				new PortletInstanceSettingsLocator(layout, portletInstanceKey));
-		}
+		return getConfiguration(
+			clazz,
+			new PortletInstanceSettingsLocator(
+				layout, portletId, configurationPid));
 	}
 
 	protected <T> Class<?> getOverrideClass(Class<T> clazz) {
@@ -171,5 +181,8 @@ public class ConfigurationProviderImpl implements ConfigurationProvider {
 
 		return settingsId;
 	}
+
+	@Reference
+	private SettingsFactory _settingsFactory;
 
 }

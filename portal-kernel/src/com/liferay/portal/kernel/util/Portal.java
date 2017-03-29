@@ -758,6 +758,9 @@ public interface Portal {
 			Layout layout, ThemeDisplay themeDisplay, Locale locale)
 		throws PortalException;
 
+	public String getLayoutFriendlyURL(ThemeDisplay themeDisplay)
+		throws PortalException;
+
 	public LayoutFriendlyURLComposite getLayoutFriendlyURLComposite(
 			long groupId, boolean privateLayout, String friendlyURL,
 			Map<String, String[]> params, Map<String, Object> requestContext)
@@ -1052,6 +1055,20 @@ public interface Portal {
 	public PortletURL getSiteAdministrationURL(
 		PortletResponse portletResponse, ThemeDisplay themeDisplay,
 		String portletName);
+
+	public String getSiteAdminURL(
+			Company company, Group group, String ppid,
+			Map<String, String[]> params)
+		throws PortalException;
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getSiteAdminURL(Company, Group, String, Map)}
+	 */
+	@Deprecated
+	public String getSiteAdminURL(
+			Group group, String ppid, Map<String, String[]> params)
+		throws PortalException;
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link

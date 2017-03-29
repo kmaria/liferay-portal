@@ -144,7 +144,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 									<liferay-frontend:vertical-card
 										actionJsp='<%= journalDisplayContext.isShowEditActions() ? "/article_action.jsp" : null %>'
 										actionJspServletContext="<%= application %>"
-										imageUrl="<%= articleImageURL %>"
+										imageUrl="<%= HtmlUtil.escape(articleImageURL) %>"
 										resultRow="<%= row %>"
 										rowChecker="<%= articleSearchContainer.getRowChecker() %>"
 										title="<%= curArticle.getTitle(locale) %>"
@@ -170,10 +170,12 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 						</liferay-ui:search-container-column-text>
 					</c:when>
 					<c:otherwise>
-						<liferay-ui:search-container-column-text
-							name="id"
-							value="<%= HtmlUtil.escape(curArticle.getArticleId()) %>"
-						/>
+						<c:if test="<%= !journalWebConfiguration.journalArticleForceAutogenerateId() %>">
+							<liferay-ui:search-container-column-text
+								name="id"
+								value="<%= HtmlUtil.escape(curArticle.getArticleId()) %>"
+							/>
+						</c:if>
 
 						<liferay-ui:search-container-column-jsp
 							cssClass="table-cell-content"
@@ -308,6 +310,13 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 						</liferay-ui:search-container-column-text>
 					</c:when>
 					<c:otherwise>
+						<c:if test="<%= !journalWebConfiguration.journalArticleForceAutogenerateId() %>">
+							<liferay-ui:search-container-column-text
+								name="id"
+								value="<%= HtmlUtil.escape(String.valueOf(curFolder.getFolderId())) %>"
+							/>
+						</c:if>
+
 						<liferay-ui:search-container-column-text
 							name="id"
 							value="<%= String.valueOf(curFolder.getFolderId()) %>"

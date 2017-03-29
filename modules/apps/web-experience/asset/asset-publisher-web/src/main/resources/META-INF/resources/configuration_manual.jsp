@@ -47,7 +47,7 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="model.resource.com.liferay.asset">
 
 						<%
-						List<AssetEntry> assetEntries = AssetPublisherUtil.getAssetEntries(renderRequest, portletPreferences, permissionChecker, assetPublisherDisplayContext.getGroupIds(), true, assetPublisherDisplayContext.isEnablePermissions(), true);
+						List<AssetEntry> assetEntries = AssetPublisherUtil.getAssetEntries(renderRequest, portletPreferences, permissionChecker, assetPublisherDisplayContext.getGroupIds(), true, assetPublisherDisplayContext.isEnablePermissions(), true, AssetRendererFactory.TYPE_LATEST);
 						%>
 
 						<liferay-ui:search-container
@@ -185,6 +185,7 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 											}
 											else {
 												ClassTypeReader classTypeReader = curRendererFactory.getClassTypeReader();
+
 												List<ClassType> assetAvailableClassTypes = classTypeReader.getAvailableClassTypes(PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId), locale);
 
 												for (ClassType assetAvailableClassType : assetAvailableClassTypes) {

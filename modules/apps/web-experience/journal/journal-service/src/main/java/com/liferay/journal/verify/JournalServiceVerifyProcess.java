@@ -21,7 +21,7 @@ import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.Fields;
-import com.liferay.journal.configuration.JournalServiceConfigurationValues;
+import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.internal.verify.model.JournalArticleResourceVerifiableModel;
 import com.liferay.journal.internal.verify.model.JournalArticleVerifiableModel;
 import com.liferay.journal.internal.verify.model.JournalFeedVerifiableModel;
@@ -50,8 +50,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.SystemEventLocalService;
@@ -140,6 +142,10 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 		_assetEntryLocalService = assetEntryLocalService;
 	}
 
+	/**
+	 * @deprecated As of 3.10.0
+	 */
+	@Deprecated
 	@Reference(unbind = "-")
 	protected void setCompanyLocalService(
 		CompanyLocalService companyLocalService) {
@@ -147,6 +153,10 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 		_companyLocalService = companyLocalService;
 	}
 
+	/**
+	 * @deprecated As of 3.10.0
+	 */
+	@Deprecated
 	@Reference(unbind = "-")
 	protected void setDDMStructureLocalService(
 		DDMStructureLocalService ddmStructureLocalService) {
@@ -188,6 +198,10 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 		_journalContentSearchLocalService = journalContentSearchLocalService;
 	}
 
+	/**
+	 * @deprecated As of 3.10.0
+	 */
+	@Deprecated
 	@Reference(unbind = "-")
 	protected void setJournalConverter(JournalConverter journalConverter) {
 		_journalConverter = journalConverter;
@@ -344,6 +358,10 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 		}
 	}
 
+	/**
+	 * @deprecated As of 3.10.0
+	 */
+	@Deprecated
 	protected void updateDynamicElements(JournalArticle article)
 		throws Exception {
 
@@ -677,8 +695,14 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 
 	protected void verifyArticleExpirationDate() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			if (!JournalServiceConfigurationValues.
-					JOURNAL_ARTICLE_EXPIRE_ALL_VERSIONS) {
+			long companyId = CompanyThreadLocal.getCompanyId();
+
+			JournalServiceConfiguration journalServiceConfiguration =
+				ConfigurationProviderUtil.getCompanyConfiguration(
+					JournalServiceConfiguration.class, companyId);
+
+			if (!journalServiceConfiguration.
+					expireAllArticleVersionsEnabled()) {
 
 				return;
 			}
@@ -798,16 +822,6 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 						catch (Exception e) {
 							_log.error(
 								"Unable to check the structure for article " +
-									article.getId(),
-								e);
-						}
-
-						try {
-							updateDynamicElements(article);
-						}
-						catch (Exception e) {
-							_log.error(
-								"Unable to update content for article " +
 									article.getId(),
 								e);
 						}

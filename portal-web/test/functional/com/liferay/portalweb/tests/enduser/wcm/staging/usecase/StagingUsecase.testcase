@@ -2599,9 +2599,7 @@
 		</execute>
 	</command>
 
-	<!-- LPS-66816 -->
-
-	<!--<command name="StagingLogo" priority="3">
+	<command name="StagingLogo" priority="3">
 		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Site Name" />
 		</execute>
@@ -2682,7 +2680,7 @@
 		</execute>
 
 		<execute macro="Page#viewCustomLogoPG" />
-	</command>-->
+	</command>
 
 	<command name="StagingMultipleDM" priority="3">
 		<execute macro="Navigator#gotoSitePage">
@@ -3315,9 +3313,7 @@
 		</execute>
 	</command>
 
-	<!-- LPS-69254 -->
-
-	<!--<command name="StagingPublishPage" priority="5">
+	<command name="StagingPublishPage" priority="5">
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -3488,7 +3484,7 @@
 		<execute macro="Portlet#viewPG">
 			<var name="portletName" value="Wiki" />
 		</execute>
-	</command>-->
+	</command>
 
 	<command name="StagingRemoteDocumentSubtypeViaAP" priority="3">
 		<property name="custom.properties" value="tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=" />

@@ -9,8 +9,26 @@
 		<execute function="AssertClick" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 	</command>
 
+	<command name="inputDescription">
+		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${description}" />
+	</command>
+
+	<command name="inputLocalizedName">
+		<execute function="Click" locator1="Language#SITE_NAME_TRANSLATION">
+			<var name="key_language" value="${language}" />
+		</execute>
+
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${localizedName}" />
+		</execute>
+	</command>
+
 	<command name="inputName">
 		<execute function="Type" locator1="TextInput#NAME" value1="${name}" />
+	</command>
+
+	<command name="inputTitle">
+		<execute function="Type" locator1="TextInput#TITLE" value1="${title}" />
 	</command>
 
 	<command name="publish">

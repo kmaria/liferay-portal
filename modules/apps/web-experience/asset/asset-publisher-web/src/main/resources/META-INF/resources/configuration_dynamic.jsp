@@ -44,7 +44,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 							<%= selectScope %>
 						</aui:fieldset>
 
-						<aui:fieldset label="asset-entry-type">
+						<aui:fieldset cssClass="source-container" label="asset-entry-type">
 
 							<%
 							Set<Long> availableClassNameIdsSet = SetUtil.fromArray(assetPublisherDisplayContext.getAvailableClassNameIds());
@@ -350,7 +350,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 									contentBox: '#<portlet:namespace />queryRules',
 									fieldIndexes: '<portlet:namespace />queryLogicIndexes',
 									namespace: '<portlet:namespace />',
-									url: '<liferay-portlet:renderURL portletName="<%= AssetPublisherPortletKeys.ASSET_PUBLISHER %>" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/edit_query_rule.jsp" /><portlet:param name="categorizableGroupIds" value="<%= StringUtil.merge(assetPublisherDisplayContext.getReferencedModelsGroupIds()) %>" /></liferay-portlet:renderURL>'
+									url: '<liferay-portlet:renderURL portletConfiguration="<%= true %>" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="<%= Constants.CMD %>" value="edit_query_rule" /><portlet:param name="categorizableGroupIds" value="<%= StringUtil.merge(assetPublisherDisplayContext.getReferencedModelsGroupIds()) %>" /></liferay-portlet:renderURL>'
 								}
 							).render();
 						</aui:script>
@@ -559,7 +559,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 	var ddmStructureFieldName = $('#<portlet:namespace />ddmStructureFieldName');
 	var orderByColumn1 = $('#<portlet:namespace />orderByColumn1');
 	var orderByColumn2 = $('#<portlet:namespace />orderByColumn2');
-	var sourcePanel = $('#<portlet:namespace />assetPublisherSourcePanel');
+	var sourcePanel = $('.source-container');
 
 	<%
 	for (AssetRendererFactory<?> curRendererFactory : classTypesAssetRendererFactories) {
@@ -729,7 +729,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 	sourcePanel.on(
 		'click',
-		'.asset-subtypefields-wrapper-enable .field',
+		'.asset-subtypefields-wrapper-enable label',
 		function(event) {
 			var assetSubtypeFieldsPopupNodes = $('.asset-subtypefields-popup .btn');
 

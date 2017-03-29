@@ -267,9 +267,13 @@ public class LayoutTypePortletImpl
 
 	@Override
 	public List<Portlet> getAllPortlets(boolean includeSystem) {
-		List<Portlet> filteredPortlets = new ArrayList<>();
-
 		List<Portlet> portlets = getAllPortlets();
+
+		if (includeSystem) {
+			return portlets;
+		}
+
+		List<Portlet> filteredPortlets = new ArrayList<>();
 
 		for (Portlet portlet : portlets) {
 			if (portlet.isSystem() && !includeSystem) {
@@ -1557,7 +1561,7 @@ public class LayoutTypePortletImpl
 		Group group = null;
 
 		try {
-			group = layout.getGroup();
+			group = _getGroup();
 		}
 		catch (PortalException pe) {
 			_log.error("Unable to get group " + layout.getGroupId(), pe);
@@ -1943,6 +1947,16 @@ public class LayoutTypePortletImpl
 			_dateFormat.format(new Date()));
 	}
 
+	private Group _getGroup() throws PortalException {
+		if (_group == null) {
+			Layout layout = getLayout();
+
+			_group = layout.getGroup();
+		}
+
+		return _group;
+	}
+
 	private static final String _MODIFIED_DATE = "modifiedDate";
 
 	private static final String _NESTED_PORTLETS_NAMESPACE =
@@ -1958,6 +1972,7 @@ public class LayoutTypePortletImpl
 		FastDateFormatFactoryUtil.getSimpleDateFormat(
 			PropsValues.INDEX_DATE_FORMAT_PATTERN);
 	private boolean _enablePortletLayoutListener = true;
+	private Group _group;
 	private Layout _layoutSetPrototypeLayout;
 	private PortalPreferences _portalPreferences;
 	private boolean _updatePermission;

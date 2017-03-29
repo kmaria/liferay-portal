@@ -16,11 +16,11 @@
 
 <%@ include file="/html/taglib/aui/input/init.jsp" %>
 
-<liferay-util:buffer var="helpMessageContent">
-	<c:if test="<%= Validator.isNotNull(helpMessage) %>">
+<c:if test="<%= Validator.isNotNull(helpMessage) %>">
+	<liferay-util:buffer var="helpMessageContent">
 		<liferay-ui:icon-help message="<%= helpMessage %>" />
-	</c:if>
-</liferay-util:buffer>
+	</liferay-util:buffer>
+</c:if>
 
 <liferay-util:buffer var="labelContent">
 	<c:if test="<%= Validator.isNotNull(label) %>">
@@ -41,7 +41,7 @@
 		</c:if>
 
 		<c:if test='<%= Validator.isNotNull(helpMessage) && !type.equals("toggle-switch") %>'>
-			<%= helpMessageContent %>
+			<%= pageContext.getAttribute("helpMessageContent") %>
 		</c:if>
 
 		<c:if test="<%= changesContext %>">
@@ -132,7 +132,7 @@
 			</span>
 
 			<c:if test="<%= Validator.isNotNull(helpMessage) %>">
-				<span class="toggle-switch-text toggle-switch-text-right"><%= helpMessageContent %></span>
+				<span class="toggle-switch-text toggle-switch-text-right"><%= pageContext.getAttribute("helpMessageContent") %></span>
 			</c:if>
 		</c:if>
 	</c:if>
@@ -292,7 +292,7 @@ boolean choiceField = checkboxField || radioField;
 		if (type.equals("hidden") && (value == null)) {
 			valueString = BeanPropertiesUtil.getStringSilent(bean, name);
 		}
-		else if (!ignoreRequestValue && (Validator.isNull(type) || type.equals("email") || type.equals("text") || type.equals("textarea"))) {
+		else if (!ignoreRequestValue && (Validator.isNull(type) || ArrayUtil.contains(_TYPES, type))) {
 			valueString = BeanParamUtil.getStringSilent(bean, request, name, valueString);
 
 			if (Validator.isNotNull(fieldParam)) {
@@ -418,4 +418,6 @@ private long _getClassPK(Object bean, long classPK) {
 }
 
 private static final String _TEXTAREA_WIDTH_HEIGHT_PREFIX = "liferay_resize_";
+
+private static final String[] _TYPES = {"color", "email", "number", "range", "tel", "text", "textarea"};
 %>
