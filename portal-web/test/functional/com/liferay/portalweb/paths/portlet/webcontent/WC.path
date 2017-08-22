@@ -233,6 +233,11 @@
 	<td>//div[contains(@class,'treeview')]//div[contains(@class,'card-horizontal') and contains(.,'${key_folderName}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ENTRY_TITLE</td>
+	<td>//a[contains(@title,'${key_webContentTitle}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>
