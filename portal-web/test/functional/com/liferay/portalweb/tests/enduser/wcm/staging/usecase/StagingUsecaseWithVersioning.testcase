@@ -773,9 +773,11 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
-		<execute macro="WebContentNavigator#gotoEditCP">
+		<execute macro="WebContentNavigator#gotoPreviewEntryCP">
 			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
+
+		<execute macro="Navigator#gotoBack" />
 	</command>
 
 	<command name="StagingSiteVariationIncompletePage" priority="5">
