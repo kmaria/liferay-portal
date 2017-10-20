@@ -33,31 +33,29 @@
 	</set-up>
 
 	<tear-down>
-		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+    		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="User#logoutAndLoginPG">
-					<var name="userLoginEmailAddress" value="test@liferay.com" />
-					<var name="userLoginFullName" value="Test Test" />
-				</execute>
+    		<if>
+    			<equals arg1="${testPortalInstance}" arg2="true" />
+    			<then>
+    				<execute macro="PortalInstances#tearDownCP" />
+    			</then>
+    			<else>
+    				<execute macro="User#logoutAndLoginPG">
+    					<var name="userLoginEmailAddress" value="test@liferay.com" />
+    					<var name="userLoginFullName" value="Test Test" />
+    				</execute>
 
-				<execute macro="User#deactivateCP">
-					<var name="userFirstName" value="userfn" />
-				</execute>
+                    <execute macro="User#tearDownSpecificUser">
+                        <var name="userScreenName" value="usersn" />
+                    </execute>
 
-				<execute macro="User#deleteCP" />
+    				<execute macro="Role#removeStagingAdminRole" />
 
-				<execute macro="Role#tearDownCP" />
-
-				<execute macro="Site#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
+    				<execute macro="Site#tearDownCP" />
+    			</else>
+    		</if>
+    	</tear-down>
 
 	<command name="StagingDemoLocalLive1" priority="4">
 		<execute macro="Navigator#openSiteURL">
