@@ -711,7 +711,12 @@
 		</if>
 
 		<if>
-			<condition function="IsElementPresent" locator1="Staging#STAGING_MENU_READY_FOR_PUBLICATION" />
+			<and>
+				<condition function="IsElementPresent" locator1="Staging#STAGING_MENU_READY_FOR_PUBLICATION" />
+				<not>
+					<isset var="pleaseDoNotMarkAsReady" />
+				</not>
+			</and>
 			<then>
 				<execute function="Check#toggleSwitch" locator1="Staging#STAGING_MENU_READY_FOR_PUBLICATION" />
 			</then>
@@ -719,7 +724,6 @@
 
 		<if>
 			<and>
-				<condition function="IsElementPresent" locator1="SitePages#NAVIGATION_PUBLIC_PAGES" />
 				<condition function="IsElementPresent" locator1="Staging#STAGING_BUTTON" />
 			</and>
 			<then>
@@ -1170,6 +1174,18 @@
 			<else>
 				<execute function="AssertTextEquals" locator1="Message#WORKFLOW_STATUS" value1="Pending (Review)" />
 			</else>
+		</if>
+	</command>
+
+	<command name="uncheckReadyForPublication">
+		<if>
+			<and>
+				<condition function="IsElementPresent" locator1="Staging#STAGING_MENU_READY_FOR_PUBLICATION" />
+				<condition function="IsChecked" locator1="Staging#STAGING_MENU_READY_FOR_PUBLICATION" />
+			</and>
+			<then>
+				<execute function="Uncheck" locator1="Staging#STAGING_MENU_READY_FOR_PUBLICATION" />
+			</then>
 		</if>
 	</command>
 
