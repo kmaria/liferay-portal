@@ -571,9 +571,9 @@
 			<var name="viewNoEntryTitle" value="Blogs Entry Title 2" />
 		</execute>
 
-		<execute macro="SitePageNavigator#gotoPages">
-			<var name="page" value="Public Pages" />
-			<var name="site" value="Site Name" />
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Blogs Page 2" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="Staging#gotoPublishToLive" />
@@ -723,7 +723,7 @@
 		</execute>
 
 		<execute macro="SystemSettings#editConfiguration">
-			<var name="configurationName" value="Documents & Media Service" />
+			<var name="configurationName" value="Documents &amp; Media Service" />
 		</execute>
 
 		<execute function="Type" locator1="TextInput#GENERIC_TEXT_INPUT" value1="30000000">

@@ -23,6 +23,9 @@
 			<property name="allowedExportPackageDirName" value="adaptive-media-image-service" />
 			<property name="allowedExportPackageDirName" value="adaptive-media-web" />
 			<property name="allowedExportPackageDirName" value="analytics-java-client" />
+			<property name="allowedExportPackageDirName" value="apio-architect-liferay-portal" />
+			<property name="allowedExportPackageDirName" value="apio-architect-sample-liferay-portal" />
+			<property name="allowedExportPackageDirName" value="apio-architect-wiring-osgi" />
 			<property name="allowedExportPackageDirName" value="dynamic-data-mapping-data-provider" />
 			<property name="allowedExportPackageDirName" value="dynamic-data-mapping-expression" />
 			<property name="allowedExportPackageDirName" value="dynamic-data-mapping-form-builder" />
@@ -51,7 +54,6 @@
 			<property name="allowedExportPackageDirName" value="modules/apps/collaboration/mentions/mentions-web" />
 			<property name="allowedExportPackageDirName" value="modules/apps/collaboration/message-boards/message-boards-web" />
 			<property name="allowedExportPackageDirName" value="modules/apps/collaboration/microblogs/microblogs-service" />
-			<property name="allowedExportPackageDirName" value="modules/apps/collaboration/wiki/wiki-engine-input-editor-common" />
 			<property name="allowedExportPackageDirName" value="modules/apps/collaboration/wiki/wiki-service" />
 			<property name="allowedExportPackageDirName" value="modules/apps/events-display/events-display-web" />
 			<property name="allowedExportPackageDirName" value="modules/apps/forms-and-workflow/calendar/calendar-service" />
@@ -454,9 +456,9 @@
 		<check name="XMLWebFileCheck" />
 	</source-processor>
 	<source-processor name="YMLSourceProcessor">
-		<check name="WhitespaceCheck">
+		<check name="YMLDefintionOrderCheck" />
+		<check name="YMLWhitespaceCheck">
 			<property name="allowLeadingSpaces" value="true" />
 		</check>
-		<check name="YMLDefintionOrderCheck" />
 	</source-processor>
 </source-formatter>
