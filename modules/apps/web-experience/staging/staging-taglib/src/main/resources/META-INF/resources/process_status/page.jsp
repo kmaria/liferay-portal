@@ -14,8 +14,8 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/process_status/init.jsp" %>
 
-<liferay-staging:process-list
-	resultRowSplitter="<%= new PublishResultRowSplitter() %>"
-/>
+<h6 class="background-task-status-row background-task-status-<%= cssStatusLabel %> <%= cssStatusClass %>">
+	<liferay-ui:message key="<%= backgroundTaskStatusLabel %>" />
+</h6>

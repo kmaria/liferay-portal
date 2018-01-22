@@ -14,8 +14,13 @@
  */
 --%>
 
+<%@ page import="com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants" %>
+
 <%@ include file="/init.jsp" %>
 
-<liferay-staging:process-list
-	resultRowSplitter="<%= new PublishResultRowSplitter() %>"
-/>
+<%
+int backgroundTaskStatus = ((Integer)request.getAttribute("liferay-staging:process-status:backgroundTaskStatus")).intValue();
+String backgroundTaskStatusLabel = (String)request.getAttribute("liferay-staging:process-status:backgroundTaskStatusLabel");
+String cssStatusLabel = BackgroundTaskConstants.getStatusLabel(backgroundTaskStatus);
+String cssStatusClass = BackgroundTaskConstants.getStatusCssClass(backgroundTaskStatus);
+%>
