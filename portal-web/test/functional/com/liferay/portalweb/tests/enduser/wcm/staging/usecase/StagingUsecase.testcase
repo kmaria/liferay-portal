@@ -286,6 +286,7 @@
 
 		<execute macro="Staging#configurePublishToLive">
 			<var name="checkPageName" value="Public Pages" />
+			<var name="checkContentNameList" value="Blogs" />
 		</execute>
 
 		<execute macro="Staging#savePublishTemplate">
@@ -294,7 +295,7 @@
 		</execute>
 
 		<execute macro="Staging#publishToLivePublishTemplate">
-			<var name="publishTemplateName" value="Publish Template Name" />
+			<var name="publishTemplateName" value="Publish Template Name Edit" />
 			<var name="siteName" value="Site Name" />
 		</execute>
 
