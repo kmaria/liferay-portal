@@ -167,6 +167,17 @@
 		<execute macro="SitePages#deletePage">
 			<var name="pageName" value="Test Page Name" />
 		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Pages" />
+		</execute>
+
+		<execute macro="Page#viewNoPage">
+			<var name="privacy" value="Public Pages" />
+			<var name="pageName" value="Test Page Name" />
+		</execute>
 	</command>
 
 	<command name="PublicationWithoutReadyForPublication" priority="4">
