@@ -85,12 +85,18 @@
 			<var name="parentPageName" value="Staging Test Page" />
 		</execute>
 
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Page 1" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
 		<execute macro="Staging#changeSitePageVariationPG">
 			<var name="sitePagesVariationMenulistName" value="Main Variation" />
 			<var name="sitePagesVariationName" value="Summer" />
 		</execute>
 
-		<execute macro="Staging#viewNotAvailableMenuItem">
+		<execute macro="Page#viewNoPage">
+			<var name="privacy" value="Public Pages" />
 			<var name="pageName" value="Page 1" />
 		</execute>
 	</command>
