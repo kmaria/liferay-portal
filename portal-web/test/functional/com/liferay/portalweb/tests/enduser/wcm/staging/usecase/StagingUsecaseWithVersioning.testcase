@@ -96,8 +96,8 @@
 		</execute>
 
 		<execute macro="Page#viewNoPage">
-			<var name="privacy" value="Public Pages" />
 			<var name="pageName" value="Page 1" />
+			<var name="privacy" value="Public Pages" />
 		</execute>
 	</command>
 
@@ -175,8 +175,8 @@
 		</execute>
 
 		<execute macro="Page#viewNoPage">
-			<var name="privacy" value="Public Pages" />
 			<var name="pageName" value="Test Page Name" />
+			<var name="privacy" value="Public Pages" />
 		</execute>
 	</command>
 
