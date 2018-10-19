@@ -512,6 +512,8 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
+		<execute function="Refresh" />
+
 		<execute macro="Site#addBlankCP">
 			<var name="siteName" value="Site Name" />
 		</execute>
@@ -765,6 +767,8 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
+		<execute function="Refresh" />
+
 		<execute macro="Site#addBlankCP">
 			<var name="siteName" value="Site Name 2" />
 		</execute>
@@ -873,6 +877,8 @@
 		<execute macro="DMDocument#deleteCP">
 			<var name="dmDocumentTitle" value="DM Document Title" />
 		</execute>
+
+		<execute function="Refresh" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Sites" />
