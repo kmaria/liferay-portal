@@ -551,6 +551,7 @@
 		<execute function="AssertElementPresent" locator1="IFrame#DIALOG" />
 
 		<execute macro="LAR#_export">
+			<var name="exportIndividualDeletions" value="${exportIndividualDeletions}" />
 			<var name="exportPermissions" value="${exportPermissions}" />
 			<var name="larFileName" value="${larFileName}" />
 			<var name="portletName" value="${portletName}" />
