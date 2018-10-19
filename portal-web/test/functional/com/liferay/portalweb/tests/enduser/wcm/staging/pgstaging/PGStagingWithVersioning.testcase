@@ -108,7 +108,11 @@
 			<var name="localizedFriendlyURL" value="/german" />
 		</execute>
 
-		<execute macro="Button#clickSave" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="German Staging Test Page" />
+		</execute>
+
+		<execute function="Click" locator1="Button#SAVE" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />
