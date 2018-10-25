@@ -579,6 +579,8 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
+		<execute function="Refresh" />
+
 		<execute macro="Site#addBlankCP">
 			<var name="siteName" value="Site Name" />
 		</execute>
