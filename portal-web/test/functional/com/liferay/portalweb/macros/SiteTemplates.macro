@@ -96,11 +96,17 @@
 			<var name="name" value="${pageName}" />
 		</execute>
 
-		<for list="1,2" param="iteration">
-			<execute macro="Button#click">
-				<var name="button" value="Save" />
-			</execute>
-		</for>
+		<execute macro="Button#click">
+			<var name="button" value="Save" />
+		</execute>
+
+		<execute function="SelectFrame#selectFrameTop" />
+
+		<execute macro="Button#click">
+			<var name="button" value="Save" />
+		</execute>
+
+		<execute function="WaitForSPARefresh" />
 	</command>
 
 	<command name="deleteCP">
