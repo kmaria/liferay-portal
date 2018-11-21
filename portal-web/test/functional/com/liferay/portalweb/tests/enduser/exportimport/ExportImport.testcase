@@ -371,6 +371,7 @@
 		</execute>
 
 		<execute macro="WebContent#deleteCP">
+			<var name="siteURLKey" value="Liferay" />
 			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
