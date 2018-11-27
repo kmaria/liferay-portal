@@ -165,6 +165,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>HISTORY_VERSION_2</td>
+	<td>xpath=(//a[contains(@class,'layout-revision')])[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>HISTORY_VERSION_ANCHOR</td>
 	<td>//a[contains(@class,'layout-revision')]</td>
 	<td></td>

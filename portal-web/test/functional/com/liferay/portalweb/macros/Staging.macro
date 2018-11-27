@@ -1165,9 +1165,15 @@
 				</then>
 			</elseif>
 			<elseif>
-				<condition function="IsElementPresent#isVisible" locator1="Staging#HISTORY_VERSION" />
+				<condition function="IsElementPresent" locator1="Staging#HISTORY_VERSION_2" />
 				<then>
-					<execute function="AssertTextEquals#assertPartialText" locator1="Staging#HISTORY_VERSION" value1="${historyVersion}" />
+					<execute function="AssertTextEquals" locator1="Staging#HISTORY_VERSION_2" value1="${historyVersion}" />
+				</then>
+			</elseif>
+			<elseif>
+				<condition function="IsElementPresent" locator1="Staging#HISTORY_VERSION" />
+				<then>
+					<execute function="AssertTextEquals" locator1="Staging#HISTORY_VERSION" value1="${historyVersion}" />
 				</then>
 			</elseif>
 			<else>
