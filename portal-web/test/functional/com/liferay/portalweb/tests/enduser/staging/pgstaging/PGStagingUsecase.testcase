@@ -26,9 +26,11 @@
 			<else>
 				<execute macro="User#tearDownCP" />
 
-				<execute macro="Role#tearDownCP" />
+				<execute macro="Organization#tearDownCP">
+					<var name="orgName" value="Staging Organization Name" />
+				</execute>
 
-				<execute macro="Organization#tearDownCP" />
+				<execute macro="Role#tearDownCP" />
 			</else>
 		</if>
 	</tear-down>
@@ -71,7 +73,7 @@
 		</execute>
 
 		<execute macro="Organization#addCP">
-			<var name="orgName" value="Organization Name" />
+			<var name="orgName" value="Staging Organization Name" />
 			<var name="orgType" value="Organization" />
 		</execute>
 
@@ -84,11 +86,11 @@
 		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
 
 		<execute macro="Organization#addSiteCP">
-			<var name="orgName" value="Organization Name" />
+			<var name="orgName" value="Staging Organization Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Organization Name" />
+			<var name="site" value="Staging Organization Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -129,7 +131,7 @@
 		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
 
 		<execute macro="Organization#addMemberCP">
-			<var name="orgName" value="Organization Name" />
+			<var name="orgName" value="Staging Organization Name" />
 			<var name="userFirstName" value="userfn" />
 			<var name="userLastName" value="userln" />
 			<var name="userName" value="userfn userln" />
@@ -165,7 +167,7 @@
 		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
 
 		<execute macro="Organization#addMemberCP">
-			<var name="orgName" value="Organization Name" />
+			<var name="orgName" value="Staging Organization Name" />
 			<var name="userFirstName" value="userfncr" />
 			<var name="userLastName" value="userlncr" />
 			<var name="userName" value="userfncr userlncr" />
@@ -181,7 +183,7 @@
 		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
 
 		<execute macro="Organization#assignOrgRoleCP">
-			<var name="orgName" value="Organization Name" />
+			<var name="orgName" value="Staging Organization Name" />
 			<var name="roleTitle" value="Organization Content Reviewer" />
 			<var name="userFirstName" value="userfncr" />
 			<var name="userLastName" value="userlncr" />
@@ -216,7 +218,7 @@
 		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
 
 		<execute macro="Organization#addMemberCP">
-			<var name="orgName" value="Organization Name" />
+			<var name="orgName" value="Staging Organization Name" />
 			<var name="userFirstName" value="userfnoa" />
 			<var name="userLastName" value="userlnoa" />
 			<var name="userScreenName" value="usersnoa" />
@@ -231,7 +233,7 @@
 		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
 
 		<execute macro="Organization#assignOrgRoleCP">
-			<var name="orgName" value="Organization Name" />
+			<var name="orgName" value="Staging Organization Name" />
 			<var name="roleTitle" value="Organization Administrator" />
 			<var name="userFirstName" value="userfnoa" />
 			<var name="userLastName" value="userlnoa" />
@@ -239,7 +241,7 @@
 		</execute>
 
 		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Organization Name" />
+			<var name="siteName" value="Staging Organization Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -249,11 +251,11 @@
 		</execute>
 
 		<execute macro="Staging#activateStagingCP">
-			<var name="siteName" value="Organization Name" />
+			<var name="siteName" value="Staging Organization Name" />
 		</execute>
 
 		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Organization Name" />
+			<var name="siteName" value="Staging Organization Name" />
 		</execute>
 
 		<execute macro="Navigator#gotoStagedView" />
@@ -276,7 +278,7 @@
 
 		<execute macro="Navigator#gotoStagedSitePage">
 			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Organization Name" />
+			<var name="siteName" value="Staging Organization Name" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -287,7 +289,7 @@
 		<execute macro="User#logoutUserPG" />
 
 		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Organization Name" />
+			<var name="siteName" value="Staging Organization Name" />
 		</execute>
 
 		<execute function="AssertElementNotPresent" locator1="Portlet#TITLE">
@@ -301,7 +303,7 @@
 
 		<execute macro="Navigator#gotoStagedSitePage">
 			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Organization Name" />
+			<var name="siteName" value="Staging Organization Name" />
 		</execute>
 
 		<execute macro="Staging#gotoPublishToLive" />
@@ -311,7 +313,7 @@
 		<execute macro="User#logoutUserPG" />
 
 		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Organization Name" />
+			<var name="siteName" value="Staging Organization Name" />
 		</execute>
 
 		<execute function="AssertElementPresent" locator1="Portlet#TITLE">
@@ -325,7 +327,7 @@
 
 		<execute macro="Navigator#gotoStagedSitePage">
 			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Organization Name" />
+			<var name="siteName" value="Staging Organization Name" />
 		</execute>
 
 		<execute macro="BlogsEntry#addWithWorkflowPG">
@@ -336,7 +338,7 @@
 		<execute macro="User#logoutUserPG" />
 
 		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Organization Name" />
+			<var name="siteName" value="Staging Organization Name" />
 		</execute>
 
 		<execute function="AssertElementNotPresent" locator1="BlogsEntry#TITLE">
@@ -371,7 +373,7 @@
 		<execute macro="User#logoutUserPG" />
 
 		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Organization Name" />
+			<var name="siteName" value="Staging Organization Name" />
 		</execute>
 
 		<execute function="AssertElementNotPresent" locator1="BlogsEntry#TITLE">
@@ -385,7 +387,7 @@
 
 		<execute macro="Navigator#gotoStagedSitePage">
 			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Organization Name" />
+			<var name="siteName" value="Staging Organization Name" />
 		</execute>
 
 		<execute macro="Staging#gotoPublishToLive" />
@@ -395,7 +397,7 @@
 		<execute macro="User#logoutUserPG" />
 
 		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Organization Name" />
+			<var name="siteName" value="Staging Organization Name" />
 		</execute>
 
 		<execute function="AssertElementPresent" locator1="BlogsEntry#TITLE">

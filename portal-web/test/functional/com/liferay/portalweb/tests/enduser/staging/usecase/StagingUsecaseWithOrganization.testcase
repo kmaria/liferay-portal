@@ -24,13 +24,15 @@
 					<var name="userLoginFullName" value="Test Test" />
 				</execute>
 
-				<execute macro="Organization#tearDownCP" />
-
 				<execute macro="User#deactivateCP">
 					<var name="userFirstName" value="userfn" />
 				</execute>
 
 				<execute macro="User#deleteCP" />
+
+				<execute macro="Organization#tearDownCP">
+					<var name="orgName" value="Staging Organization Name" />
+				</execute>
 			</else>
 		</if>
 	</tear-down>
@@ -47,7 +49,7 @@
 		</execute>
 
 		<execute macro="Organization#addCP">
-			<var name="orgName" value="Organization Name" />
+			<var name="orgName" value="Staging Organization Name" />
 			<var name="orgType" value="Organization" />
 		</execute>
 
@@ -61,7 +63,7 @@
 
 		<execute macro="Organization#addSiteCP">
 			<var name="organizationSite" value="Community Site" />
-			<var name="orgName" value="Organization Name" />
+			<var name="orgName" value="Staging Organization Name" />
 		</execute>
 
 		<execute macro="JSONUser#addUser">
@@ -103,7 +105,7 @@
 		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
 
 		<execute macro="Organization#addMemberCP">
-			<var name="orgName" value="Organization Name" />
+			<var name="orgName" value="Staging Organization Name" />
 			<var name="userFirstName" value="userfn" />
 			<var name="userLastName" value="userln" />
 			<var name="userName" value="userfn userln" />
@@ -118,7 +120,7 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Organization Name" />
+			<var name="site" value="Staging Organization Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -129,12 +131,12 @@
 
 		<execute macro="Staging#activateStagingCP">
 			<var name="pageVersioningEnabled" value="true" />
-			<var name="siteName" value="Organization Name" />
+			<var name="siteName" value="Staging Organization Name" />
 		</execute>
 
 		<execute macro="Navigator#gotoStagedSitePage">
 			<var name="pageName" value="Home" />
-			<var name="siteName" value="Organization Name" />
+			<var name="siteName" value="Staging Organization Name" />
 		</execute>
 
 		<execute macro="Staging#addSitePagesVariationPG">
@@ -144,7 +146,7 @@
 
 		<execute macro="Navigator#gotoStagedSitePage">
 			<var name="pageName" value="Home" />
-			<var name="siteName" value="Organization Name" />
+			<var name="siteName" value="Staging Organization Name" />
 		</execute>
 
 		<execute macro="Staging#viewSitePagesVariationPG">
@@ -157,7 +159,7 @@
 
 		<execute macro="Navigator#gotoStagedSitePage">
 			<var name="pageName" value="Home" />
-			<var name="siteName" value="Organization Name" />
+			<var name="siteName" value="Staging Organization Name" />
 		</execute>
 
 		<execute macro="Staging#viewPageVariationPG">
