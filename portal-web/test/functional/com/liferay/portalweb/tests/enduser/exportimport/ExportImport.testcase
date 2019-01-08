@@ -632,6 +632,7 @@ definition {
 	test ExportImportSampleLARPortlet {
 		property portal.acceptance = "false";
 		property portlet.plugins.includes = "sample-lar-portlet";
+		property portal.release = "false";
 		property test.name.skip.portal.instance = "ExportImport#ExportImportSampleLARPortlet";
 
 		ProductMenu.gotoPortlet(
