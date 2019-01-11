@@ -98,6 +98,8 @@ definition {
 		DownloadTempFile(locator1 = "${larFileName}");
 
 		SelectFrame(value1 = "relative=top");
+
+		AssertTextNotPresent(value1 = "The requested resource could not be found");
 	}
 
 	macro _exportSite {
