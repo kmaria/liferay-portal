@@ -494,8 +494,7 @@ definition {
 
 	@priority = "5"
 	test ExportImportPortlet {
-		property portal.acceptance = "false";
-		property portal.release = "false";
+		property portal.acceptance = "true";
 
 		ProductMenu.gotoPortlet(
 			category = "Build",
