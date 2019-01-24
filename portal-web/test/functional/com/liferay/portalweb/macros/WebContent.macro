@@ -1110,10 +1110,9 @@ definition {
 
 		Click(locator1 = "WC#ENTRY_LIST_MENULIST_ICON");
 
-		AssertClick.assertPartialTextClickAt(
-			locator1 = "MenuItem#ANY_MENU_ITEM",
-			value1 = "Move to Recycle Bin",
-			key_menuItem = "Move to Recycle Bin"
+		WebContentNavigator.gotoEntryMenuItem(
+			entry = "${webContentTitle}",
+			menuItem = "Move to Recycle Bin"
 		);
 
 		AssertElementPresent(locator1 = "Message#SUCCESS");
