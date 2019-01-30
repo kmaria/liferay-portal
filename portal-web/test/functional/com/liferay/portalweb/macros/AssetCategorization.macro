@@ -52,7 +52,7 @@ definition {
 
 		SelectFrame(value1 = "relative=top");
 
-		AssertClick(locator1 = "Button#DONE", value1 = "Done");
+		AssertClick(locator1 = "Button#ADD", value1 = "Add");
 	}
 
 	macro addTag {
