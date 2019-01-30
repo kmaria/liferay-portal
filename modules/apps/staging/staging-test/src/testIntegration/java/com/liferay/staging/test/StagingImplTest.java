@@ -86,6 +86,7 @@ import javax.portlet.PortletPreferences;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -110,6 +111,7 @@ public class StagingImplTest {
 		_group = GroupTestUtil.addGroup();
 	}
 
+	@Ignore
 	@Test
 	public void testInitialPublication() throws Exception {
 		long companyId = _group.getCompanyId();
