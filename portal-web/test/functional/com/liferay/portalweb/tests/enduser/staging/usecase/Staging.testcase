@@ -1094,7 +1094,7 @@ definition {
 			portlet = "Web Content"
 		);
 
-		Workflow.configureWorkflow(workflowDefinition = "Single Approver");
+		Workflow.configureWCWorkflowViaFolderInfo(workflowDefinition = "Single Approver");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
