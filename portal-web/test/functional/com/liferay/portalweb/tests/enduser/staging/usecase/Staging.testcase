@@ -2513,7 +2513,7 @@ definition {
 		);
 
 		Staging.publishViaSAP(
-			assetTitle = "Web Content Title",
+			entry = "Web Content Title",
 			confirmMessage = "Are you sure you want to publish the selected web content?"
 		);
 
@@ -2524,7 +2524,7 @@ definition {
 		);
 
 		Staging.publishViaSAP(
-			assetTitle = "Test Bookmark",
+			entry = "Test Bookmark",
 			confirmMessage = "Are you sure you want to publish to live?"
 		);
 
@@ -2535,7 +2535,7 @@ definition {
 		);
 
 		Staging.publishViaSAP(
-			assetTitle = "DM Document Title",
+			entry = "DM Document Title",
 			confirmMessage = "Are you sure you want to publish the selected document?"
 		);
 

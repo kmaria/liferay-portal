@@ -871,7 +871,7 @@ definition {
 		);
 
 		Staging.publishViaSAP(
-			assetTitle = "Web Content Title",
+			entry = "Web Content Title",
 			confirmMessage = "Are you sure you want to publish the selected web content?"
 		);
 

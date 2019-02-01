@@ -113,7 +113,7 @@ definition {
 		LexiconEntry.changeDisplayStyle(displayStyle = "Cards");
 
 		Staging.publishViaSAP(
-			assetTitle = "Blogs Entry Title",
+			entry = "Blogs Entry Title",
 			confirmMessage = "Are you sure you want to publish to live?"
 		);
 
