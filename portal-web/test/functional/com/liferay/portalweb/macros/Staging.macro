@@ -887,9 +887,17 @@ definition {
 	}
 
 	macro publishViaSAP {
-		Click(locator1 = "Icon#ROW_VERTICAL_ELLIPSIS", key_rowEntry = "${assetTitle}");
+		if (IsElementPresent(locator1 = "Icon#ROW_VERTICAL_ELLIPSIS", key_rowEntry = "${entry}")) {
+			Click(locator1 = "Icon#ROW_VERTICAL_ELLIPSIS", key_rowEntry = "${entry}");
 
-		MenuItem.clickNoError(menuItem = "Publish to Live");
+			MenuItem.clickNoError(menuItem = "Publish to Live");
+		}
+		else {
+			WebContentNavigator.gotoEntryMenuItem(
+				entry = "${entry}",
+				menuItem = "Publish to Live"
+			);
+		}
 
 		AssertConfirm(value1 = "${confirmMessage}");
 
