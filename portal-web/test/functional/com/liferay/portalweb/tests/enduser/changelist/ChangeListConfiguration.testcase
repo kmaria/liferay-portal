@@ -1,0 +1,38 @@
+@component-name = "portal-staging"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Change Lists";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+	}
+
+	@description = "Enable and Disable Change List"
+	@priority = "5"
+	test EnableDisableChangeList {
+		ProductMenu.gotoPortlet(
+			category = "Change Lists",
+			panel = "Control Panel",
+			portlet = "Settings"
+		);
+
+		ChangeList.enableChangeList();
+
+		ProductMenu.gotoPortlet(
+			category = "Change Lists",
+			panel = "Control Panel",
+			portlet = "Settings"
+		);
+
+		ChangeList.disableChangeList();
+
+		AssertElementPresent(locator1 = "ChangeListSettings#DISABLED_SAVE_AND_GO_TO_OVERVIEW_BUTTON");
+	}
+}
