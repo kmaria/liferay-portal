@@ -1,6 +1,6 @@
 definition {
 	macro _gotoAddPGViaWCD {
-		MouseOver.mouseOverNotVisible(locator1 = "WCD#ADD_WEB_CONTENT");
+		Portlet.clickPortletPlusIconPG(portletName = "Web Content Display");
 
 		Click(locator1 = "WCD#ADD_WEB_CONTENT");
 
