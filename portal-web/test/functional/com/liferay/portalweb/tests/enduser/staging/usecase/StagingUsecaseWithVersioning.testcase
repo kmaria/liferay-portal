@@ -877,6 +877,8 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#METADATA_SETS_IFRAME");
 
+		AssertElementPresent(locator1 = "Staging#HISTORY_VERSION");
+
 		var historyVersion = selenium.getText("Staging#HISTORY_VERSION");
 
 		Navigator.gotoStagedSitePage(
