@@ -312,9 +312,9 @@ definition {
 	}
 
 	macro assignSiteRoleCP {
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Assign Site Roles",
-			rowEntry = "${resourceName}"
+		LexiconCard.clickEllipsisItem(
+			card = "${resourceName}",
+			item = "Assign Site Roles"
 		);
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
