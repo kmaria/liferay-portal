@@ -1,0 +1,21 @@
+definition {
+	macro enableChangeList {
+		Check.checkToggleSwitch(
+			locator1 = "ChangeListSettings#CHANGE_LISTS_TOGGLE_SWITCH"
+		);
+
+		Click(locator1 = "Button#SAVE");
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro disableChangeList {
+		Uncheck.uncheckToggleSwitch(
+			locator1 = "ChangeListSettings#CHANGE_LISTS_TOGGLE_SWITCH"
+		);
+
+		Click(locator1 = "Button#SAVE");
+
+		Alert.viewSuccessMessage();
+	}
+}
