@@ -80,7 +80,7 @@ definition {
 			Uncheck(locator1 = "Checkbox#ADD_TO_NAVIGATION_MENU");
 		}
 
-		Button.click(button = "Save");
+		Button.click(button = "Add");
 
 		SelectFrame.selectFrameTop();
 
