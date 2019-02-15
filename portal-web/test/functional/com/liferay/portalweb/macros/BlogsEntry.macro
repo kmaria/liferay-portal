@@ -1051,10 +1051,10 @@ definition {
 			}
 		}
 		else {
-			var tagName = StringUtil.lowerCase("${tagName}");
 			var key_tagName = "${tagName}";
+			var tagName = StringUtil.lowerCase("${tagName}");
 
-			AssertClick(locator1 = "BlogsEntry#TAG", value1 = "${tagName}");
+			AssertClick.assertTextClickCaseInsensitive(locator1 = "BlogsEntry#TAG", value1 = "${tagName}");
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "AssetCategorization#TAG_FILTER_TITLE",

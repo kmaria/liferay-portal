@@ -2182,8 +2182,8 @@ definition {
 			}
 		}
 		else {
-			var tagName = StringUtil.lowerCase("${tagName}");
 			var key_tagName = "${tagName}";
+			var tagName = StringUtil.upperCase("${tagName}");
 
 			AssertTextEquals(locator1 = "DocumentsAndMedia#TAG", value1 = "${tagName}");
 		}
