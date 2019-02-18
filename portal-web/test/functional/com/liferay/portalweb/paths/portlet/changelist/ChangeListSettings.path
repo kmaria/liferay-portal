@@ -18,6 +18,11 @@
 	<td>//button[contains(.,'Save and Go to Overview')][(@disabled)]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SUPPORTED_CONTENT_TYPES</td>
+	<td>//span[contains(@data-title,'${key_changeListContentType}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

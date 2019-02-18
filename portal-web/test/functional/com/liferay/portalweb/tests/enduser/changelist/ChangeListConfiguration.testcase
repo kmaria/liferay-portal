@@ -35,4 +35,24 @@ definition {
 
 		AssertElementPresent(locator1 = "ChangeListSettings#DISABLED_SAVE_AND_GO_TO_OVERVIEW_BUTTON");
 	}
+
+	@description = "Check Supported Content Types"
+	@priority = "4"
+	test CheckSupportedContentTypes {
+		ProductMenu.gotoPortlet(
+			category = "Change Lists",
+			panel = "Control Panel",
+			portlet = "Settings"
+		);
+
+		for (var changeListContentType : list "Web Content") {
+			var key_changeListContentType = "${changeListContentType}";
+
+			AssertHTMLSourceTextPresent(
+				locator1 = "ChangeListSettings#SUPPORTED_CONTENT_TYPES",
+				value1 = "${changeListContentType}"
+			);
+		}
+
+	}
 }
