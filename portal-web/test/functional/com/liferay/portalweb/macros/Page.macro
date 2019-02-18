@@ -452,6 +452,8 @@ definition {
 
 		MenuItem.click(menuItem = "Configure");
 
+		Navigator.gotoNavTab(navTab = "Look and Feel");
+
 		AssertTextPresent(
 			locator1 = "SitePagesEditPage#VIEW_THEME",
 			value1 = "${themeName}"
