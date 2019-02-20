@@ -1,0 +1,108 @@
+@component-name = "portal-staging"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Change Lists";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		ProductMenu.gotoPortlet(
+			category = "Change Lists",
+			panel = "Control Panel",
+			portlet = "Settings"
+		);
+
+		ChangeList.enableChangeList();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			ProductMenu.gotoPortlet(
+				category = "Change Lists",
+				panel = "Control Panel",
+				portlet = "Settings"
+			);
+
+			ChangeList.disableChangeList();
+		}
+	}
+
+	@priority = "3"
+	test CancelChangeListCreation {
+		ProductMenu.gotoPortlet(
+			category = "Change Lists",
+			panel = "Control Panel",
+			portlet = "Overview"
+		);
+
+		ChangeList.cancelChangeListCreation();
+	}
+
+	@description = "Create New Change List"
+	@priority = "5"
+	test CreateNewChangeListAndActivate {
+		ProductMenu.gotoPortlet(
+			category = "Change Lists",
+			panel = "Control Panel",
+			portlet = "Overview"
+		);
+
+		ChangeList.addNewChangeList(
+			changeListDescription = "Change List Description",
+			changeListName = "Change List Name"
+		);
+
+		ChangeList.selectChangeList(
+			changeListName = "Select Change List"
+		);
+
+		ChangeList.addNewChangeList(
+			changeListDescription = "Change List Description",
+			changeListName = "Second Change List Name"
+		);
+
+		AssertTextEquals(
+			locator1 = "ChangeList#ACTIVE_CHANGE_LIST_TITLE",
+			value1 = "Second Change List Name"
+		);
+
+		ChangeList.selectChangeList(
+			changeListName = "Select Change List"
+		);
+
+		ChangeList.selectChangeListMenuItem(
+			menuItem = "Make Active",
+			rowEntry = "Change List Name"
+		);
+
+		AssertTextEquals(
+			locator1 = "ChangeList#ACTIVE_CHANGE_LIST_TITLE",
+			value1 = "Change List Name"
+		);
+	}
+
+	@description = "Try to create new change list with empty string name"
+	@priority = "3"
+	test CreateNewChangeListWithNoName {
+		ProductMenu.gotoPortlet(
+			category = "Change Lists",
+			panel = "Control Panel",
+			portlet = "Overview"
+		);
+
+		ChangeList.addNewChangeList(
+			changeListDescription = "Change List Description",
+			changeListName = " "
+		);
+
+		Alert.viewRequiredField();
+	}
+}

@@ -1,4 +1,25 @@
 definition {
+	macro addNewChangeList {
+		Click(locator1 = "Button#PLUS");
+
+		Type(locator1 = "ChangeList#CHANGE_LIST_NAME", value1 = "${changeListName}");
+
+		Type(locator1 = "ChangeList#CHANGE_LIST_DESCRIPTION", value1 = "${changeListDescription}");
+
+		Button.clickSave();
+	}
+
+	macro cancelChangeListCreation {
+		Click(locator1 = "Button#PLUS");
+
+		Button.clickCancel();
+
+		AssertTextEquals(
+			locator1 = "ChangeList#OVERVIEW_PAGE_TITLE",
+			value1 = "Overview"
+		);
+	}
+
 	macro enableChangeList {
 		Check.checkToggleSwitch(
 			locator1 = "ChangeListSettings#CHANGE_LISTS_TOGGLE_SWITCH"
@@ -17,5 +38,26 @@ definition {
 		Click(locator1 = "Button#SAVE");
 
 		Alert.viewSuccessMessage();
+	}
+
+	macro selectChangeList {
+		Click(locator1 = "ChangeList#SELECT_CHANGE_LIST_DROPDOWN");
+
+		Click(
+			locator1 = "ChangeList#SELECT_CHANGE_LIST",
+			key_changeListName = "${changeListName}"
+		);
+
+		AssertTextEquals(
+			locator1 = "ChangeList#OVERVIEW_PAGE_TITLE",
+			value1 = "Select Change List"
+		);
+	}
+
+	macro selectChangeListMenuItem {
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "${menuItem}",
+			rowEntry = "${rowEntry}"
+		);
 	}
 }

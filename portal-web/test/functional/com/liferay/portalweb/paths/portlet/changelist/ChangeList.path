@@ -1,0 +1,44 @@
+<html>
+<head>
+<title>ChangeList</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ChangeList</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>ACTIVE_CHANGE_LIST_TITLE</td>
+	<td>//div[contains(@data-qa-id,'headerTitle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHANGE_LIST_NAME</td>
+	<td>//input[contains(@name,'name')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHANGE_LIST_DESCRIPTION</td>
+	<td>//input[contains(@name,'description')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OVERVIEW_PAGE_TITLE</td>
+	<td>//span[contains(@data-qa-id,'headerTitle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_CHANGE_LIST</td>
+	<td>xpath=(//a[contains(.,'Select Change List')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_CHANGE_LIST_DROPDOWN</td>OVERVIEW_PAGE_TITLE
+	<td>//a[contains(@data-qa-id,'headerDropDownMenu')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>
