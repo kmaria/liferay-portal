@@ -40,6 +40,17 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro searchForChangeList {
+		Search.searchCP(searchTerm = "${changeListName}");
+
+		var key_changeListName = "${changeListName}";
+
+		AssertTextPresent(
+			locator1 = "ChangeList#CHANGE_LIST_TABLE_ENTRY_NAME",
+			value1 = "${changeListName}"
+		);
+	}
+
 	macro selectChangeList {
 		Click(locator1 = "ChangeList#SELECT_CHANGE_LIST_DROPDOWN");
 

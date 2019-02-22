@@ -78,6 +78,8 @@ definition {
 			changeListName = "Select Change List"
 		);
 
+		ChangeList.searchForChangeList(changeListName = "Change List Name");
+
 		ChangeList.selectChangeListMenuItem(
 			menuItem = "Make Active",
 			rowEntry = "Change List Name"

@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CHANGE_LIST_TABLE_ENTRY_NAME</td>
+	<td>//tr[contains(@data-qa-id,'row')]//td[1]</td>
+	<td></td>
+</tr>C
+<tr>
 	<td>OVERVIEW_PAGE_TITLE</td>
 	<td>//span[contains(@data-qa-id,'headerTitle')]</td>
 	<td></td>
