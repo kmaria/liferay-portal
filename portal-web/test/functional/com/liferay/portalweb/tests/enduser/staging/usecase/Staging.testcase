@@ -1065,7 +1065,7 @@ definition {
 
 	@priority = "5"
 	test StagingOnlyApprovedPublishToLive {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
 		ProductMenu.gotoSite(site = "Site Name");
