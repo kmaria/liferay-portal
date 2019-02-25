@@ -36,6 +36,35 @@ definition {
 		AssertElementPresent(locator1 = "ChangeListSettings#DISABLED_SAVE_AND_GO_TO_OVERVIEW_BUTTON");
 	}
 
+	@description = "Enable Change List and go to Overview"
+	@priority = "5"
+	test EnableChangeListAndGoToOverview {
+		ProductMenu.gotoPortlet(
+			category = "Change Lists",
+			panel = "Control Panel",
+			portlet = "Settings"
+		);
+
+		ChangeList.enableChangeList(
+			gotoOverview = "true"
+		);
+
+		AssertTextEquals(
+			locator1 = "ChangeList#OVERVIEW_PAGE_TITLE",
+			value1 = "Select Change List"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Change Lists",
+			panel = "Control Panel",
+			portlet = "Settings"
+		);
+
+		ChangeList.disableChangeList();
+
+		AssertElementPresent(locator1 = "ChangeListSettings#DISABLED_SAVE_AND_GO_TO_OVERVIEW_BUTTON");
+	}
+
 	@description = "Check Supported Content Types"
 	@priority = "4"
 	test CheckSupportedContentTypes {

@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SAVE_AND_GO_TO_OVERVIEW_BUTTON</td>
+	<td>//button[contains(.,'Save and Go to Overview')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUPPORTED_CONTENT_TYPES</td>
 	<td>//span[contains(@data-title,'${key_changeListContentType}')]</td>
 	<td></td>
