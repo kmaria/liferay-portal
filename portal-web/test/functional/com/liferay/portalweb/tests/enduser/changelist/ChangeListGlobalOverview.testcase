@@ -91,6 +91,23 @@ definition {
 		);
 	}
 
+	@description = "Try to create new change list with too long name"
+	@priority = "3"
+	test CreateNewChangeListWithLongName {
+		ProductMenu.gotoPortlet(
+			category = "Change Lists",
+			panel = "Control Panel",
+			portlet = "Overview"
+		);
+
+		ChangeList.addNewChangeList(
+			changeListDescription = "Change List Description",
+			changeListName = "Lopadotemachoselachogaleokranioleipsanodrimhypotrimmatosilphioparaomelitokatakechymenokichlepikossyphophattoperisteralektryonoptekephalliokigklopeleiolagoiosiraiobaphetraganopterygon"
+		);
+
+		Alert.viewLengthValidationField();
+	}
+
 	@description = "Try to create new change list with empty string name"
 	@priority = "3"
 	test CreateNewChangeListWithNoName {
