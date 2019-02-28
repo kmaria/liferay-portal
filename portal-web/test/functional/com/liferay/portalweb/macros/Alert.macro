@@ -36,6 +36,13 @@ definition {
 		);
 	}
 
+	macro viewLengthValidationField {
+		AssertTextEquals.assertPartialText(
+			locator1 = "TextInput#REQUIRED_ALERT",
+			value1 = "Please enter no more than"
+		);
+	}
+
 	macro viewLocalizationMessage {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Home#PORTAL_LOCALIZATION_TRANSLATION_LANGUAGE_MESSAGE",
