@@ -50,6 +50,16 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro publishChangeList {
+		Click(locator1 = "Button#PUBLISH");
+
+		SelectFrame.selectFrameTop();
+
+		Click(locator1 = "ChangeList#PUBLISH_BUTTON");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro searchForChangeList {
 		Search.searchCP(searchTerm = "${changeListName}");
 

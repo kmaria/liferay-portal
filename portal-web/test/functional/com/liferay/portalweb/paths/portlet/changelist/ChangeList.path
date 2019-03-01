@@ -27,10 +27,15 @@
 	<td>CHANGE_LIST_TABLE_ENTRY_NAME</td>
 	<td>//tr[contains(@data-qa-id,'row')]//td[1]</td>
 	<td></td>
-</tr>C
+</tr>
 <tr>
 	<td>OVERVIEW_PAGE_TITLE</td>
 	<td>//span[contains(@data-qa-id,'headerTitle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLISH_BUTTON</td>
+	<td>//footer//button[contains(.,'Publish')]</td>
 	<td></td>
 </tr>
 <tr>
