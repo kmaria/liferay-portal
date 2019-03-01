@@ -122,7 +122,7 @@ definition {
 
 		Button.clickSave();
 
-		Pause(locator1 = "2000");
+		Pause(locator1 = "4000");
 
 		if ("${organizationName}" == "Duplicate") {
 			Alert.viewRequestFailedToComplete();
