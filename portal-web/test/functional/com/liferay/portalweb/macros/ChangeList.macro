@@ -64,15 +64,27 @@ definition {
 	macro selectChangeList {
 		Click(locator1 = "ChangeList#SELECT_CHANGE_LIST_DROPDOWN");
 
-		Click(
-			locator1 = "ChangeList#SELECT_CHANGE_LIST",
-			key_changeListName = "${changeListName}"
-		);
+		var key_changeListName = "${changeListName}";
 
-		AssertTextEquals(
-			locator1 = "ChangeList#OVERVIEW_PAGE_TITLE",
-			value1 = "Select Change List"
-		);
+		if ("${changeListName}" == "Select Change List") {
+			Click(locator1 = "ChangeList#SELECT_CHANGE_LIST");
+
+			AssertTextEquals(
+				locator1 = "ChangeList#OVERVIEW_PAGE_TITLE",
+				value1 = "Select Change List"
+			);
+		}
+		else {
+			Click(
+				locator1 = "ChangeList#SELECT_CHANGE_LIST_VALUE",
+				key_changeListName = "${changeListName}"
+			);
+
+			AssertTextEquals(
+				locator1 = "ChangeList#OVERVIEW_PAGE_TITLE",
+				value1 = "Overview"
+			);
+		}
 	}
 
 	macro selectChangeListMenuItem {

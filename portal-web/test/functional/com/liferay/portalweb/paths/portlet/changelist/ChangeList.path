@@ -35,11 +35,16 @@
 </tr>
 <tr>
 	<td>SELECT_CHANGE_LIST</td>
-	<td>xpath=(//a[contains(.,'Select Change List')])[2]</td>
+	<td>//a[contains(@data-qa-id,'selectChangeListMenuItem')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SELECT_CHANGE_LIST_DROPDOWN</td>OVERVIEW_PAGE_TITLE
+	<td>SELECT_CHANGE_LIST_VALUE</td>
+	<td>//a[contains(.,'${key_changeListName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_CHANGE_LIST_DROPDOWN</td>
 	<td>//a[contains(@data-qa-id,'headerDropDownMenu')]</td>
 	<td></td>
 </tr>

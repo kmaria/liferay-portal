@@ -89,6 +89,15 @@ definition {
 			locator1 = "ChangeList#ACTIVE_CHANGE_LIST_TITLE",
 			value1 = "Change List Name"
 		);
+
+		ChangeList.selectChangeList(
+			changeListName = "Second Change List Name"
+		);
+
+		AssertTextEquals(
+			locator1 = "ChangeList#ACTIVE_CHANGE_LIST_TITLE",
+			value1 = "Second Change List Name"
+		);
 	}
 
 	@description = "Try to create new change list with too long name"
