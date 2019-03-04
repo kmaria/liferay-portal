@@ -607,12 +607,6 @@ definition {
 			webContentTitle = "WC WebContent Title"
 		);
 
-		WebContent.viewStatus(
-			webContentContent = "WC WebContent Content",
-			webContentStatus = "Draft",
-			webContentTitle = "WC WebContent Title"
-		);
-
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
 			panel = "Site Administration",
