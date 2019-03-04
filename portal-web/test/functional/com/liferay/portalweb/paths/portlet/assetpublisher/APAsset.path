@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>ASSET_TITLE</td>
-	<td>//h4[@class='asset-title']/a[contains(.,'${key_assetTitle}')]</td>
+	<td>//h4[contains(@class,'asset-title') and contains(.,'${key_assetTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
