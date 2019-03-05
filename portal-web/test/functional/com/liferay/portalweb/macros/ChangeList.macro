@@ -103,4 +103,21 @@ definition {
 			rowEntry = "${rowEntry}"
 		);
 	}
+
+	macro viewPublishedChangeListDetails {
+		AssertTextEquals(
+			locator1 = "ChangeList#OVERVIEW_CHANGE_LIST_NAME",
+			value1 = "${changeListName}"
+		);
+
+		AssertTextEquals(
+			locator1 = "ChangeList#OVERVIEW_DESCRIPTION",
+			value1 = "${changeListDescription}"
+		);
+
+		AssertTextPresent(
+			locator1 = "ChangeList#OVERVIEW_PUBLISHED_BY",
+			value1 = "${changeListPublishedBy}"
+		);
+	}
 }

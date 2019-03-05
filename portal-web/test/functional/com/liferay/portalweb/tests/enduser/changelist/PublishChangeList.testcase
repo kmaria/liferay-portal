@@ -70,5 +70,13 @@ definition {
 		);
 
 		ChangeList.publishChangeList();
+
+		Click(locator1 = "Icon#CLOSE");
+
+		ChangeList.viewPublishedChangeListDetails(
+			changeListDescription = "Change List Description",
+			changeListName = "Change List Name",
+			changeListPublishedBy = "Test Test"
+		);
 	}
 }

@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>ACTIVE_CHANGE_LIST_TITLE</td>
-	<td>//div[contains(@data-qa-id,'headerTitle')]</td>
+	<td>//div[contains(@class,'border-left-blue')]//div[contains(@data-qa-id,'headerTitle')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -51,6 +51,21 @@
 <tr>
 	<td>SELECT_CHANGE_LIST_DROPDOWN</td>
 	<td>//a[contains(@data-qa-id,'headerDropDownMenu')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OVERVIEW_CHANGE_LIST_NAME</td>
+	<td>//div[contains(@class,'border-left-green')]//div[contains(@data-qa-id,'headerTitle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OVERVIEW_DESCRIPTION</td>
+	<td>//div[contains(@data-qa-id,'description')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OVERVIEW_PUBLISHED_BY</td>
+	<td>//div[contains(@data-qa-id,'publishedBy')]</td>
 	<td></td>
 </tr>
 </tbody>
