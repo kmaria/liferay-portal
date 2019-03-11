@@ -104,6 +104,20 @@ definition {
 		);
 	}
 
+	macro viewNoStagingMenuitemsNotAvailable {
+		AssertElementNotPresent(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+
+		ProductMenuHelper.expandPanel(panel = "Site Administration");
+
+		ProductMenuHelper.expandCategory(category = "Publishing");
+
+		AssertElementNotPresent(
+			locator1 = "ProductMenu#PORTLET",
+			value1 = "Staging",
+			key_portlet = "Staging"
+		);
+	}
+
 	macro viewPublishedChangeListDetails {
 		AssertTextEquals(
 			locator1 = "ChangeList#OVERVIEW_CHANGE_LIST_NAME",

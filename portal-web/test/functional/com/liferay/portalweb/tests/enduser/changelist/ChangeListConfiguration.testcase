@@ -54,6 +54,8 @@ definition {
 			value1 = "Select Change List"
 		);
 
+		ChangeList.viewNoStagingMenuitemsNotAvailable();
+
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
@@ -63,6 +65,8 @@ definition {
 		ChangeList.disableChangeList();
 
 		AssertElementPresent(locator1 = "ChangeListSettings#DISABLED_SAVE_AND_GO_TO_OVERVIEW_BUTTON");
+
+		AssertElementNotPresent(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
 	}
 
 	@description = "Check Supported Content Types"
