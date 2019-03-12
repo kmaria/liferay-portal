@@ -318,6 +318,116 @@ definition {
 		Staging.configurePublishToLive(checkPublicPages = "Staging Test Page");
 	}
 
+	@description = "This is a use case for LPS-89981 and LPS-88298."
+	@priority = "5"
+	test PublishVocabularyDeletionViaRemoteStagingOnGlobalSite {
+		property app.server.bundles.size = "1";
+		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
+		property databases.size = "1";
+
+		User.logoutPG();
+
+		User.loginPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com"
+		);
+
+		ProductMenu.gotoSite(site = "Global");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Settings"
+		);
+
+		var siteID = "siteID";
+
+		Copy(locator1 = "SitesEditSite#SITE_ID", value1 = "siteID");
+
+		User.logoutPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com"
+		);
+
+		User.loginPG(password = "test", userEmailAddress = "test@liferay.com");
+
+		ProductMenu.gotoSite(site = "Global");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.activateStagingCP(
+			remotePort = "9080",
+			remoteStaging = "true",
+			siteID = "${siteID}",
+			siteName = "Global"
+		);
+
+		Category.openCategoriesAdmin(siteURLKey = "global");
+
+		Vocabulary.addCP(vocabularyName = "Vocabulary Name");
+
+		Staging.publishToLiveNowViaPortletCP();
+
+		User.logoutPG();
+
+		User.loginPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com"
+		);
+
+		ProductMenu.gotoSite(site = "Global");
+
+		ProductMenu.gotoPortlet(
+			category = "Categorization",
+			panel = "Site Administration",
+			portlet = "Categories"
+		);
+
+		Vocabulary.viewCP(vocabularyName = "Vocabulary Name");
+
+		User.logoutPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com"
+		);
+
+		User.loginPG(password = "test", userEmailAddress = "test@liferay.com");
+
+		Category.openCategoriesAdmin(siteURLKey = "global");
+
+		Vocabulary.deleteByIconCP(vocabularyName = "Vocabulary Name");
+
+		Staging.publishToLiveNowViaPortletCP(replicateIndividualDeletions = "true");
+
+		User.logoutPG();
+
+		User.loginPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com"
+		);
+
+		ProductMenu.gotoSite(site = "Global");
+
+		ProductMenu.gotoPortlet(
+			category = "Categorization",
+			panel = "Site Administration",
+			portlet = "Categories"
+		);
+
+		AssertTextNotPresent(
+			locator1 = "Categories#VOCABULARY_ENTRY",
+			value1 = "Vocabulary Name"
+		);
+	}
+
 	@priority = "4"
 	test RemoveTagsFromPublishBlogAndDM {
 		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
