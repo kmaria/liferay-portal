@@ -93,7 +93,7 @@ definition {
 			value1 = "Successful"
 		);
 
-		var valueName = selenium.getText("//ul/li/div/h5");
+		var valueName = selenium.getText("//ul/li/div/h2");
 
 		echo("value name ${valueName}");
 
