@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CHANGE_LIST_DELETED</td>
+	<td>//div[contains(@data-qa-id,'changesDeleted')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHANGE_LIST_NAME</td>
 	<td>//input[contains(@name,'name')]</td>
 	<td></td>
@@ -96,6 +101,11 @@
 <tr>
 	<td>OVERVIEW_PUBLISHED_BY</td>
 	<td>//div[contains(@data-qa-id,'publishedBy')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_CHANGE_LIST_NAME_HISTORY</td>
+	<td>//tr[contains(.,'${key_contentTitle}')]//td[contains(@class,'change-list-title')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -109,4 +109,68 @@ definition {
 			key_contentTitle = "First Web Content"
 		);
 	}
+
+	@priority = "5"
+	test ViewChangeListInformationOnWebContentHistoryScreen {
+		ProductMenu.gotoPortlet(
+			category = "Change Lists",
+			panel = "Control Panel",
+			portlet = "Overview"
+		);
+
+		ChangeList.addNewChangeList(
+			changeListDescription = "Change List Description",
+			changeListName = "Change List Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "Web Content Title"
+		);
+
+		PortletEntry.publish();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoEntryMenuItem(
+			entry = "Web Content Title",
+			menuItem = "View History"
+		);
+
+		ChangeList.viewSpecificChangeListHistory(
+			changeListName = "Change List Name",
+			contentTitle = "Web Content Title"
+		);
+
+		LexiconTable.clickEllipsisItem(
+			item = "Delete",
+			tableEntry = "Web Content Title"
+		);
+
+		AssertConfirm(
+			value1 = "Are you sure you want to move this to the Recycle Bin?"
+		);
+
+		Alert.viewSuccessMessage();
+
+		ProductMenu.gotoPortlet(
+			category = "Change Lists",
+			panel = "Control Panel",
+			portlet = "Overview"
+		);
+
+		ChangeList.viewDeletedItemCounter(nbrOfDeletedItems = "1");
+	}
 }
