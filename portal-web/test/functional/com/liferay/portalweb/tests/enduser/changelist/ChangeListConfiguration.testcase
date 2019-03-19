@@ -12,6 +12,10 @@ definition {
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
 	}
 
 	@description = "Enable and Disable Change List"
