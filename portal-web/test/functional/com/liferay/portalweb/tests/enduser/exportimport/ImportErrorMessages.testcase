@@ -35,7 +35,8 @@ definition {
 			cannotImport = "true",
 			import6210buildNumber = "true",
 			importFail = "true",
-			larFileName = "6210buildNumber.lar"
+			larFileName = "6210buildNumber.lar",
+			uploadFrom = "dependencies"
 		);
 	}
 }
