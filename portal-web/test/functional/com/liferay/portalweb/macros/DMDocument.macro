@@ -209,8 +209,8 @@ definition {
 					);
 				}
 				else {
-					SikuliUploadCommonFile(
-						locator1 = "OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG",
+					UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+						locator1 = "TextInput#FILE",
 						value1 = "${dmDocumentFile}"
 					);
 				}
