@@ -452,12 +452,12 @@ definition {
 
 		Portlet.viewApplicationDecorator(decorator = "Barebone");
 
-		AssertTextEquals.assertPartialText(
+		AssertTextPresent(
 			locator1 = "WCD#WEB_CONTENT_CONTENT",
 			value1 = "You're a part of the S.P.A.C.E. family"
 		);
 
-		AssertTextEquals.assertPartialText(
+		AssertTextPresent(
 			locator1 = "WCD#WEB_CONTENT_CONTENT_2",
 			value1 = "Faculty Meet-and-Greet Brunch"
 		);
