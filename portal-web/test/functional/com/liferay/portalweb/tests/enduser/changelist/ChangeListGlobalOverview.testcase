@@ -16,6 +16,8 @@ definition {
 		);
 
 		ChangeList.enableChangeList();
+
+		Refresh();
 	}
 
 	tearDown {
@@ -402,5 +404,25 @@ definition {
 		);
 
 		Alert.viewRequiredField();
+	}
+
+	@description = "Try to create new change list with empty string in the description"
+	@priority = "3"
+	test CreateNewChangeListWithSpaceInTheDescription {
+		ProductMenu.gotoPortlet(
+			category = "Change Lists",
+			panel = "Control Panel",
+			portlet = "Overview"
+		);
+
+		ChangeList.addNewChangeList(
+			changeListDescription = " ",
+			changeListName = "Change List Name"
+		);
+
+		AssertTextEquals(
+			locator1 = "ChangeList#ACTIVE_CHANGE_LIST_TITLE",
+			value1 = "Change List Name"
+		);
 	}
 }
