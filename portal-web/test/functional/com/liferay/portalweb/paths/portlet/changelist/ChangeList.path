@@ -39,6 +39,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>COLLISTION_DETECTED</td>
+	<td>//span[contains(@data-title,'Collision detected')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EMPTY_PRODUCTION_VIEW_TEXT</td>
 	<td>//div[contains(@class,'sheet-text text-center text-strong empty-production-view')]</td>
 	<td></td>
