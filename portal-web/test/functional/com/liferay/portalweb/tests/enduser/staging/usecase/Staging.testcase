@@ -581,8 +581,6 @@ definition {
 
 		Navigator.gotoStagedView();
 
-		Pause(locator1 = "30000");
-
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
 			panel = "Site Administration",
@@ -1804,8 +1802,6 @@ definition {
 		ProductMenu.gotoSite(site = "Site Name");
 
 		Navigator.gotoStagedView();
-
-		Pause(locator1 = "30000");
 
 		ProductMenu.gotoPortlet(
 			category = "Publishing",

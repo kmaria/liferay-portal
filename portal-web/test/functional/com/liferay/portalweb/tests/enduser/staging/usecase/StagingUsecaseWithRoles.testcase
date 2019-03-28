@@ -697,7 +697,7 @@ definition {
 			siteName = "Community Site Name"
 		);
 
-		Pause(locator1 = "30000");
+		Pause(locator1 = "5000");
 
 		Staging.schedulePublishToLivePG(scheduleTitleName = "Staging Schedule Title");
 
