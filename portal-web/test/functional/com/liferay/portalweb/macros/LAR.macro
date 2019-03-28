@@ -119,7 +119,7 @@ definition {
 			portletOption = "Export / Import"
 		);
 
-		Pause(locator1 = "5000");
+		Pause(locator1 = "3000");
 	}
 
 	macro _gotoExportSite {
@@ -147,7 +147,7 @@ definition {
 	}
 
 	macro _importSite {
-		Pause(locator1 = "18000");
+		Pause(locator1 = "15000");
 
 		Click(locator1 = "Button#CONTINUE");
 
@@ -218,7 +218,7 @@ definition {
 			);
 		}
 
-		Pause(locator1 = "30000");
+		Pause(locator1 = "15000");
 
 		if ("${cannotImport}" == "true") {
 			AssertTextEquals(
@@ -303,8 +303,6 @@ definition {
 
 		AssertElementPresent(locator1 = "Button#SELECT_FILE");
 
-		Pause(locator1 = "13000");
-
 		if ("${uploadFrom}" == "dependencies") {
 			UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
 				locator1 = "TextInput#FILE",
@@ -318,7 +316,7 @@ definition {
 			);
 		}
 
-		Pause(locator1 = "190000");
+		Pause(locator1 = "15000");
 
 		if (isSet(importValidationMissingItem)) {
 			AssertTextEquals.assertPartialText(
@@ -538,7 +536,7 @@ definition {
 	}
 
 	macro filterCompletedProcesses {
-		Pause(locator1 = "5000");
+		Pause(locator1 = "3000");
 
 		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
 
