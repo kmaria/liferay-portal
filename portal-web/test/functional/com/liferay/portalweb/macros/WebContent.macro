@@ -256,8 +256,6 @@ definition {
 		);
 
 		Button.clickPublish();
-
-		SelectFrame(value1 = "relative=top");
 	}
 
 	macro addPriority {
