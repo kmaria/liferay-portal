@@ -77,6 +77,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>STAGING_PUBLISH_TO_REMOTE_LIVE_BUTTON</td>
+	<td>//button[contains(.,'Publish to Remote Live')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COPY_FROM_LIVE</td>
 	<td>//a/span[contains(.,'Copy from Live')]</td>
 	<td></td>
