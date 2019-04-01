@@ -279,7 +279,6 @@ definition {
 		WebContentTemplates.addCP(
 			structureName = "Basic Web Content",
 			templateDescription = "WC Template Description",
-			templateFieldNames = "Image",
 			templateName = "WC Template Name"
 		);
 
