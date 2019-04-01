@@ -109,6 +109,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PRODUCTION_CARD_TITLE</td>
+	<td>//span[contains(@class,'work-on-production')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VIEW_CHANGE_LIST_NAME_HISTORY</td>
 	<td>//tr[contains(.,'${key_contentTitle}')]//td[contains(@class,'change-list-title')]</td>
 	<td></td>

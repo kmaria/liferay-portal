@@ -58,6 +58,11 @@ definition {
 			value1 = "Select Change List"
 		);
 
+		AssertElementPresent(
+			locator1 = "ChangeList#PRODUCTION_CARD_TITLE",
+			value1 = "Work on Production"
+		);
+
 		ChangeList.viewNoStagingMenuitemsNotAvailable();
 
 		ProductMenu.gotoPortlet(
