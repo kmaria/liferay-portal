@@ -9,16 +9,16 @@ definition {
 
 		User.firstLoginPG();
 
-		JSONGroup.addGroup(groupName = "Test Site Name");
+		JSONGroup.addGroup(groupName = "Site Name");
 
 		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Asset Publisher Page"
+			groupName = "Site Name",
+			layoutName = "Staging Test Page"
 		);
 
 		Navigator.gotoSitePage(
-			pageName = "Asset Publisher Page",
-			siteName = "Test Site Name"
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
 		);
 
 		Portlet.addPG(portletName = "Asset Publisher");
@@ -31,7 +31,7 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
 		}
 	}
 
@@ -127,6 +127,14 @@ definition {
 	@description = "This is a use case for LPS-81196."
 	@priority = "3"
 	test StagingPublishAssetPublisherConfiguredCategoriesFilter {
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.activateStagingCP(siteName = "Site Name");
+
 		ProductMenu.gotoPortlet(
 			category = "Categorization",
 			panel = "Site Administration",
