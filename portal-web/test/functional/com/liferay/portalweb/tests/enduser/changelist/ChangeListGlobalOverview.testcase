@@ -346,10 +346,7 @@ definition {
 
 		ChangeList.searchForChangeList(changeListName = "Change List Name");
 
-		ChangeList.selectChangeListMenuItem(
-			menuItem = "Make Active",
-			rowEntry = "Change List Name"
-		);
+		Click(locator1 = "ChangeList#CHANGE_LIST_NAME_CARD_VIEW", key_changeListName = "Change List Name");
 
 		AssertTextEquals(
 			locator1 = "ChangeList#ACTIVE_CHANGE_LIST_TITLE",

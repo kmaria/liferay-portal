@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CHANGE_LIST_NAME_CARD_VIEW</td>
+	<td>//span[contains(@data-qa-id,'headerSubTitle')][normalize-space(text())='${key_changeListName}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHANGE_LIST_DESCRIPTION</td>
 	<td>//input[contains(@name,'description')]</td>
 	<td></td>
