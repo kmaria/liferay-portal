@@ -42,7 +42,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Overview"
+			portlet = "Change Lists"
 		);
 
 		ChangeList.addNewChangeList(
@@ -68,7 +68,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Overview"
+			portlet = "ChangeLists"
 		);
 
 		ChangeList.viewChangeOnOverview(
@@ -109,7 +109,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Overview"
+			portlet = "Change Lists"
 		);
 
 		ChangeList.viewChangeOnOverview(
@@ -124,7 +124,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Overview"
+			portlet = "Change Lists"
 		);
 
 		ChangeList.addNewChangeList(
@@ -150,7 +150,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Overview"
+			portlet = "Change Lists"
 		);
 
 		ChangeList.viewChangeOnOverview(
@@ -176,7 +176,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Overview"
+			portlet = "Change Lists"
 		);
 
 		ChangeList.viewChangeOnOverview(
@@ -199,7 +199,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Overview"
+			portlet = "Change Lists"
 		);
 
 		ChangeList.viewChangeOnOverview(
@@ -214,7 +214,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Overview"
+			portlet = "Change Lists"
 		);
 
 		ChangeList.addNewChangeList(
@@ -246,7 +246,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Overview"
+			portlet = "Change Lists"
 		);
 
 		ChangeList.viewContentTypeOnOverview(
@@ -260,7 +260,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Overview"
+			portlet = "Change Lists"
 		);
 
 		ChangeList.addNewChangeList(
@@ -285,7 +285,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Overview"
+			portlet = "Change Lists"
 		);
 
 		ChangeList.viewContentTypeOnOverview(
@@ -299,7 +299,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Overview"
+			portlet = "Change Lists"
 		);
 
 		ChangeList.cancelChangeListCreation();
@@ -313,7 +313,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Overview"
+			portlet = "Change Lists"
 		);
 
 		ChangeList.addNewChangeList(
@@ -377,7 +377,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Overview"
+			portlet = "Change Lists"
 		);
 
 		ChangeList.addNewChangeList(
@@ -394,7 +394,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Overview"
+			portlet = "Change Lists"
 		);
 
 		ChangeList.addNewChangeList(
@@ -411,7 +411,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Overview"
+			portlet = "Change Lists"
 		);
 
 		ChangeList.addNewChangeList(

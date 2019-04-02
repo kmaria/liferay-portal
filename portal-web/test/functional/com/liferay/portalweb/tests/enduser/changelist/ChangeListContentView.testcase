@@ -68,7 +68,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Overview"
+			portlet = "Change Lists"
 		);
 
 		ChangeList.addNewChangeList(
@@ -115,7 +115,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Overview"
+			portlet = "Change Lists"
 		);
 
 		ChangeList.addNewChangeList(
@@ -168,7 +168,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Overview"
+			portlet = "Change Lists"
 		);
 
 		ChangeList.viewDeletedItemCounter(nbrOfDeletedItems = "1");

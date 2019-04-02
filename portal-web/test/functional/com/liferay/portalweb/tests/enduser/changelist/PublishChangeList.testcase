@@ -22,7 +22,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Overview"
+			portlet = "Change Lists"
 		);
 
 		ChangeList.addNewChangeList(
@@ -68,7 +68,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Overview"
+			portlet = "Change Lists"
 		);
 
 		ChangeList.publishChangeList(
@@ -78,7 +78,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Overview"
+			portlet = "Change Lists"
 		);
 
 		ChangeList.addNewChangeList(
