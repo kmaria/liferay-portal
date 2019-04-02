@@ -335,7 +335,7 @@ definition {
 			value1 = "Second Change List Name"
 		);
 
-		AssertTextEquals(
+		AssertTextPresent(
 			locator1 = "ChangeList#EMPTY_PRODUCTION_VIEW_TEXT",
 			value1 = "No change list has been published yet."
 		);
@@ -365,7 +365,7 @@ definition {
 			value1 = "Second Change List Name"
 		);
 
-		AssertTextEquals(
+		AssertTextPresent(
 			locator1 = "ChangeList#EMPTY_PRODUCTION_VIEW_TEXT",
 			value1 = "No change list has been published yet."
 		);
