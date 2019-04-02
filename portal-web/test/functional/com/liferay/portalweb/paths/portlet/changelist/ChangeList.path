@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ACTIVE_CHANGE_LIST_STATUS</td>
+	<td>//td[contains(.,'${key_changeListName}')]//following-sibling::td//span[contains(@class,'label-info')]//span</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHANGE_LIST_DELETED</td>
 	<td>//div[contains(@data-qa-id,'changesDeleted')]</td>
 	<td></td>
