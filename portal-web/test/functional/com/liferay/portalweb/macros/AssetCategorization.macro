@@ -4,11 +4,13 @@ definition {
 
 		ScrollWebElementIntoView(locator1 = "AssetCategorization#TAGS_FIELD");
 
-		if (IsVisible(locator1 = "AssetCategorization#TAG_AUTOCOMPLETE_CONTAINER")) {
-			Click(
-				locator1 = "AssetCategorization#TAG_AUTOCOMPLETE_SPECIFIC",
-				key_tagName = "${tagName}"
-			);
+		if (IsElementPresent(locator1 = "AssetCategorization#TAG_AUTOCOMPLETE_CONTAINER")) {
+			if (IsVisible(locator1 = "AssetCategorization#TAG_AUTOCOMPLETE_CONTAINER")) {
+				Click(
+					locator1 = "AssetCategorization#TAG_AUTOCOMPLETE_SPECIFIC",
+					key_tagName = "${tagName}"
+				);
+			}
 		}
 		else {
 			KeyPress(locator1 = "AssetCategorization#TAGS_FIELD", value1 = ",");
