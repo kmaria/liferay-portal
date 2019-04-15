@@ -368,6 +368,39 @@ definition {
 		);
 	}
 
+	@priority = "4"
+	test CreateNewChangeListExistingName {
+		ProductMenu.gotoPortlet(
+			category = "Change Lists",
+			panel = "Control Panel",
+			portlet = "Change Lists"
+		);
+
+		ChangeList.addNewChangeList(
+			changeListDescription = "Change List Description",
+			changeListName = "Change List Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Change Lists",
+			panel = "Control Panel",
+			portlet = "Change Lists"
+		);
+
+		ChangeList.selectChangeList(
+			changeListName = "Select Change List"
+		);
+
+		ChangeList.addNewChangeList(
+			changeListDescription = "Change List Description",
+			changeListName = "Change List Name"
+		);
+
+		Alert.viewErrorMessage(
+			errorMessage = "Name is already used by another change list."
+		);
+	}
+
 	@description = "Try to create new change list with too long name"
 	@priority = "3"
 	test CreateNewChangeListWithLongName {
