@@ -25,12 +25,7 @@ definition {
 			locator1 = "ChangeListSettings#CHANGE_LISTS_TOGGLE_SWITCH"
 		);
 
-		if (isSet(gotoOverview)) {
-			Click(locator1 = "ChangeListSettings#SAVE_AND_GO_TO_OVERVIEW_BUTTON");
-		}
-		else {
-			Click(locator1 = "Button#SAVE");
-		}
+		Click(locator1 = "Button#SAVE");
 
 		Alert.viewSuccessMessage();
 	}

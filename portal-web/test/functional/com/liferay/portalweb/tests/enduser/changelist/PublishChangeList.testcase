@@ -17,8 +17,6 @@ definition {
 
 		ChangeList.enableChangeList();
 
-		Refresh();
-
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
