@@ -1,4 +1,22 @@
 definition {
+	macro addADTWithFieldEntryCP {
+		AssertVisible(locator1 = "Button#PLUS");
+
+		LexiconEntry.gotoAdd();
+
+		MenuItem.click(menuItem = "${portletName} Template");
+
+		SiteAdmin.viewPortletTitle(portletTitle = "New ${portletName} Template");
+
+		PortletEntry.inputName(name = "${portletName} Test ADT");
+
+		Click(locator1 = "DDMEditTemplate#SCRIPT_FIELD", key_fieldName = "${fieldName}");
+
+		PortletEntry.save();
+
+		Refresh();
+	}
+
 	macro addCP {
 		var key_adtType = "${adtType}";
 
