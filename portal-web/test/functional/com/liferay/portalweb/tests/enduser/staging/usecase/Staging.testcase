@@ -107,6 +107,64 @@ definition {
 		);
 	}
 
+	@description = "This is a use case for LPS-92039 and LPS-92636."
+	@priority = "3"
+	test CreateWidgetTemplateWhenNotStagedADT {
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			panel = "Site Administration",
+			portlet = "Widget Templates"
+		);
+
+		AssertVisible(locator1 = "Button#PLUS");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.activateStagingCP(siteName = "Site Name", uncheckContent = "Widget Templates");
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			panel = "Site Administration",
+			portlet = "Widget Templates"
+		);
+
+		ApplicationDisplayTemplates.addADTWithFieldEntryCP(
+			fieldName = "Asset Entry",
+			portletName = "Asset Publisher"
+		);
+
+		AssertTextEquals(
+			locator1 = "ApplicationDisplayTemplates#ADT_TABLE_NAME_1",
+			value1 = "Asset Publisher Test ADT"
+		);
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			panel = "Site Administration",
+			portlet = "Widget Templates"
+		);
+
+		ApplicationDisplayTemplates.addADTWithFieldEntryCP(
+			fieldName = "Blog Entries",
+			portletName = "Blogs"
+		);
+
+		AssertTextEquals(
+			locator1 = "ApplicationDisplayTemplates#ADT_TABLE_NAME_2",
+			value1 = "Blogs Test ADT"
+		);
+	}
+
 	@priority = "4"
 	test DeletePublishTemplate {
 		Navigator.openSiteURL(siteName = "Site Name");
