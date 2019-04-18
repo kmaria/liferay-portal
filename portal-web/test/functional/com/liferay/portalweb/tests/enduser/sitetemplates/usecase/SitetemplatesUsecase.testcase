@@ -505,7 +505,7 @@ definition {
 			webContentContent = "${page2URL}"
 		);
 
-		BlogsEntry.addEntryExternalURL(entryExternalURL = "${page2URL}");
+		AlloyEditor.addEntryExternalURL(entryExternalURL = "${page2URL}");
 
 		PortletEntry.publish();
 
