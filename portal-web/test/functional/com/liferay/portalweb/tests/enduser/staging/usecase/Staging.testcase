@@ -1778,9 +1778,15 @@ definition {
 			configurationScope = "System Scope"
 		);
 
-		SystemSettings.configureAssetDynamicExportSetting(enableDynamicExport = "true");
+		SystemSettings.configureSystemSetting(
+			enableSetting = "true",
+			settingFieldName = "Enable Dynamic Export"
+		);
 
-		SystemSettings.configureAssetManualExportSetting(enableManualExport = "true");
+		SystemSettings.configureSystemSetting(
+			enableSetting = "true",
+			settingFieldName = "Enable Manual Export"
+		);
 
 		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
 
@@ -1826,11 +1832,7 @@ definition {
 			configurationScope = "System Scope"
 		);
 
-		SystemSettings.configureAssetDynamicExportSetting(
-			enableDynamicExport = "true",
-			exportLimit = "true",
-			exportLimitNumber = "1"
-		);
+		SystemSettings.configureDynamicExportLimit(exportLimitNumber = "1");
 
 		Staging.openStagingAdmin(siteURLKey = "site-name");
 
