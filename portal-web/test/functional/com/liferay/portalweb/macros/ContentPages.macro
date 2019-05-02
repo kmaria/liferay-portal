@@ -38,7 +38,9 @@ definition {
 
 		SelectFrame.selectFrameTop();
 
-		PageEditor.assertFragmentSidebarLoaded();
+		if ("${menuItem}" == "Content Page Template") {
+			PageEditor.assertFragmentSidebarLoaded();
+		}
 	}
 
 	macro clickPencil {
