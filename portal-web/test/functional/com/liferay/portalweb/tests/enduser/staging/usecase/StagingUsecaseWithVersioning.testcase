@@ -806,14 +806,11 @@ definition {
 			panel = "Site Administration",
 			portlet = "Pages");
 
-		WidgetPages.addPage(
+		SitePages.addPublicPage(
 			collectionName = "Page Template Collection",
+			inheritChanges = "false",
 			pageName = "Test Page Name",
 			pageTemplateName = "Page Template Name");
-
-		Page.togglePageTemplateInheritChanges(toggleValue = "disable");
-
-		Button.clickSave();
 
 		SitePages.togglePrivacy(privacy = "Public Pages");
 

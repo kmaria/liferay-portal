@@ -17,10 +17,6 @@ definition {
 		PortletEntry.inputName(name = "${pageTemplateName}");
 
 		Button.clickSave();
-
-		if ("${menuItem}" == "Content Page Template") {
-			PageEditor.assertFragmentSidebarLoaded();
-		}
 	}
 
 	macro _gotoAddCollection {
@@ -60,6 +56,10 @@ definition {
 			pageTemplateName = "${pageTemplateName}",
 			pageTemplateType = "${pageTemplateType}",
 			siteTemplate = "${siteTemplate}");
+
+		if ("${pageTemplateType}" == "Content Page Template") {
+			PageEditor.assertFragmentSidebarLoaded();
+		}
 	}
 
 	macro configureWidgetPageTemplateLayout {
