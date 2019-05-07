@@ -138,6 +138,8 @@ definition {
 			panel = "Site Administration",
 			portlet = "Pages");
 
+		SitePages.togglePrivacy(privacy = "Public Pages");
+
 		Page.viewNoDeletePagesAssociatedWithSiteTemplate(
 			page = "Site Child Page Name",
 			pageName = "Site Page Name");
