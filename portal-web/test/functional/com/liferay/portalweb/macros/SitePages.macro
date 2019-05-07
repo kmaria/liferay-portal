@@ -1,7 +1,7 @@
 definition {
 	macro _addPage {
 		SitePages._selectPageType(
-			collectionName="${collectionName}",
+			collectionName = "${collectionName}",
 			pageTemplateName = "${pageTemplateName}",
 			sitePageType = "${sitePageType}");
 
@@ -88,7 +88,7 @@ definition {
 				Navigator.gotoNavNested(navNested = "${collectionName}");
 			}
 			else {
-			Navigator.gotoNavNested(navNested = "Global Templates");
+				Navigator.gotoNavNested(navNested = "Global Templates");
 			}
 		}
 		else if (isSet(sitePageType)) {
