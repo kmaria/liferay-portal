@@ -1,6 +1,7 @@
 definition {
 	macro _addPage {
 		SitePages._selectPageType(
+			collectionName = "${collectionName}",
 			pageTemplateName = "${pageTemplateName}",
 			sitePageType = "${sitePageType}");
 
@@ -83,7 +84,12 @@ definition {
 		if (!(contains("${pageTemplateName}", "{pageTemplateName}"))) {
 			var sitePageType = "${pageTemplateName}";
 
-			Navigator.gotoNavNested(navNested = "Global Templates");
+			if (isSet(collectionName)) {
+				Navigator.gotoNavNested(navNested = "${collectionName}");
+			}
+			else {
+				Navigator.gotoNavNested(navNested = "Global Templates");
+			}
 		}
 		else if (isSet(sitePageType)) {
 			var sitePageType = "${sitePageType}";
@@ -183,6 +189,7 @@ definition {
 
 		SitePages._addPage(
 			assertCheckboxMissing = "${assertCheckboxMissing}",
+			collectionName = "${collectionName}",
 			inheritChanges = "${inheritChanges}",
 			navigationMenus = "${navigationMenus}",
 			pageName = "${pageName}",
