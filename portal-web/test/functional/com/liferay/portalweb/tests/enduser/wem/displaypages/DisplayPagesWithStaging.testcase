@@ -52,4 +52,24 @@ definition {
 				locator1 = "NavBar#NAV_ITEM_LINK");
 		}
 	}
+
+	@description = "This tests one of the workarounds of LPS-92522."
+	@priority = "5"
+	test PublishDisplayPageWithFragment {
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name-staging");
+
+		DisplayPageTemplatesAdmin.addDisplayPage(displayPageName = "Display Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Sections",
+			fragmentName = "Banner Center");
+
+		Button.clickPublish();
+
+		Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+
+		Staging.publishCustomPublication();
+
+		AssertConsoleTextNotPresent(value1 = "PortletDataException");
+	}
 }
