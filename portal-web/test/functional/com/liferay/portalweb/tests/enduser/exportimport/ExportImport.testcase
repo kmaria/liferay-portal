@@ -498,6 +498,64 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "com.liferay.exportimport.kernel.lar.PortletDataException");
 	}
 
+	@description = "This is a use case for LPS-91440."
+	@priority = "3"
+	test ExportImportGlobalPagesViaInstances {
+		property test.name.skip.portal.instance = "ExportImport#ExportImportGlobalPagesViaInstances";
+
+		ProductMenu.gotoSite(site = "Global");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Export");
+
+		LexiconEntry.gotoAdd();
+
+		LAR.configureExportOptions(
+			checkContentNameList = "Pages",
+			uncheckContentNameList = "Documents and Media,Web Content");
+
+		AssertClick(
+			locator1 = "SitePagesExport#EXPORT_BUTTON",
+			value1 = "Export");
+
+		var key_larFileName = "${larFileName}";
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "SitePagesExport#CURRENT_AND_PREVIOUS_STATUS",
+			value1 = "Successful");
+
+		var larFileName = LAR.getLarFileName();
+
+		LAR.downloadLar();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Virtual Instances");
+
+		PortalInstances.addCP(
+			mailDomain = "www.able.com",
+			virtualHost = "www.able.com",
+			webId = "www.able.com");
+
+		User.logoutPG();
+
+		User.firstLoginPG(
+			password = "test",
+			userEmailAddress = "test@www.able.com",
+			virtualHostsURL = "http://www.able.com:8080");
+
+		ProductMenu.gotoSite(site = "Global");
+
+		LAR.importSiteCP(
+			larFileName = "${larFileName}",
+			siteName = "Global");
+
+		AssertConsoleTextNotPresent(value1 = "com.liferay.exportimport.kernel.lar.PortletDataException");
+	}
+
 	@priority = "5"
 	test ExportImportPortlet {
 		property portal.acceptance = "true";
