@@ -107,7 +107,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "ChangeList#OVERVIEW_PAGE_TITLE",
-				value1 = "Change Lists");
+				value1 = "Overview");
 		}
 	}
 
