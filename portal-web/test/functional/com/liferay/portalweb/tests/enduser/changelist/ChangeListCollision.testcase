@@ -106,13 +106,13 @@ definition {
 		ChangeList.publishChangeList(changeListName = "Second Change List Name");
 
 		ProductMenu.gotoPortlet(
-				category = "Change Lists",
-				panel = "Control Panel",
-				portlet = "Overview");
+			category = "Change Lists",
+			panel = "Control Panel",
+			portlet = "Overview");
 
 		Click(
-				key_changeListName = "First Change List Name",
-				locator1 = "ChangeList#CHANGE_LIST_NAME_CARD_VIEW");
+			key_changeListName = "First Change List Name",
+			locator1 = "ChangeList#CHANGE_LIST_NAME_CARD_VIEW");
 
 		AssertElementPresent(locator1 = "ChangeList#COLLISION_DETECTED");
 	}
