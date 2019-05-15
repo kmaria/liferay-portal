@@ -50,7 +50,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Change Lists");
+			portlet = "Overview");
 
 		ChangeList.addNewChangeList(
 			changeListDescription = "Change List Description",
@@ -62,7 +62,7 @@ definition {
 			changeListDescription = "Change List Description",
 			changeListName = "Second Change List Name");
 
-		ChangeList.selectChangeList(changeListName = "First Change List");
+		ChangeList.selectChangeList(changeListName = "First Change List Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -80,11 +80,11 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Change Lists");
+			portlet = "Overview");
 
-		AssertHTMLSourceTextNotPresent(value1 = "ChangeList#COLLISTION_DETECTED");
+		AssertElementNotPresent(locator1 = "ChangeList#COLLISION_DETECTED");
 
-		ChangeList.selectChangeList(changeListName = "Second Change List");
+		ChangeList.selectChangeList(changeListName = "Second Change List Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -101,8 +101,19 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Change Lists");
+			portlet = "Overview");
 
-		AssertHTMLSourceTextPresent(value1 = "ChangeList#COLLISTION_DETECTED");
+		ChangeList.publishChangeList(changeListName = "Second Change List Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Change Lists",
+			panel = "Control Panel",
+			portlet = "Overview");
+
+		Click(
+			key_changeListName = "First Change List Name",
+			locator1 = "ChangeList#CHANGE_LIST_NAME_CARD_VIEW");
+
+		AssertElementPresent(locator1 = "ChangeList#COLLISION_DETECTED");
 	}
 }

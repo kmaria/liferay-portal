@@ -59,8 +59,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>COLLISTION_DETECTED</td>
-	<td>//span[contains(@data-title,'Collision detected')]</td>
+	<td>COLLISION_DETECTED</td>
+	<td>//span[contains(@data-qa-id,'collision-detected')]</td>
 	<td></td>
 </tr>
 <tr>

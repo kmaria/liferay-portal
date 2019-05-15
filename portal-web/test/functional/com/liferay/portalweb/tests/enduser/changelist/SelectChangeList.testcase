@@ -19,7 +19,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Change Lists");
+			portlet = "Overview");
 
 		ChangeList.addNewChangeList(
 			changeListDescription = "Change List Description",
@@ -73,7 +73,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Change Lists");
+			portlet = "Overview");
 
 		ChangeList.selectChangeList(changeListName = "Select Change List");
 
@@ -94,7 +94,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Change Lists");
+			portlet = "Overview");
 
 		ChangeList.selectChangeList(changeListName = "Select Change List");
 
@@ -112,7 +112,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Change Lists");
+			portlet = "Overview");
 
 		ChangeList.selectChangeList(changeListName = "Select Change List");
 
@@ -154,7 +154,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Change Lists");
+			portlet = "Overview");
 
 		Click(
 			key_changeListName = "Change List Name",

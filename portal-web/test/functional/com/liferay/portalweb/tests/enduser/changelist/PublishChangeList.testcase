@@ -19,7 +19,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Change Lists");
+			portlet = "Overview");
 
 		ChangeList.addNewChangeList(
 			changeListDescription = "Change List Description",
@@ -60,14 +60,14 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Change Lists");
+			portlet = "Overview");
 
 		ChangeList.publishChangeList(changeListName = "Change List Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Change Lists");
+			portlet = "Overview");
 
 		ChangeList.addNewChangeList(
 			changeListDescription = "Change List Description",

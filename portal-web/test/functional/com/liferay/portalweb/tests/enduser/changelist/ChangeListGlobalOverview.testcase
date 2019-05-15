@@ -55,7 +55,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Change Lists");
+			portlet = "Overview");
 
 		ChangeList.viewChangeOnOverview(
 			contentChangeType = "Added",
@@ -88,7 +88,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Change Lists");
+			portlet = "Overview");
 
 		ChangeList.viewChangeOnOverview(
 			contentChangeType = "Added",
@@ -118,7 +118,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Change Lists");
+			portlet = "Overview");
 
 		ChangeList.viewChangeOnOverview(
 			contentChangeType = "Added",
@@ -142,7 +142,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Change Lists");
+			portlet = "Overview");
 
 		ChangeList.viewChangeOnOverview(
 			contentChangeType = "Modified",
@@ -163,7 +163,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Change Lists");
+			portlet = "Overview");
 
 		ChangeList.viewChangeOnOverview(
 			contentChangeType = "Deleted",
@@ -204,7 +204,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Change Lists");
+			portlet = "Overview");
 
 		ChangeList.viewContentTypeOnOverview(
 			contentTitle = "My Structure",
@@ -232,7 +232,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Change Lists");
+			portlet = "Overview");
 
 		ChangeList.viewContentTypeOnOverview(
 			contentTitle = "WC Template Name",
@@ -299,7 +299,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Change Lists");
+			portlet = "Overview");
 
 		ChangeList.selectChangeList(changeListName = "Select Change List");
 
