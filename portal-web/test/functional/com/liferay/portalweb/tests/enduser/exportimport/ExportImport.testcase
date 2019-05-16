@@ -458,7 +458,7 @@ definition {
 
 		LAR.configureExportOptions(
 			checkContentNameList = "Web Content",
-			uncheckContentNameList = "Documents and Media, Pages");
+			uncheckContentNameList = "Documents and Media,Pages");
 
 		AssertClick(
 			locator1 = "SitePagesExport#EXPORT_BUTTON",
