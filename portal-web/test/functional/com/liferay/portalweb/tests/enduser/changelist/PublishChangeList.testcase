@@ -55,7 +55,7 @@ definition {
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "Web Content Title");
 
-		PortletEntry.publish();
+		Button.clickPublishToChangeList();
 
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
