@@ -375,10 +375,7 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
-			category = "Mi cuenta",
-			panel = "User",
-			portlet = "Mi cuenta");
+		UserBar.gotoDropdownItem(dropdownItem = "Mi cuenta");
 
 		MyAccount.changeUserLanguage(
 			languageName = "English (United States)",
