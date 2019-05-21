@@ -2099,8 +2099,8 @@ definition {
 			locator1 = "StagingPublishToLive#SIMPLE_PUBLICATION_CONTENT_TYPE");
 
 		AssertElementPresent(
-				key_itemName = "Documents and Media",
-				locator1 = "StagingPublishToLive#SIMPLE_PUBLICATION_CONTENT_TYPE");
+			key_itemName = "Documents and Media",
+			locator1 = "StagingPublishToLive#SIMPLE_PUBLICATION_CONTENT_TYPE");
 
 		Staging.publishToLive();
 
