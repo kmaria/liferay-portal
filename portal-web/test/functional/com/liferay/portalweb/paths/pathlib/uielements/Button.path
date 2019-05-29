@@ -219,11 +219,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DOCUMENTS_AND_MEDIA</td>
-	<td>//div[@data-fieldname='${key_fieldName}']/div/button[contains(.,'Select')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DONE</td>
 	<td>//button[contains(.,'Done')]</td>
 	<td></td>
