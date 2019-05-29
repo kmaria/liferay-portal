@@ -466,8 +466,20 @@ definition {
 
 		if (isSet(webContentDocumentsAndMedia)) {
 			AssertClick(
-				locator1 = "Button#DOCUMENTS_AND_MEDIA",
+				key_fieldName = "${fieldName}",
+				locator1 = "Button#SELECT_CONTENT",
+				value1 = "Select");
+
+			SelectFrame(locator1 = "IFrame#DIALOG");
+
+			AssertClick(
+				key_dmDocumentTitle = "${webContentDocumentsAndMedia}",
+				locator1 = "WC#ICON_DOCUMENT_TITLE",
 				value1 = "${webContentDocumentsAndMedia}");
+
+			SelectFrameTop(value1 = "relative=top");
+
+			Click(locator1 = "Button#ADD");
 		}
 
 		if (isSet(webContentHTML)) {
