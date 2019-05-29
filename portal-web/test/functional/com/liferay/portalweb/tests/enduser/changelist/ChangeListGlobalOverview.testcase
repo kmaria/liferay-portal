@@ -356,4 +356,13 @@ definition {
 			value1 = "Change List Name");
 	}
 
+	@priority = "5"
+	test DeleteChangeListFromOverviewScreen {
+		ChangeList.addNewChangeList(
+			changeListDescription = "Change List Description",
+			changeListName = "Change List Name");
+
+		ChangeList.deleteChangeListFromOverviewScreen(changeListName = "Change List Name");
+	}
+
 }

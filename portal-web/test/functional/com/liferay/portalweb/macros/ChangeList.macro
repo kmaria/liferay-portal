@@ -43,7 +43,18 @@ definition {
 
 	macro confirmSwitchingChangeList {
 		AssertConfirm.assertPartialConfirmation(value1 = "Do you want to switch to ${changeListName} change list?");
+	}
 
+	macro deleteChangeListFromOverviewScreen {
+		ClickNoError(locator1 = "Icon#DELETE");
+
+		AssertConfirm(value1 = "Are you sure you want to delete '${changeListName}' change list?");
+
+		AssertTextEquals(
+			locator1 = "ChangeList#OVERVIEW_PAGE_TITLE",
+			value1 = "Select Change List");
+
+		Alert.viewSuccessMessageText(successMessage = "Production has been checked out. All your modifications will be added to the live site immediately.");
 	}
 
 	macro disableChangeList {
@@ -296,8 +307,8 @@ definition {
 				ChangeList.confirmSwitchingChangeList(changeListName = "Work on Production");
 			}
 		}
-		Alert.viewSuccessMessageText(successMessage = "Production has been checked out. All your modifications will be added to the live site immediately.");
 
+		Alert.viewSuccessMessageText(successMessage = "Production has been checked out. All your modifications will be added to the live site immediately.");
 	}
 
 }
