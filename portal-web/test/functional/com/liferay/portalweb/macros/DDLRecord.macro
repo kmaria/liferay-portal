@@ -177,7 +177,7 @@ definition {
 		var key_fieldName = "${fieldName}";
 
 		AssertClick(
-			locator1 = "Button#LINK_TO_PAGE_SELECT_PAGE",
+			locator1 = "Button#SELECT_CONTENT",
 			value1 = "Select");
 	}
 
@@ -244,7 +244,7 @@ definition {
 		}
 		else {
 			AssertClick(
-				locator1 = "Button#LINK_TO_PAGE_SELECT_PAGE",
+				locator1 = "Button#SELECT_CONTENT",
 				value1 = "Select");
 		}
 
@@ -432,7 +432,7 @@ definition {
 		var key_webContentTitle = "${webContentTitle}";
 
 		AssertClick(
-			locator1 = "Button#LINK_TO_PAGE_SELECT_PAGE",
+			locator1 = "Button#SELECT_CONTENT",
 			value1 = "Select");
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
