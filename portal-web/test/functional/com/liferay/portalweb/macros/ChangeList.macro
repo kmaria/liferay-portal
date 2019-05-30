@@ -93,7 +93,9 @@ definition {
 			key_rowEntry = "${rowEntry}",
 			locator1 = "Icon#TABLE_VERTICAL_ELLIPSIS");
 
-		MenuItem.click(menuItem = "Delete");
+		MenuItem.clickNoError(menuItem = "Delete");
+
+		AssertConfirm(value1 = "Are you sure you want to delete '${rowEntry}' change list?");
 	}
 
 	macro publishChangeList {
