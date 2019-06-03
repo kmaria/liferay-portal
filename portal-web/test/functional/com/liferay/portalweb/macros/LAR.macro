@@ -106,7 +106,7 @@ definition {
 				value1 = "${larFileName}");
 		}
 
-		LAR.exportSuccess();
+		LAR.exportWithAssertionOnSuccess();
 	}
 
 	macro _gotoExportImport {
@@ -444,7 +444,7 @@ definition {
 				value1 = "${larFileName}");
 		}
 
-		LAR.exportSuccess();
+		LAR.exportWithAssertionOnSuccess();
 
 		if (isSet(larFileName)) {
 			AssertTextEquals.assertPartialText(
@@ -486,7 +486,15 @@ definition {
 		LAR._exportSite(larFileName = "${larFileName}");
 	}
 
-	macro exportSuccess {
+	macro exportUserGroups {
+		LAR._gotoExportImport();
+
+		LAR._export(
+			exportPermissions = "${exportPermissions}",
+			larFileName = "${larFileName}");
+	}
+
+	macro exportWithAssertionOnSuccess {
 		AssertClick(
 			locator1 = "SitePagesExport#EXPORT_BUTTON",
 			value1 = "Export");
@@ -494,14 +502,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "SitePagesExport#CURRENT_AND_PREVIOUS_STATUS",
 			value1 = "Successful");
-	}
-
-	macro exportUserGroups {
-		LAR._gotoExportImport();
-
-		LAR._export(
-			exportPermissions = "${exportPermissions}",
-			larFileName = "${larFileName}");
 	}
 
 	macro filterCompletedProcesses {

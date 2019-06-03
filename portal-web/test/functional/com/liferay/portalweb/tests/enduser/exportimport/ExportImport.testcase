@@ -661,7 +661,7 @@ definition {
 
 		LAR.configureExportSiteCP();
 
-		LAR.exportSuccess();
+		LAR.exportWithAssertionOnSuccess();
 
 		var larFileName = LAR.getLarFileName();
 
@@ -714,10 +714,6 @@ definition {
 
 		var key_larFileName = "${larFileName}";
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "SitePagesExport#CURRENT_AND_PREVIOUS_STATUS",
-			value1 = "Successful");
-
 		var larFileName = LAR.getLarFileName();
 
 		LAR.downloadLar();
@@ -749,10 +745,6 @@ definition {
 		LAR.exportSiteCP();
 
 		var key_larFileName = "${larFileName}";
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "SitePagesExport#CURRENT_AND_PREVIOUS_STATUS",
-			value1 = "Successful");
 
 		var larFileName = LAR.getLarFileName();
 
@@ -887,7 +879,7 @@ definition {
 			uncheckContentNameList = "Documents and Media",
 			uncheckSubContent = "Referenced Content");
 
-		LAR.exportSuccess();
+		LAR.exportWithAssertionOnSuccess();
 
 		var larFileName = LAR.getLarFileName();
 
@@ -1082,10 +1074,6 @@ definition {
 	@priority = "5"
 	test ExportViaGuest {
 		LAR.exportSiteCP();
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "SitePagesExport#CURRENT_AND_PREVIOUS_STATUS",
-			value1 = "Successful");
 
 		var downloadURL = selenium.getAttribute("//ul/li/div/h2/span/a@href");
 
