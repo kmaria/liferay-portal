@@ -32,9 +32,9 @@ definition {
 				panel = "Control Panel",
 				portlet = "Settings");
 
-			ChangeList.disableChangeList();
-
 			ChangeList.changeUserSettingsPopuConfirmation(changeUserPopupConfirmation = "enable");
+
+			ChangeList.disableChangeList();
 		}
 	}
 

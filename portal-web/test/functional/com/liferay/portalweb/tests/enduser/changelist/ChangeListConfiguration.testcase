@@ -77,6 +77,8 @@ definition {
 			locator1 = "ChangeList#PRODUCTION_CARD_TITLE",
 			value1 = "Work on Production");
 
+		AssertElementPresent(locator1 = "ChangeList#INDICATOR");
+
 		ChangeList.viewNoStagingMenuitemsNotAvailable();
 
 		ChangeList.viewWarningOnSiteExportImport(portletName = "Export");
