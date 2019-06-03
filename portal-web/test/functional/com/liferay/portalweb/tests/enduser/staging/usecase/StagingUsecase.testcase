@@ -903,8 +903,8 @@ definition {
 
 		Portlet.addPG(portletName = "Web Content Display");
 
-		WebContentDisplayPortlet.selectParentSiteWebContent(
-			parentSiteName = "Site Name",
+		WebContentDisplayPortlet.selectOtherSiteWebContent(
+			otherSiteName = "Site Name",
 			webContentTitle = "Web Content Title");
 
 		ProductMenu.gotoPortlet(

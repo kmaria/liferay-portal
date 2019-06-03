@@ -229,7 +229,7 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	macro selectParentSiteWebContent {
+	macro selectOtherSiteWebContent {
 		Portlet.gotoPortletOptions(
 			portletName = "Web Content Display",
 			portletOption = "Configuration");
@@ -246,7 +246,7 @@ definition {
 
 		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
 
-		MenuItem.click(menuItem = "${parentSiteName}");
+		MenuItem.click(menuItem = "${otherSiteName}");
 
 		var key_webContentTitle = "${webContentTitle}";
 
