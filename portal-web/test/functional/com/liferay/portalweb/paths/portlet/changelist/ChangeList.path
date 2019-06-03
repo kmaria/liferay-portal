@@ -89,6 +89,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INDICATOR</td>
+	<td>//li[contains(@class,'nav-item')]//span/*[name()='svg'][contains(@class,'change-list')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LATEST_CHANGES_CHANGE_TYPE</td>
 	<td>//div[contains(@id,'change-entry-change-type') and contains(.,'${key_contentChangeType}')]</td>
 	<td></td>
