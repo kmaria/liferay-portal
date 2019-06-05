@@ -91,6 +91,7 @@ definition {
 			portlet = "Overview");
 
 		ChangeList.viewNoChangeListInSelectDropdown(changeListName = "Change List Name");
+
 	}
 
 }
