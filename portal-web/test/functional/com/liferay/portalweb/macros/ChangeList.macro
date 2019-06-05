@@ -211,6 +211,14 @@ definition {
 			value1 = "${nbrOfModifiedItems}");
 	}
 
+	macro viewNoChangeListInSelectDropdown {
+		Click(locator1 = "ChangeList#SELECT_CHANGE_LIST_DROPDOWN");
+
+		AssertElementNotPresent(
+			key_changeListName = "${changeListName}",
+			locator1 = "ChangeList#SELECT_CHANGE_LIST_VALUE");
+	}
+
 	macro viewNoStagingMenuitemsNotAvailable {
 		AssertElementNotPresent(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
 

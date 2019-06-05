@@ -84,6 +84,13 @@ definition {
 			changeListDescription = "Change List Description",
 			changeListName = "Change List Name",
 			changeListPublishedBy = "Test Test");
+
+		ProductMenu.gotoPortlet(
+			category = "Change Lists",
+			panel = "Control Panel",
+			portlet = "Overview");
+
+		ChangeList.viewNoChangeListInSelectDropdown(changeListName = "Change List Name");
 	}
 
 }
