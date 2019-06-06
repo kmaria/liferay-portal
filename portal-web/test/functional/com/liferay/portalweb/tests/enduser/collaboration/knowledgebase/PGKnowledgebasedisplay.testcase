@@ -434,9 +434,9 @@ definition {
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
-		LexiconEntry.rate(ratingResult = "Thumb Up");
+		Ratings.rate(ratingResult = "Thumb Up");
 
-		LexiconEntry.viewRating(
+		Ratings.viewRating(
 			ratingResult = "Thumb Up",
 			voteCount = "1");
 	}
@@ -886,9 +886,9 @@ definition {
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title");
 
-		LexiconEntry.rate(ratingResult = "Thumb Up");
+		Ratings.rate(ratingResult = "Thumb Up");
 
-		LexiconEntry.viewRating(
+		Ratings.viewRating(
 			ratingResult = "Thumb Up",
 			voteCount = "1");
 
@@ -928,7 +928,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
-		LexiconEntry.viewRating(voteCount = "1");
+		Ratings.viewRating(voteCount = "1");
 	}
 
 	@priority = "3"

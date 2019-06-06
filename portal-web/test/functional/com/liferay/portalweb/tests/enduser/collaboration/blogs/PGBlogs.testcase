@@ -907,23 +907,23 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		LexiconEntry.rate(ratingResult = "Thumb Up");
+		Ratings.rate(ratingResult = "Thumb Up");
 
-		LexiconEntry.viewRating(
+		Ratings.viewRating(
 			ratingResult = "Thumb Up",
 			voteCount = "1");
 
-		LexiconEntry.viewRating(
+		Ratings.viewRating(
 			ratingResult = "Thumb Down",
 			voteCount = "0");
 
-		LexiconEntry.rate(ratingResult = "Thumb Down");
+		Ratings.rate(ratingResult = "Thumb Down");
 
-		LexiconEntry.viewRating(
+		Ratings.viewRating(
 			ratingResult = "Thumb Up",
 			voteCount = "0");
 
-		LexiconEntry.viewRating(
+		Ratings.viewRating(
 			ratingResult = "Thumb Down",
 			voteCount = "1");
 	}
