@@ -242,6 +242,8 @@ definition {
 
 	@priority = "3"
 	test ModifyInitalPageVariationSetup {
+		Navigator.openSiteURL(siteName = "Site Name");
+
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
 			panel = "Site Administration",
@@ -259,6 +261,8 @@ definition {
 
 	@priority = "5"
 	test NotStagedAssets {
+		Navigator.openSiteURL(siteName = "Site Name");
+
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
 			panel = "Site Administration",
@@ -750,6 +754,8 @@ definition {
 
 	@priority = "4"
 	test StagingCopyFromLive {
+		Navigator.openSiteURL(siteName = "Site Name");
+
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
 			panel = "Site Administration",
