@@ -1,0 +1,26 @@
+definition {
+
+	macro rate {
+		var key_ratingResult = StringUtil.replace("${ratingResult}", " ", "-");
+		var key_ratingResult = StringUtil.lowerCase("${key_ratingResult}");
+
+		Click(locator1 = "Ratings#THUMB");
+	}
+
+	macro viewRating {
+		var key_ratingResult = StringUtil.replace("${ratingResult}", " ", "-");
+		var key_ratingResult = StringUtil.lowerCase("${key_ratingResult}");
+
+		if (isSet(ratingResult)) {
+			AssertTextEquals(
+				locator1 = "Ratings#THUMB",
+				value1 = "${voteCount}");
+		}
+		else {
+			AssertTextEquals(
+				locator1 = "Ratings#DISPLAY_VOTES",
+				value1 = "${voteCount}");
+		}
+	}
+
+}
