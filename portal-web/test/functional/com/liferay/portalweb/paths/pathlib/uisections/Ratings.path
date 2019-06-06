@@ -24,8 +24,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>THUMB_UP_OFF</td>
+	<td>//span[contains(@class,'thumb-up') and contains(@class,'rating-off')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>THUMB_DOWN</td>
 	<td>//div[contains(@class,'ratings')]//a[contains(@class,'thumb-down')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THUMB_DOWN_OFF</td>
+	<td>//span[contains(@class,'thumb-down') and contains(@class,'rating-off')]</td>
 	<td></td>
 </tr>
 <tr>

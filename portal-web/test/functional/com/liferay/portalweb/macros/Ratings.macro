@@ -23,4 +23,14 @@ definition {
 		}
 	}
 
+	macro viewRatingReadOnly {
+		AssertElementNotPresent(locator1 = "Ratings#THUMB_UP");
+
+		AssertElementNotPresent(locator1 = "Ratings#THUMB_DOWN");
+
+		AssertElementPresent(locator1 = "Ratings#THUMB_UP_OFF");
+
+		AssertElementPresent(locator1 = "Ratings#THUMB_DOWN_OFF");
+	}
+
 }
