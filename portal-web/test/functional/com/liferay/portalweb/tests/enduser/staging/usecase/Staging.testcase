@@ -2392,7 +2392,7 @@ definition {
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
-		Page.viewPagesOrder(
+		Page.viewPagesOrderOnPage(
 			pageName1 = "Staging Test Page",
 			pageName2 = "Test Page 1",
 			pageName3 = "Test Page 2");

@@ -45,6 +45,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LIST_GROUP_ITEM_ROW_ENTRY_ON_PAGE</td>
+	<td>xpath=(//li[contains(@id,'SiteNavigationMenuPortlet')])[${key_index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LIST_GROUP_ITEM_ROW_ELLIPSIS</td>
 	<td>xpath=(//li[contains(@class,'list-group-item')])[${key_index}]//button[*[name()='svg'][contains(@class,'icon-ellipsis-v')]]</td>
 	<td></td>
