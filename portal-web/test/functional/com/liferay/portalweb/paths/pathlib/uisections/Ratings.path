@@ -176,6 +176,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>AVERAGE_STAR_DISABLE</td>
+	<td>xPath=(//div[contains(@id,'_ratingScore')]//span[(@class='rating-element icon-star-empty') and (@title='Ratings are disabled in Staging')])[${key_averageDisableStar}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>AVERAGE_STAR_EMPTY</td>
 	<td>xPath=(//div[contains(@id,'_ratingScore')]//span[@class='rating-element icon-star-empty'])[${key_averageEmptyStar}]</td>
 	<td></td>
