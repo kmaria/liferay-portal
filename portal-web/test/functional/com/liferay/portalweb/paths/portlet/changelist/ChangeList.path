@@ -60,7 +60,7 @@
 </tr>
 <tr>
 	<td>CHANGE_LIST_DESCRIPTION</td>
-	<td>//input[contains(@name,'description')]</td>
+	<td>//textarea[contains(@name,'description')]</td>
 	<td></td>
 </tr>
 <tr>
