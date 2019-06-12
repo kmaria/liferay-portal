@@ -1199,6 +1199,12 @@ definition {
 	macro viewFrontPagePG {
 		var key_wikiNodeName = "${wikiNodeName}";
 
+		if ("${viewWikiNode}" == "true") {
+			AssertClick(
+				locator1 = "Wiki#NODE_NAME",
+				value1 = "${wikiNodeName}");
+		}
+
 		AssertTextEquals(
 			locator1 = "Portlet#H3_HEADER",
 			value1 = "FrontPage");
