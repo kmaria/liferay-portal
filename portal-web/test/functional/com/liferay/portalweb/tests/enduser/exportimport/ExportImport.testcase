@@ -41,22 +41,10 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "Web Content Content",
-			webContentTitle = "Web Content Title");
-
-		PortletEntry.publish();
-
-		WebContent.viewTitle(webContentTitle = "Web Content Title");
+		JSONWebcontent.addWebContent(
+			content = "Web Content Content",
+			groupName = "Guest",
+			title = "Web Content Title");
 
 		Navigator.openURL();
 
@@ -367,27 +355,12 @@ definition {
 
 	@priority = "4"
 	test ExportImportDeletions {
-		Navigator.openURL();
+		JSONWebcontent.addWebContent(
+			content = "Web Content Content",
+			groupName = "Guest",
+			title = "Web Content Title");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "Web Content Content",
-			webContentTitle = "Web Content Title");
-
-		PortletEntry.publish();
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContent.openWebContentAdmin(siteURLKey = "guest");
 
 		LAR.exportPortlet(larFileName = "ExportWebContent.lar");
 
@@ -742,15 +715,12 @@ definition {
 	test ExportImportSiteWithReferencedWebContent {
 		JSONGroup.addGroup(groupName = "Site Name A");
 
-		WebContent.openWebContentAdmin(siteURLKey = "site-name-a");
+		JSONWebcontent.addWebContent(
+			content = "Web Content",
+			groupName = "Site Name A",
+			title = "Web Content Title");
 
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "Web Content Content",
-			webContentTitle = "Web Content Title");
-
-		PortletEntry.publish();
+		ProductMenu.gotoSite(site = "Site Name A");
 
 		LAR.exportSiteCP();
 
