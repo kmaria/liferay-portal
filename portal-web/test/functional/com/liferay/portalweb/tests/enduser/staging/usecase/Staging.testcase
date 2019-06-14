@@ -366,6 +366,77 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "com.liferay.exportimport.kernel.lar.PortletDataException");
 	}
 
+	@description = "This is a use case for LPS-93695."
+	@priority = "3"
+	test PublishContentPageWithCategory {
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Search");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/search");
+
+		Portlet.addPG(portletName = "Search Results");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging");
+
+		Staging.activateStagingCP(siteName = "Site Name");
+
+		SitePages.openPagesAdmin(siteURLKey = "site-name-staging");
+
+		ContentPages.addPage(pageName = "Test Content Page");
+
+		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
+
+		Staging.publishCustomPublication();
+
+		Category.openCategoriesAdmin(siteURLKey = "site-name-staging");
+
+		Vocabulary.addCP(
+			vocabularyDescription = "Vocabulary Description",
+			vocabularyName = "Vocabulary Name");
+
+		Category.openCategoriesAdmin(siteURLKey = "site-name-staging");
+
+		Category.addCP(
+			categoryName = "Category Name",
+			vocabularyName = "Vocabulary Name");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name-staging/test-content-page");
+
+		ContentPages.clickPencil();
+
+		PageEditor.addWidget(portletName = "Categories Navigation");
+
+		PageEditor.clickPublish();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name-staging/test-content-page");
+
+		SearchPortlets.searchEmbedded(searchTerm = "Category Name");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Test Content Page",
+			searchAssetType = "Categories");
+
+		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
+
+		Staging.publishCustomPublication();
+
+		Navigator.gotoSitePage(
+			pageName = "Search",
+			siteName = "Site Name");
+
+		SearchPortlets.searchEmbedded(searchTerm = "Category Name");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Test Content Page",
+			searchAssetType = "Categories");
+	}
+
 	@description = "This is a use case for LPS-72545."
 	@priority = "4"
 	test PublishCustomFieldDeletionviaRemoteStaging {
