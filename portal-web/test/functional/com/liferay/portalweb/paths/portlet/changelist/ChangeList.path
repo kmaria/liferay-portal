@@ -69,6 +69,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CHANGE_LIST_NAME_WC_HISTORY</td>
+	<td>//td[contains(@class,'change-list-title')]//a[contains(.,'${key_changeListName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHECK_CIRCLE</td>
 	<td>//td[contains(.,'${key_contentTitle}')]//following-sibling::td//span[span/*[name()='svg'][contains(@class,'lexicon-icon')]]</td>
 	<td></td>
