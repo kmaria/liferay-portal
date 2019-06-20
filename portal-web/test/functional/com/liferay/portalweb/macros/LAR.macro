@@ -300,7 +300,7 @@ definition {
 				value1 = "${larFileName}");
 		}
 
-		Pause(locator1 = "15000");
+		Pause(locator1 = "20000");
 
 		if (isSet(importValidationMissingItem)) {
 			AssertTextEquals.assertPartialText(
