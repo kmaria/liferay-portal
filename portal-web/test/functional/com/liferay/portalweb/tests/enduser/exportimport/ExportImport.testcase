@@ -610,9 +610,12 @@ definition {
 
 		SitePages.addPublicPage(pageName = "Test Page Name");
 
-		Navigator.gotoPage(pageName = "Test Page Name");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Page Name",
+			widgetName = "Blogs");
 
-		Portlet.addPG(portletName = "Blogs");
+		Navigator.gotoPage(pageName = "Test Page Name");
 
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -740,11 +743,14 @@ definition {
 			groupName = "Site Name B",
 			layoutName = "Test Page");
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name B",
+			layoutName = "Test Page",
+			widgetName = "Web Content Display");
+
 		Navigator.gotoSitePage(
 			pageName = "Test Page",
 			siteName = "Site Name B");
-
-		Portlet.addPG(portletName = "Web Content Display");
 
 		WebContentDisplayPortlet.selectOtherSiteWebContent(
 			otherSiteName = "Site Name A",

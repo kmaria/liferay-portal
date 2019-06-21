@@ -545,11 +545,14 @@ definition {
 	@description = "This is a use case for LPS-80492."
 	@priority = "4"
 	test PublishRenamedTags {
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Staging Test Page",
+			widgetName = "Web Content Display");
+
 		Navigator.gotoSitePage(
 			pageName = "Staging Test Page",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Web Content Display");
 
 		WebContent.addPGViaWCD(
 			webContentContent = "WebContent Content",
@@ -770,11 +773,14 @@ definition {
 
 		Staging.activateStagingCP(siteName = "Site Name");
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Staging Test Page",
+			widgetName = "Blogs");
+
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Blogs");
 
 		BlogsNavigator.gotoAddEntry();
 
@@ -796,11 +802,14 @@ definition {
 			entryTitle = "Blogs Entry Title",
 			tagName = "stagingtag");
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Staging Test Page",
+			widgetName = "Documents and Media");
+
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Documents and Media");
 
 		DMDocument.addPG(
 			dmDocumentFile = "Document_1.doc",
@@ -1279,11 +1288,14 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Staging Test Page",
+			widgetName = "Documents and Media");
+
 		Navigator.gotoSitePage(
 			pageName = "Staging Test Page",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Documents and Media");
 
 		DMDocument.enableActionsMenuOnPortlet();
 
@@ -1349,19 +1361,15 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Staging Test Page 2");
 
-		ProductMenu.gotoSite(site = "Site Name");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Staging Test Page",
+			widgetName = "Web Content Display");
 
-		Navigator.gotoSitePage(
-			pageName = "Staging Test Page",
-			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Web Content Display");
-
-		Navigator.gotoSitePage(
-			pageName = "Staging Test Page 2",
-			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Web Content Display");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Staging Test Page 2",
+			widgetName = "Web Content Display");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
@@ -1557,11 +1565,10 @@ definition {
 			dmDocumentTitle = "DM Document Type Title",
 			dmDocumentTypeName = "DM Document Type Name");
 
-		Navigator.gotoSitePage(
-			pageName = "Staging Test Page",
-			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Asset Publisher");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Staging Test Page",
+			widgetName = "Asset Publisher");
 
 		Navigator.gotoSitePage(
 			pageName = "Staging Test Page",
@@ -1669,11 +1676,10 @@ definition {
 
 		Staging.remoteStagingSetUp(siteName = "Site Name");
 
-		Navigator.gotoSitePage(
-			pageName = "Staging Test Page",
-			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Web Content Display");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Staging Test Page",
+			widgetName = "Web Content Display");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
@@ -1838,18 +1844,14 @@ definition {
 
 		Staging.remoteStagingSetUp(siteName = "Site Name");
 
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Staging Test Page",
+			widgetName = "Web Content Display");
 
 		Navigator.gotoSitePage(
 			pageName = "Staging Test Page",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Web Content Display");
 
 		Portlet.gotoPortletOptions(
 			portletName = "Web Content Display",
@@ -1965,11 +1967,10 @@ definition {
 
 		Staging.remoteStagingSetUp(siteName = "Site Name");
 
-		Navigator.gotoSitePage(
-			pageName = "Staging Test Page",
-			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Asset Publisher");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Staging Test Page",
+			widgetName = "Asset Publisher");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
@@ -2503,11 +2504,14 @@ definition {
 	@description = "This is a use case for LPS-82355."
 	@priority = "5"
 	test ViewPublishDocumentTypeWithConfiguredAssetType {
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Staging Test Page",
+			widgetName = "Asset Publisher");
+
 		Navigator.gotoSitePage(
 			pageName = "Staging Test Page",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Asset Publisher");
 
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
@@ -2665,7 +2669,10 @@ definition {
 	test ViewPublishWCWithConfiguredCategoriesFilter {
 		Navigator.openSiteURL(siteName = "Site Name");
 
-		Portlet.addPG(portletName = "Asset Publisher");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Staging Test Page",
+			widgetName = "Asset Publisher");
 
 		ProductMenu.gotoPortlet(
 			category = "Publishing",

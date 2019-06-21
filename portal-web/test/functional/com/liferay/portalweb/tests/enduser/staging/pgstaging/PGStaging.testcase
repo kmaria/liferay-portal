@@ -39,11 +39,10 @@ definition {
 
 		Staging.remoteStagingSetUp(siteName = "Site Name");
 
-		Navigator.gotoSitePage(
-			pageName = "Staging Test Page",
-			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Documents and Media");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Staging Test Page",
+			widgetName = "Documents and Media");
 
 		Navigator.gotoSitePage(
 			pageName = "Staging Test Page",
@@ -90,9 +89,10 @@ definition {
 
 	@priority = "4"
 	test ActivateDeactivateStagingLocalLiveDM {
-		Navigator.gotoSitePage(
-			pageName = "Staging Test Page",
-			siteName = "Site Name");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Staging Test Page",
+			widgetName = "Documents and Media");
 
 		Portlet.addPG(
 			pageName = "Staging Test Page",
@@ -171,13 +171,10 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
-		Navigator.gotoSitePage(
-			pageName = "Staging Test Page",
-			siteName = "Site Name");
-
-		Portlet.addPG(
-			pageName = "Staging Test Page",
-			portletName = "Documents and Media");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Staging Test Page",
+			widgetName = "Documents and Media");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
@@ -319,17 +316,15 @@ definition {
 			groupName = "Site Name",
 			layoutName = "AP Test Page");
 
-		Navigator.gotoSitePage(
-			pageName = "AP Test Page",
-			siteName = "Site Name");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "AP Test Page",
+			widgetName = "Asset Publisher");
 
-		Portlet.addPG(portletName = "Asset Publisher");
-
-		Navigator.gotoSitePage(
-			pageName = "Blogs Test Page",
-			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Blogs");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Blogs Test Page",
+			widgetName = "Blogs");
 
 		Navigator.gotoSitePage(
 			pageName = "Blogs Test Page",
@@ -424,13 +419,10 @@ definition {
 			privacy = "Public Pages",
 			sitePageType = "Widget Page");
 
-		Navigator.gotoSitePage(
-			pageName = "Staging Test Page",
-			siteName = "Site Name");
-
-		Portlet.addPG(
-			pageName = "Staging Test Page",
-			portletName = "Documents and Media");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Staging Test Page",
+			widgetName = "Documents and Media");
 
 		Navigator.gotoSitePage(
 			pageName = "Staging Test Page",
@@ -507,13 +499,12 @@ definition {
 
 	@priority = "4"
 	test LayoutScope {
-		Navigator.gotoSitePage(
-			pageName = "Staging Test Page",
-			siteName = "Site Name");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Staging Test Page",
+			widgetName = "Message Boards");
 
-		Portlet.addPG(
-			pageName = "Staging Test Page",
-			portletName = "Message Boards");
+		Navigator.openSiteURL(siteName = "Site Name");
 
 		MessageboardsPortlet.configureScopePG(scopeName = "Staging Test Page (Create New)");
 
@@ -738,11 +729,14 @@ definition {
 			pageVersioningEnabled = "true",
 			siteName = "Site Name");
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Staging Test Page",
+			widgetName = "Web Content Display");
+
 		Navigator.gotoSitePage(
 			pageName = "Staging Test Page",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Web Content Display");
 
 		WebContent.addPGViaWCD(
 			webContentContent = "Web Content Content",
@@ -776,13 +770,14 @@ definition {
 
 		Staging.activateStagingCP(siteName = "Site Name");
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Staging Test Page",
+			widgetName = "Asset Publisher");
+
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
 			siteName = "Site Name");
-
-		Portlet.addPG(
-			pageName = "Staging Test Page",
-			portletName = "Asset Publisher");
 
 		AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Set as the Default Asset Publisher for This Page");
 
@@ -854,11 +849,14 @@ definition {
 
 		Staging.addSitePagesVariationPG(sitePagesVariationName = "Test Site Pages Variation");
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Staging Test Page",
+			widgetName = "Web Content Display");
+
 		Navigator.gotoSitePage(
 			pageName = "Staging Test Page",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Web Content Display");
 
 		WebContent.addPGViaWCD(
 			webContentContent = "Web Content Content",
@@ -891,11 +889,14 @@ definition {
 
 		Staging.addPageVariationPG(pageVariationName = "Test Page Variation");
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Test Variation Page",
+			widgetName = "Blogs");
+
 		Navigator.gotoSitePage(
 			pageName = "Test Variation Page",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Blogs");
 
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",
