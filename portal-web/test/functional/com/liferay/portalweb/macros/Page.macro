@@ -169,7 +169,7 @@ definition {
 		}
 
 		AssertClick(
-			locator1 = "Button#DELETE",
+			locator1 = "Button#DELETE_LAYOUT_LOGO",
 			value1 = "Delete");
 
 		PortletEntry.save();
