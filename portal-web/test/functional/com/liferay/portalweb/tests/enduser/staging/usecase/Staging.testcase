@@ -773,14 +773,11 @@ definition {
 
 		Staging.activateStagingCP(siteName = "Site Name");
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Staging Test Page",
-			widgetName = "Blogs");
-
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
 			siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Blogs");
 
 		BlogsNavigator.gotoAddEntry();
 
