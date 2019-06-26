@@ -1964,10 +1964,11 @@ definition {
 
 		Staging.remoteStagingSetUp(siteName = "Site Name");
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Staging Test Page",
-			widgetName = "Asset Publisher");
+		Navigator.gotoSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Asset Publisher");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
