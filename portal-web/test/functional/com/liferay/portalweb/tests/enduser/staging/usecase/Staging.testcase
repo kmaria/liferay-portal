@@ -361,9 +361,9 @@ definition {
 
 		Staging.openStagingAdmin(siteURLKey = "child-sitename");
 
-		Staging.publishCustomPublication(remoteStaging = "true");
-
-		AssertConsoleTextNotPresent(value1 = "com.liferay.exportimport.kernel.lar.PortletDataException");
+		Staging.publishCustomPublication(
+			failureExpected = "true",
+			remoteStaging = "true");
 	}
 
 	@description = "This is a use case for LPS-93695."
