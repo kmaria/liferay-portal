@@ -631,6 +631,218 @@ definition {
 			rowEntry = "tag name edit");
 	}
 
+	@description = "This is a use case for LPS-96155."
+	@priority = "4"
+	test PublishReviewedPageRevision {
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Staging Test Page 1");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Staging Test Page 2");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Staging Test Page 3");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging");
+
+		Staging.activateStagingCP(
+			pageVersioningEnabled = "true",
+			siteName = "Site Name");
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Page Revision");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.addCP(
+			userEmailAddress = "userea1@liferay.com",
+			userFirstName = "userfn1",
+			userLastName = "userln1",
+			userScreenName = "usersn1");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.editPasswordCP(
+			userEmailAddress = "userea1@liferay.com",
+			userScreenName = "usersn1");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.assignRegularRoleCP(
+			roleTitle = "Administrator",
+			userScreenName = "usersn1");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.addCP(
+			userEmailAddress = "userea2@liferay.com",
+			userFirstName = "userfn2",
+			userLastName = "userln2",
+			userScreenName = "usersn2");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.editPasswordCP(
+			userEmailAddress = "userea2@liferay.com",
+			userScreenName = "usersn2");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.assignRegularRoleCP(
+			roleTitle = "Administrator",
+			userScreenName = "usersn2");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea1@liferay.com");
+
+		for (var pageCount : list "1,2,3") {
+			Navigator.gotoStagedSitePage(
+				pageName = "Staging Test Page ${pageCount}",
+				siteName = "Site Name");
+
+			Portlet.addPG(portletName = "Web Content Display");
+
+			Staging.submitForPublicationPageRevision();
+		}
+
+		User.logoutPG(
+			password = "test",
+			userEmailAddress = "userea1@liferay.com");
+
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "userea2@liferay.com");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		for (var pageCount : list "1,2,3") {
+			Workflow.assignToMeTaskByActions(
+				workflowAssetTitle = "Staging Test Page ${pageCount}",
+				workflowAssetType = "Page Revision",
+				workflowTask = "Review");
+
+			Workflow.approveTaskByActions(
+				workflowAssetTitle = "Staging Test Page ${pageCount}",
+				workflowAssetType = "Page Revision",
+				workflowTask = "Review");
+		}
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page 1",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(
+			pageName = "Staging Test Page 3",
+			siteName = "Site Name");
+
+		var key_portletTitleName = "Web Content Display";
+
+		AssertElementPresent(locator1 = "Portlet#SPECIFIC_TITLE");
+
+		User.logoutPG(
+			password = "test",
+			userEmailAddress = "userea2@liferay.com");
+
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "userea1@liferay.com");
+
+		for (var pageCount : list "1,2,3") {
+			Navigator.gotoStagedSitePage(
+				pageName = "Staging Test Page ${pageCount}",
+				siteName = "Site Name");
+
+			Portlet.addPG(portletName = "Asset Publisher");
+
+			Staging.submitForPublicationPageRevision();
+		}
+
+		User.logoutPG(
+			password = "test",
+			userEmailAddress = "userea1@liferay.com");
+
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "userea2@liferay.com");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		for (var pageCount : list "1,2") {
+			Workflow.assignToMeTaskByActions(
+				workflowAssetTitle = "Staging Test Page ${pageCount}",
+				workflowAssetType = "Page Revision",
+				workflowTask = "Review");
+
+			Workflow.approveTaskByActions(
+				workflowAssetTitle = "Staging Test Page ${pageCount}",
+				workflowAssetType = "Page Revision",
+				workflowTask = "Review");
+		}
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page 1",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(
+			pageName = "Staging Test Page 1",
+			siteName = "Site Name");
+
+		var key_portletTitleName = "Asset Publisher";
+
+		AssertElementPresent(locator1 = "Portlet#SPECIFIC_TITLE");
+
+		Navigator.gotoSitePage(
+			pageName = "Staging Test Page 3",
+			siteName = "Site Name");
+
+		AssertElementNotPresent(locator1 = "Portlet#SPECIFIC_TITLE");
+	}
+
 	@priority = "4"
 	test PublishTemplateWithPages {
 		JSONLayout.addPrivateLayout(
