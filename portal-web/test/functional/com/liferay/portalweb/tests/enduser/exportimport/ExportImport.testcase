@@ -1194,7 +1194,7 @@ definition {
 
 		DMDocument.expandInfo();
 
-		var dmDocumentURL = selenium.getAttribute("//input[contains(@class,'lfr-input-resource')]@value");
+		var dmDocumentURL = selenium.getAttribute("//input[contains(@id,'urlInput')]@value");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
