@@ -69,7 +69,7 @@ definition {
 			siteTemplateName = "Site Template Name",
 			siteType = "Site Template");
 
-		ProductMenu.gotoSite(site = "Site Template Site Name");
+		Navigator.openSiteURL(siteName = "Site Template Site Name");
 
 		Portlet.viewNoPortletsPresentPG();
 
@@ -86,7 +86,7 @@ definition {
 
 		Portlet.addPG(portletName = "Hello World");
 
-		ProductMenu.gotoSite(site = "Site Template Site Name");
+		Navigator.openSiteURL(siteName = "Site Template Site Name");
 
 		if (IsElementNotPresent(locator1 = "Portlet#PORTLET_CONTENT")) {
 			Refresh();
@@ -125,7 +125,7 @@ definition {
 			siteTemplateName = "Site Template Name",
 			siteType = "Site Template");
 
-		ProductMenu.gotoSite(site = "Site Template Site Name");
+		Navigator.openSiteURL(siteName = "Site Template Site Name");
 
 		Page.viewCurrentTheme(
 			page = "Public Pages",
@@ -154,7 +154,7 @@ definition {
 			siteTemplateName = "Site Template Name",
 			siteType = "Site Template");
 
-		ProductMenu.gotoSite(site = "Site Template Site Name");
+		Navigator.openSiteURL(siteName = "Site Template Site Name");
 
 		Page.viewPageLockCheck();
 
@@ -412,7 +412,7 @@ definition {
 			siteTemplateName = "Site Template Name",
 			siteType = "Site Template");
 
-		ProductMenu.gotoSite(site = "Site Template Site Name");
+		Navigator.openSiteURL(siteName = "Site Template Site Name");
 
 		AssertElementPresent(locator1 = "ControlMenu#ADD");
 
@@ -431,7 +431,7 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userScreenName = "usersn");
 
-		ProductMenu.gotoSite(site = "Site Template Site Name");
+		Navigator.openSiteURL(siteName = "Site Template Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
@@ -561,7 +561,7 @@ definition {
 			siteType = "Site Template",
 			uncheckPropagation = "true");
 
-		ProductMenu.gotoSite(site = "Site Name");
+		Navigator.openSiteURL(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
