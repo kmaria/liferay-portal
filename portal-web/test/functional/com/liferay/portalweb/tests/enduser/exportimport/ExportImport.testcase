@@ -723,7 +723,7 @@ definition {
 			groupName = "Site Name A",
 			title = "Web Content Title");
 
-		Navigator.openSiteURL(siteName = "Site Name A");
+		ProductMenu.gotoSite(site = "Site Name A");
 
 		LAR.exportSiteCP();
 

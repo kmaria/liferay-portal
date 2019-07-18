@@ -414,7 +414,7 @@ definition {
 			templateFieldNames = "Text",
 			templateName = "Template Name");
 
-		Navigator.openSiteURL(siteName = "Child SiteName");
+		ProductMenu.gotoSite(site = "Child SiteName");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
