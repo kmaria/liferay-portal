@@ -1128,13 +1128,13 @@ definition {
 	@description = "This is a use case for LPS-88498."
 	@priority = "5"
 	test ExportViaGuest {
+		property test.name.skip.portal.instance = "ExportImport#ExportViaGuest";
+
 		LAR.exportSiteCP();
 
 		var downloadURL = selenium.getAttribute("//ul/li/div/h2/span/a@href");
 
 		User.logoutPG();
-
-		Pause(locator = "3000");
 
 		Navigator.openSpecificURL(url = "${downloadURL}");
 
