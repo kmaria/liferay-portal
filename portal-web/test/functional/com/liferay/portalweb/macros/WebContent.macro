@@ -850,6 +850,14 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
+	macro editFriendlyURL {
+		Panel.expandPanel(panel = "Friendly URL");
+
+		Type(
+			locator1 = "TextInput#FRIENDLY_URL",
+			value1 = "${webContentFriendlyURL}");
+	}
+
 	macro editInReview {
 		WebContent.addCP(webContentTitle = "${webContentTitleEdit}");
 
