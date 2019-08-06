@@ -1080,6 +1080,20 @@ definition {
 			value1 = "${assetTitle}");
 	}
 
+	macro viewConfigureSiteScope {
+		var key_siteName = "${siteName}";
+
+		AssetPublisherPortlet.gotoConfigurationPG();
+
+		Navigator.gotoNavTab(navTab = "Asset Selection");
+
+		Panel.expandPanel(panel = "Scope");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "APConfiguration#SOURCE_SCOPE_NAME",
+			value1 = "${siteName}");
+	}
+
 	macro viewConfigureSiteScopeContentSharingPG {
 		AssetPublisherPortlet.gotoConfigurationPG();
 
