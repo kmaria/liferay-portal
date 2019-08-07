@@ -1115,6 +1115,37 @@ definition {
 			siteName = "Site Name");
 	}
 
+	@description = "This is a use case for LPS-83326."
+	@priority = "5"
+	test ExportImportWebcontentFolderWithWorkflow {
+		WebContent.openWebContentAdmin(siteURLKey = "guest");
+
+		WebContentFolder.addCP(
+			folderDescription = "WC Folder Description",
+			folderName = "WC Folder Name");
+
+		WebContentFolder.configureWorkflowCP(
+			folderName = "WC Folder Name",
+			workflowDefinition = "Single Approver",
+			workflowRestriction = "Default Workflow");
+
+		WebContent.openWebContentAdmin(siteURLKey = "guest");
+
+		LAR.exportPortlet(larFileName = "WebContent_portlet.lar");
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		WebContent.openWebContentAdmin(siteURLKey = "site-name");
+
+		LAR.importPortlet(larFileName = "WebContent_portlet.lar");
+
+		WebContent.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContentFolder.viewFolderWorkflow(
+			folderName = "WC Folder Name",
+			workflowResourceValue = "Single Approver");
+	}
+
 	@description = "This is a use case for LPS-86608."
 	@priority = "3"
 	test ExportImportWebcontentWithRepeatField {
