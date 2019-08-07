@@ -1,4 +1,4 @@
-@component-name = "portal-staging"
+@component-name = "portal-change-tracking"
 definition {
 
 	property portal.release = "true";
