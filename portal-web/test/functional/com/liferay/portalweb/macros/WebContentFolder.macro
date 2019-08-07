@@ -179,4 +179,16 @@ definition {
 		AssertElementPresent(locator1 = "Message#SUCCESS");
 	}
 
+	macro viewFolderWorkflow {
+		WebContentFolder.gotoEditCP(
+			folderName = "${folderName}",
+			webContentTitle = "${folderName}");
+
+		var key_workflowResourceValue = "${workflowResourceValue}";
+
+		AssertTextEquals(
+			locator1 = "WCEditFolder#WORKFLOW_FOLDER_WORKFLOW",
+			value1 = "${workflowResourceValue}");
+	}
+
 }
