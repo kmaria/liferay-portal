@@ -732,4 +732,46 @@ definition {
 		WikiPage.viewCustomADTSocialPG(wikiPageContent = "Test Wiki Content");
 	}
 
+	@priority = "4"
+	test PublishWidgetPageTemplates {
+		Navigator.openSiteURL(siteName = "Test Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging");
+
+		Staging.activateStagingCP(siteName = "Test Site Name");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "ADT Test Page",
+			siteName = "Test Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			panel = "Site Administration",
+			portlet = "Widget Templates");
+
+		ApplicationDisplayTemplates.addCP(
+			adtFile = "adt_asset_publisher_rich_summary.ftl",
+			adtType = "Asset Publisher");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "ADT Test Page",
+			siteName = "Test Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		ProductMenu.gotoLiveSite();
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			panel = "Site Administration",
+			portlet = "Widget Templates");
+
+		ApplicationDisplayTemplates.viewTemplate(adtType = "Asset Publisher");
+	}
+
 }
