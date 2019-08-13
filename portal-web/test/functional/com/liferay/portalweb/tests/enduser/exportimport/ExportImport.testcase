@@ -704,8 +704,8 @@ definition {
 		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title 2");
 
 		WebContent.viewPGViaWCD(
-			linkToPage = "true",
-			linkName = "Link to Page");
+			linkName = "Link to Page",
+			linkToPage = "true");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
@@ -1486,9 +1486,9 @@ definition {
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
 		WebContent.addWithStructureCP(
-			fieldName = "DocumentsandMedia",
+			fieldName = "DocumentsAndMedia",
 			linkedPageName = "Test Page",
-			linkFieldName = "LinktoPage",
+			linkFieldName = "LinkToPage",
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name",
 			webContentDocumentsAndMedia = "DM Document Title.txt",

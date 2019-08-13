@@ -495,7 +495,7 @@ definition {
 
 		WebContent.addWithStructureCP(
 			linkedPageName = "Test Page",
-			linkFieldName = "LinktoPage",
+			linkFieldName = "LinkToPage",
 			structureName = "Test Structure",
 			templateName = "Test Template",
 			webContentTitle = "WC Title");
