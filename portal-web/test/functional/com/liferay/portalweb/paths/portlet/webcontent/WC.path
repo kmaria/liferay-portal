@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LINK_TO_PAGE_NEXT_PAGE</td>
+	<td>//a[contains(@class,'collapse-icon')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LINK_TO_PAGE_SELECT_PAGE_BUTTON</td>
 	<td>//button[contains(@id,'SelectButton')]</td>
 	<td></td>
