@@ -28,6 +28,10 @@ definition {
 
 	@priority = "4"
 	test CheckPublicationSummaryLocal {
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Staging Test Page");
+
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
 			panel = "Site Administration",
@@ -35,12 +39,10 @@ definition {
 
 		Staging.activateStagingCP(siteName = "Site Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
-
-		SitePages.addPublicPage(pageName = "Staging Test Page");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Staging Test Page",
+			widgetName = "Documents and Media");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
@@ -71,12 +73,9 @@ definition {
 			remoteStaging = "true",
 			siteName = "Site Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
-
-		SitePages.addPublicPage(pageName = "Staging Test Page");
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Staging Test Page");
 
 		Navigator.gotoSitePage(
 			pageName = "Staging Test Page",
