@@ -1226,6 +1226,75 @@ definition {
 			siteName = "Site Name");
 	}
 
+	@description = "This is a use case for LPS-84204."
+	@priority = "4"
+	test ExportImportWCDReferenceWhenNotStagedWebContent {
+		JSONGroup.addGroup(groupName = "Site Name A");
+
+		SitePages.openPagesAdmin(siteURLKey = "site-name-a");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging");
+
+		Staging.activateStagingCP(
+			siteName = "Site Name A",
+			uncheckContent = "Web Content");
+
+		JSONWebcontent.addWebContent(
+			content = "Web Content Content",
+			groupName = "Site Name A",
+			title = "Web Content Title");
+
+		Staging.openStagingAdmin(siteURLKey = "site-name-a-staging");
+
+		Staging.publishCustomPublication();
+
+		JSONGroup.addGroup(groupName = "Site Name B");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name B",
+			layoutName = "Test Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name B",
+			layoutName = "Test Page",
+			widgetName = "Web Content Display");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name B");
+
+		Refresh();
+
+		WebContentDisplayPortlet.selectOtherSiteWebContent(
+			otherSiteName = "Site Name A",
+			webContentTitle = "Web Content Title");
+
+		WebContent.viewPGViaWCD(webContentContent = "Web Content Content");
+
+		LAR.exportSiteCP();
+
+		var key_larFileName = "${larFileName}";
+
+		var larFileName = LAR.getLarFileName();
+
+		LAR.downloadLar();
+
+		JSONGroup.addGroup(groupName = "Site Name C");
+
+		LAR.importSiteCP(
+			larFileName = "${larFileName}",
+			siteName = "Site Name C");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name C");
+
+		WebContent.viewPGViaWCD(webContentContent = "Web Content Content");
+	}
+
 	@description = "This is a use case for LPS-83326."
 	@priority = "5"
 	test ExportImportWebcontentFolderWithWorkflow {
