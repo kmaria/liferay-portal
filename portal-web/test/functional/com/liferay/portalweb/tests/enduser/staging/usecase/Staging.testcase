@@ -3307,6 +3307,159 @@ definition {
 			pageName3 = "Test Page 2");
 	}
 
+	@description = "This is a use case for LPS-97827."
+	@priority = "2"
+	test ViewParentPageNameAfterPublishChangesInChildPage {
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Child Page A",
+			parentLayoutName = "Staging Test Page");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Child Page B",
+			parentLayoutName = "Staging Test Page");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Child Page C",
+			parentLayoutName = "Staging Test Page");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging");
+
+		Staging.activateStagingCP(
+			pageVersioningEnabled = "true",
+			siteName = "Site Name");
+
+		SitePages.openPagesAdmin(siteURLKey = "site-name-staging");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Staging Test Page");
+
+		Page.editName(pageNameEdit = "Staging Page Edit");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Page Edit",
+			siteName = "Site Name");
+
+		Staging.markAsReadyForPublication();
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Page Edit",
+			siteName = "Site Name");
+
+		Page.view(
+			pageName = "Staging Page Edit",
+			privacy = "Public Pages");
+
+		Navigator.gotoSitePage(
+			pageName = "Staging Page Edit",
+			siteName = "Site Name");
+
+		Page.view(
+			pageName = "Staging Page Edit",
+			privacy = "Public Pages");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Page Revision");
+
+		Navigator.openStagingSiteURL(siteName = "Site Name");
+
+		Page.gotoChildPagePG(
+			childPageName = "Child Page A",
+			pageName = "Staging Page Edit");
+
+		Portlet.addPG(portletName = "Blogs");
+
+		Page.viewWithWorkflowPG(workflowStatus = "Draft");
+
+		Staging.submitForPublicationPageRevision();
+
+		Navigator.openStagingSiteURL(siteName = "Site Name");
+
+		Page.gotoChildPagePG(
+			childPageName = "Child Page A",
+			pageName = "Staging Page Edit");
+
+		Page.viewWithWorkflowPG(workflowStatus = "Pending (Review)");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Page Edit",
+			siteName = "Site Name");
+
+		Page.viewWithWorkflowPG(workflowStatus = "Ready for Publication");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Child Page A",
+			workflowAssetType = "Page Revision",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Child Page A",
+			workflowAssetType = "Page Revision",
+			workflowTask = "Review");
+
+		Navigator.openStagingSiteURL(siteName = "Site Name");
+
+		Page.gotoChildPagePG(
+			childPageName = "Child Page A",
+			pageName = "Staging Page Edit");
+
+		Page.viewWithWorkflowPG(workflowStatus = "Ready for Publication");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Page Edit",
+			siteName = "Site Name");
+
+		Page.viewWithWorkflowPG(workflowStatus = "Ready for Publication");
+
+		Navigator.openStagingSiteURL(siteName = "Site Name");
+
+		Page.gotoChildPagePG(
+			childPageName = "Child Page A",
+			pageName = "Staging Page Edit");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.openStagingSiteURL(siteName = "Site Name");
+
+		Page.gotoChildPagePG(
+			childPageName = "Child Page A",
+			pageName = "Staging Page Edit");
+
+		Portlet.viewPG(portletName = "Blogs");
+
+		Navigator.gotoSitePage(
+			pageName = "Staging Page Edit",
+			siteName = "Site Name");
+
+		Page.view(
+			pageName = "Staging Page Edit",
+			privacy = "Public Pages");
+	}
+
 	@description = "This is a use case for LPS-82355."
 	@priority = "5"
 	test ViewPublishDocumentTypeWithConfiguredAssetType {
