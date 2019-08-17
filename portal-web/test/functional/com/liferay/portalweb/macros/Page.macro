@@ -953,13 +953,15 @@ definition {
 				value1 = "${workflowStatus}");
 		}
 
-		AssertClick.assertPartialTextClickAt(
-			locator1 = "Staging#LIVE_BUTTON",
-			value1 = "Live");
+		if ("${livePage}" == "true") {
+			AssertClick.assertPartialTextClickAt(
+				locator1 = "Staging#LIVE_BUTTON",
+				value1 = "Live");
 
-		var key_pageName = "${pageName}";
+			var key_pageName = "${pageName}";
 
-		AssertElementNotPresent(locator1 = "Home#PAGE");
+			AssertElementNotPresent(locator1 = "Home#PAGE");
+		}
 	}
 
 }
