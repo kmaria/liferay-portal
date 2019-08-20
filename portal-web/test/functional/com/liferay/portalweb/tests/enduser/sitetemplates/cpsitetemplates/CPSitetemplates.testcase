@@ -161,6 +161,43 @@ definition {
 		AssertElementNotPresent(locator1 = "ControlMenu#ADD");
 	}
 
+	@description = "This is a use case for LPS-84497."
+	@priority = "3"
+	test DeactivateActivateSiteTemplate {
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Site Templates");
+
+		SiteTemplates.addCP(
+			siteTemplateActive = "Yes",
+			siteTemplateName = "Site Template Name");
+
+		SiteTemplates.viewCP(siteTemplateName = "Site Template Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Site Templates");
+
+		SiteTemplates.deactivateCP(siteTemplateName = "Site Template Name");
+
+		SiteTemplates.viewTemplateStatusCP(
+			siteTemplateActiveEdit = "No",
+			siteTemplateName = "Site Template Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Site Templates");
+
+		SiteTemplates.activateCP(siteTemplateName = "Site Template Name");
+
+		SiteTemplates.viewTemplateStatusCP(
+			siteTemplateActiveEdit = "Yes",
+			siteTemplateName = "Site Template Name");
+	}
+
 	@priority = "4"
 	test DeactivateDefaultSiteTemplate {
 		ProductMenu.gotoPortlet(
