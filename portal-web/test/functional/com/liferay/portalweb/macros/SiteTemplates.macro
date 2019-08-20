@@ -1,5 +1,19 @@
 definition {
 
+	macro activateCP {
+		var key_siteTemplateName = "${siteTemplateName}";
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "SiteTemplates#SITE_TEMPLATE_TABLE_NAME",
+			value1 = "${siteTemplateName}");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Activate",
+			rowEntry = "${siteTemplateName}");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro addChildPageViaSiteTemplateCP {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Manage",
@@ -83,6 +97,22 @@ definition {
 		if (!("${sitePageType}" == "Content Page")) {
 			Button.click(button = "Save");
 		}
+	}
+
+	macro deactivateCP {
+		var key_siteTemplateName = "${siteTemplateName}";
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "SiteTemplates#SITE_TEMPLATE_TABLE_NAME",
+			value1 = "${siteTemplateName}");
+
+		LexiconEntry.gotoEntryMenuItemNoError(
+			menuItem = "Deactivate",
+			rowEntry = "${siteTemplateName}");
+
+		AssertConfirm(value1 = "Are you sure you want to deactivate this?");
+
+		Alert.viewSuccessMessage();
 	}
 
 	macro deleteCP {
