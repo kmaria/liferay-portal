@@ -801,6 +801,49 @@ definition {
 			dmDocumentTitle = "DM Document Title");
 	}
 
+	@description = "This is a use case for LPS-91959."
+	@priority = "3"
+	test PublishPageDeletions {
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Test Page");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging");
+
+		Staging.activateStagingCP(siteName = "Site Name");
+
+		SitePages.openPagesAdmin(siteURLKey = "site-name-staging");
+
+		SitePages.deletePage(pageName = "Staging Test Page");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		Page.viewNoPG(pageName = "Staging Test Page");
+
+		Staging.gotoPublishToLive();
+
+		AssertElementPresent(
+			key_itemName = "Pages",
+			locator1 = "StagingPublishToLive#SIMPLE_PUBLICATION_DELETION");
+
+		Staging.configurePublishToLive(pageDeletion = "true");
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		Page.viewNoPG(pageName = "Staging Test Page");
+	}
+
 	@description = "This is a use case for LPS-90924."
 	@priority = "3"
 	test PublishPageRevisionWithPortletSettingsChanges {
