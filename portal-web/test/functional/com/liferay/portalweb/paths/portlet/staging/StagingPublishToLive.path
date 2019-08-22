@@ -98,7 +98,7 @@
 </tr>
 <tr>
 	<td>SIMPLE_PUBLICATION_DELETION</td>
-	<td>//span[contains(@class,'deletions') and contains(.,'${key_itemName}')]</td>
+	<td>//li[contains(.,'${key_itemName}')]//span[contains(@class,'deletions')]</td>
 	<td></td>
 </tr>
 <tr>
