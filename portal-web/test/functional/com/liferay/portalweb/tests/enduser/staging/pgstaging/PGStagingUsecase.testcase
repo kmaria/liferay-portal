@@ -324,7 +324,7 @@ definition {
 
 		User.logoutUserPG();
 
-		SitePages.openPagesAdmin(siteURLKey = "Staging Organization Name");
+		Navigator.openSiteURL(siteName = "Staging Organization Name");
 
 		AssertElementPresent(
 			key_entryTitle = "Blogs Entry Title",
