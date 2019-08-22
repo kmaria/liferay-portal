@@ -68,7 +68,7 @@
 <!--VIEWER-->
 <tr>
 	<td>CAPTION</td>
-	<td>//div[@class='image-viewer-footer-content']/p[@class='image-viewer-caption' and contains(.,'${key_uploadFileName}')]</td>
+	<td>//li[@data-qa-id='row']/div[contains(@class,'image-card') and contains(.,'${key_uploadFileName}')]</td>
 	<td></td>
 </tr>
 <tr>
