@@ -102,6 +102,14 @@ definition {
 		Click(locator1 = "Checkbox#PERMISSIONS");
 	}
 
+	macro pageDeletion {
+		Click(locator1 = "StagingPublishToLive#CONTENT_CHOOSE_CONTENT_DELETION_CHECKBOX");
+
+		AssertElementPresent(locator1 = "StagingPublishToLive#PAGES_CHOOSE_PAGE_DELETION_CHECKBOX");
+
+		Click(locator1 = "StagingPublishToLive#PAGES_CHOOSE_PAGE_DELETION_CHECKBOX");
+	}
+
 	macro setTitle {
 		Type(
 			locator1 = "StagingPublishToLive#PUBLICATION_TITLE",

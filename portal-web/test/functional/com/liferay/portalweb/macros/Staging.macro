@@ -314,6 +314,10 @@ definition {
 			ContentConfiguration.contentDeletion();
 		}
 
+		if ("${pageDeletion}" == "true") {
+			ContentConfiguration.pageDeletion();
+		}
+
 		if (isSet(checkContentNameList)) {
 			ContentConfiguration.checkContentNameList(checkContentNameList = "${checkContentNameList}");
 		}
