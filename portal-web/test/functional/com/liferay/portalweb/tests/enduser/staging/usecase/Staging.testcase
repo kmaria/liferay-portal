@@ -3837,6 +3837,42 @@ definition {
 			assetTitle = "Web Content Title 2");
 	}
 
+	@description = "This is a use case for LPS-98019."
+	@priority = "3"
+	test ViewSearchPageKeywordsParameterWithStaging {
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging");
+
+		Staging.activateStagingCP(
+			pageVersioningEnabled = "true",
+			siteName = "Site Name");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Search Bar");
+
+		SearchPortlets.configureWidgetParameterNames(keywordsParameterName = "query");
+
+		SearchPortlets.searchWidget(searchTerm = "test");
+
+		var portalURL = PropsUtil.get("portal.url");
+		var keywordsParameterName = StringUtil.extractLast("${portalURL}", "?");
+		var keywordsParameter = StringUtil.extractFirst("${keywordsParameterName}", "=");
+
+		if ("${keywordsParameter}" == "query") {
+			SelectFrame(value1 = "relative=top");
+		}
+		else {
+			fail("Invalid keywords parameter.");
+		}
+	}
+
 	@description = "This is a use case for LPS-77935."
 	@priority = "4"
 	test ViewSimplePublicationAfterDeleteDocumentInGlobal {
