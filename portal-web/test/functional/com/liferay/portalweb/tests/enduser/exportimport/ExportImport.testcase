@@ -251,6 +251,34 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 	}
 
+	@description = "This is a use case for LPS-82752."
+	@priority = "5"
+	test ExportContentThenPublish {
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		SitePages.openPagesAdmin(siteURLKey = "site-name");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging");
+
+		Staging.activateStagingCP(siteName = "Site Name");
+
+		JSONWebcontent.addWebContent(
+			content = "Web Content Content",
+			groupName = "Site Name",
+			title = "Web Content Title");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		LAR.exportSiteCP();
+
+		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
+
+		Staging.publishCustomPublication();
+	}
+
 	@description = "This is a use case for LPS-96391."
 	@priority = "5"
 	test ExportImportContentPageWithWCDOnFragment {
