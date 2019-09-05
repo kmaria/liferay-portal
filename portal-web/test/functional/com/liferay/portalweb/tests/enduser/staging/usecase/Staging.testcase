@@ -3857,8 +3857,8 @@ definition {
 
 		SearchPortlets.searchWidget(searchTerm = "test");
 
-		var portalURL = PropsUtil.get("portal.url");
-		var keywordsParameterName = StringUtil.extractLast("${portalURL}", "?");
+		var currentURL = Navigator.getCurrentURL();
+		var keywordsParameterName = StringUtil.extractLast("${currentURL}", "?");
 		var keywordsParameter = StringUtil.extractFirst("${keywordsParameterName}", "=");
 
 		echo("## Keywords Parameter: ${keywordsParameter}");
